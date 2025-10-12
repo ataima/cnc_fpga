@@ -1,0 +1,1 @@
+vcom -93 cnc_pkg.vhd encoder_decoder.vhd bresenham_axis.vhd            step_dir_generator.vhd cnc_3axis_controller.vhd

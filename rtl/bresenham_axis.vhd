@@ -43,14 +43,17 @@ end bresenham_axis;
 
 architecture rtl of bresenham_axis is
 
+    constant ERROR_BITS : integer := POSITION_WIDTH + 2;  -- 34 bit per POSITION_WIDTH=32
+
     type state_t is (IDLE, RUNNING, DONE);
     signal state : state_t;
 
     -- Algoritmo Bresenham (scaling per 2*dy, 2*dx)
-    signal error_accum : signed(POSITION_WIDTH+1 downto 0);  -- Extra bit per overflow
+    signal error_accum : signed(ERROR_BITS-1 downto 0);
 
     -- Contatori
-    signal step_counter   : unsigned(POSITION_WIDTH-1 downto 0);
+    signal step_counter   : unsigned(POSITION_WIDTH-1 downto 0);  -- Conta major steps
+    signal minor_steps    : unsigned(POSITION_WIDTH-1 downto 0);  -- Conta minor steps
     signal total_steps    : unsigned(POSITION_WIDTH-1 downto 0);
 
     -- Timer per generazione step
@@ -60,7 +63,7 @@ architecture rtl of bresenham_axis is
     -- Posizione calcolata
     signal pos_internal   : signed(POSITION_WIDTH-1 downto 0);
 
-    -- Edge detect per start (per pulire DONE -> IDLE)
+    -- Edge detect per start
     signal start_prev     : std_logic := '0';
 
 begin
@@ -70,12 +73,16 @@ begin
     -- ========================================================================
     process(clk, rst)
         variable delta_major_s, delta_minor_s : signed(POSITION_WIDTH downto 0);
-        variable error_init : signed(POSITION_WIDTH+1 downto 0);
+        variable error_init : signed(ERROR_BITS-1 downto 0);
+        variable two_delta_minor, two_delta_major : signed(ERROR_BITS-1 downto 0);
+        variable new_error : signed(ERROR_BITS-1 downto 0);
+        variable adjusted_error : signed(ERROR_BITS-1 downto 0);
     begin
         if rst = '1' then
             state <= IDLE;
             error_accum <= (others => '0');
             step_counter <= (others => '0');
+            minor_steps <= (others => '0');
             total_steps <= (others => '0');
             step_timer <= (others => '0');
             step_pulse <= '0';
@@ -85,7 +92,7 @@ begin
         elsif rising_edge(clk) then
 
             start_prev <= start;  -- Edge detect
-            step_pulse <= '0';  -- Default: no step
+            step_pulse <= '0';    -- Default: no step
 
             case state is
 
@@ -96,16 +103,17 @@ begin
                     if start = '1' and start_prev = '0' then  -- Rising edge
                         state <= RUNNING;
                         step_counter <= (others => '0');
+                        minor_steps <= (others => '0');
                         step_timer <= (others => '0');
 
                         -- Inizializza total_steps
                         total_steps <= delta_major;  -- Sempre delta_major (per sync)
 
-                        -- Calcola init error = 2*dy - dx (signed per sicurezza)
+                        -- Calcola init error = 2*dy - dx - 1 per evitare step extra
                         delta_major_s := signed('0' & delta_major);
                         delta_minor_s := signed('0' & delta_minor);
-                        error_init := (delta_minor_s sll 1) - delta_major_s;  -- 2*dy - dx
-                        error_accum <= resize(error_init, POSITION_WIDTH+2);  -- Scalato
+                        error_init := resize((delta_minor_s sll 1) - delta_major_s - 1, ERROR_BITS);
+                        error_accum <= error_init;
 
                         -- Per major axis, error non usato
                     end if;
@@ -119,12 +127,14 @@ begin
                         -- Abort immediato: reset contatori
                         state <= DONE;
                         step_counter <= (others => '0');
+                        minor_steps <= (others => '0');
                         step_timer <= (others => '0');
 
-                    elsif step_counter < total_steps and step_period > 0 then  -- Check period >0
+                    elsif step_counter < total_steps and step_period > 0 then
 
                         -- Timer per rate limiting (major ticks)
-                        if step_timer < step_period then
+                        -- Nota: conta da 0 a (step_period-1) per avere esattamente step_period cicli
+                        if step_timer < (step_period - 1) then
                             step_timer <= step_timer + 1;
                         else
                             step_timer <= (others => '0');
@@ -143,17 +153,24 @@ begin
                                     pos_internal <= pos_internal - 1;
                                 end if;
 
+                                -- Nota: step_counter già incrementato sopra (linea 142)
+                                -- minor_steps NON viene usato per major axis
+
                             else
                                 -- Asse secondario: Bresenham decision
                                 -- Aggiorna error: error += 2*dy
-                                error_accum <= error_accum + (resize(signed('0' & delta_minor), POSITION_WIDTH+2) sll 1);
+                                two_delta_minor := resize(signed('0' & delta_minor), ERROR_BITS) sll 1;
+                                new_error := error_accum + two_delta_minor;
+                                error_accum <= new_error;
 
-                                -- Check: if error >= 0 then step, error -= 2*dx
-                                if error_accum >= 0 then
+                                -- Check: if error > 0 then step, error -= 2*dx
+                                if new_error > 0 then
                                     step_pulse <= '1';
 
                                     -- Sottrai 2*dx
-                                    error_accum <= error_accum - (resize(signed('0' & delta_major), POSITION_WIDTH+2) sll 1);
+                                    two_delta_major := resize(signed('0' & delta_major), ERROR_BITS) sll 1;
+                                    adjusted_error := new_error - two_delta_major;
+                                    error_accum <= adjusted_error;
 
                                     -- Aggiorna posizione
                                     if direction = '1' then
@@ -161,7 +178,10 @@ begin
                                     else
                                         pos_internal <= pos_internal - 1;
                                     end if;
-                                end if;  -- Altrimenti, no step su minor
+
+                                    -- Conta step per minor axis
+                                    minor_steps <= minor_steps + 1;
+                                end if;
                             end if;
                         end if;
 
@@ -174,7 +194,7 @@ begin
                 -- DONE: Movimento terminato
                 -- ============================================================
                 when DONE =>
-                    if start = '0' then  -- O usa falling edge: start_prev='1' and start='0'
+                    if start = '0' then
                         state <= IDLE;
                     end if;
 
@@ -188,6 +208,8 @@ begin
     step_req <= step_pulse;
     busy <= '1' when state = RUNNING else '0';
     position <= pos_internal;
-    steps_done <= step_counter;  -- Numero di major steps (o tuoi step per major)
+    steps_done <= minor_steps when is_major_axis = '0' else step_counter;
 
 end rtl;
+
+

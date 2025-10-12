@@ -1,0 +1,7 @@
+vdel -lib work -all
+
+vcom -93 ../rtl/cnc_pkg.vhd ../rtl/bresenham_axis.vhd  ../rtl/encoder_decoder.vhd ../rtl/cnc_3axis_controller.vhd ../rtl/step_dir_generator.vhd
+vcom -93 tb_bresenham.vhd
+
+
+vsim -t 1ns -voptargs="+acc"  work.tb_bresenham

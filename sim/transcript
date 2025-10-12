@@ -1,5 +1,5 @@
-# vsim work.tb_bresenham -do "run -all" 
-# Start time: 16:53:02 on Oct 12,2025
+# vsim -c work.tb_bresenham -do "run 150 ms; quit -f" 
+# Start time: 20:32:44 on Oct 12,2025
 # Loading std.standard
 # Loading std.textio(body)
 # Loading ieee.std_logic_1164(body)
@@ -7,47 +7,61 @@
 # Loading work.cnc_pkg(body)
 # Loading work.tb_bresenham(sim)
 # Loading work.bresenham_axis(rtl)
-# run -all
+# run 150 ms
 # ** Note: === TEST 1: Movimento (0,0) -> (100,50) ===
 #    Time: 200 ns  Iteration: 0  Instance: /tb_bresenham
-# ** Fatal: (vsim-3420) Array lengths do not match. Left is 34 (33 downto 0). Right is 33 (32 downto 0).
-#    Time: 210 ns  Iteration: 1  Process: /tb_bresenham/dut_x/line__71 File: ../rtl/bresenham_axis.vhd
-# Fatal error in Process line__71 at ../rtl/bresenham_axis.vhd line 107
-# 
-# HDL call sequence:
-# Stopped at ../rtl/bresenham_axis.vhd 107 Process line__71
-# 
-# Load canceled
-step
-# Cannot continue because of fatal error.
-# HDL call sequence:
-# Stopped at ../rtl/bresenham_axis.vhd 107 Process line__71
-# 
-step
-# Cannot continue because of fatal error.
-# HDL call sequence:
-# Stopped at ../rtl/bresenham_axis.vhd 107 Process line__71
-# 
-step
-# Cannot continue because of fatal error.
-# HDL call sequence:
-# Stopped at ../rtl/bresenham_axis.vhd 107 Process line__71
-# 
-step
-# Cannot continue because of fatal error.
-# HDL call sequence:
-# Stopped at ../rtl/bresenham_axis.vhd 107 Process line__71
-# 
-step
-# Cannot continue because of fatal error.
-# HDL call sequence:
-# Stopped at ../rtl/bresenham_axis.vhd 107 Process line__71
-# 
-step
-# Cannot continue because of fatal error.
-# HDL call sequence:
-# Stopped at ../rtl/bresenham_axis.vhd 107 Process line__71
-# 
-# Break key hit
-# End time: 16:56:57 on Oct 12,2025, Elapsed time: 0:03:55
-# Errors: 1, Warnings: 0
+# ** Note: X final position: 100
+#    Time: 23230 ns  Iteration: 0  Instance: /tb_bresenham
+# ** Note: Y final position: 50
+#    Time: 23230 ns  Iteration: 0  Instance: /tb_bresenham
+# ** Note: X steps done: 100
+#    Time: 23230 ns  Iteration: 0  Instance: /tb_bresenham
+# ** Note: Y steps done: 50
+#    Time: 23230 ns  Iteration: 0  Instance: /tb_bresenham
+# ** Note: === TEST 2: Abort durante movimento ===
+#    Time: 24430 ns  Iteration: 0  Instance: /tb_bresenham
+# ** Note: Abort test: X pos = 22
+#    Time: 30470 ns  Iteration: 0  Instance: /tb_bresenham
+# ** Note: Abort test: Y pos = 11
+#    Time: 30470 ns  Iteration: 0  Instance: /tb_bresenham
+# ** Note: === TEST 3: Movimento negativo (-50,-25) ===
+#    Time: 31670 ns  Iteration: 0  Instance: /tb_bresenham
+# ** Note: Test 3 - X final position: -50
+#    Time: 43690 ns  Iteration: 0  Instance: /tb_bresenham
+# ** Note: Test 3 - Y final position: -25
+#    Time: 43690 ns  Iteration: 0  Instance: /tb_bresenham
+# ** Note: === TEST 4: Major axis solo X=100, Y=0 ===
+#    Time: 44890 ns  Iteration: 0  Instance: /tb_bresenham
+# ** Note: Test 4 - X final position: 100
+#    Time: 67910 ns  Iteration: 0  Instance: /tb_bresenham
+# ** Note: Test 4 - Y final position: 0
+#    Time: 67910 ns  Iteration: 0  Instance: /tb_bresenham
+# ** Note: Test 4 - X steps done: 100
+#    Time: 67910 ns  Iteration: 0  Instance: /tb_bresenham
+# ** Note: Test 4 - Y steps done: 0
+#    Time: 67910 ns  Iteration: 0  Instance: /tb_bresenham
+# ** Note: === TEST 5: Diagonale 45 gradi (100,100) ===
+#    Time: 69110 ns  Iteration: 0  Instance: /tb_bresenham
+# ** Note: Test 5 - X final position: 100
+#    Time: 92130 ns  Iteration: 0  Instance: /tb_bresenham
+# ** Note: Test 5 - Y final position: 100
+#    Time: 92130 ns  Iteration: 0  Instance: /tb_bresenham
+# ** Note: Test 5 - X steps done: 100
+#    Time: 92130 ns  Iteration: 0  Instance: /tb_bresenham
+# ** Note: Test 5 - Y steps done: 100
+#    Time: 92130 ns  Iteration: 0  Instance: /tb_bresenham
+# ** Note: === TEST 6: Movimento lento step_period=1000 (50,25) ===
+#    Time: 93330 ns  Iteration: 0  Instance: /tb_bresenham
+# ** Note: Test 6 - X final position: 50
+#    Time: 1095350 ns  Iteration: 0  Instance: /tb_bresenham
+# ** Note: Test 6 - Y final position: 25
+#    Time: 1095350 ns  Iteration: 0  Instance: /tb_bresenham
+# ** Note: Test 6 - X steps done: 50
+#    Time: 1095350 ns  Iteration: 0  Instance: /tb_bresenham
+# ** Note: Test 6 - Y steps done: 25
+#    Time: 1095350 ns  Iteration: 0  Instance: /tb_bresenham
+# ** Note: === SIMULAZIONE COMPLETATA - 6/6 TEST ===
+#    Time: 1096350 ns  Iteration: 0  Instance: /tb_bresenham
+#  quit -f
+# End time: 20:32:49 on Oct 12,2025, Elapsed time: 0:00:05
+# Errors: 0, Warnings: 0

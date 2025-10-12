@@ -10,7 +10,7 @@ z2
 cModel Technology
 Z0 d/home/angelocoppi/quartus_wb/cnc_fpga/sim
 Ebresenham_axis
-Z1 w1760278711
+Z1 w1760284244
 Z2 DPx4 work 7 cnc_pkg 0 22 iOVfh]Azz7GK^e:g6DOdL0
 Z3 DPx4 ieee 11 numeric_std 0 22 aU^R8eGcicLcUFIaBQSL>3
 Z4 DPx3 std 6 textio 0 22 zE1`LPoLg^DX3Oz^4Fj1K3
@@ -25,11 +25,11 @@ VYN0oj4JP1DY@n=a1`cPe22
 !s100 e?Z;cPj58Bc4ViRI813fg0
 Z8 OV;C;2020.1;71
 31
-Z9 !s110 1760280282
+Z9 !s110 1760288490
 !i10b 1
-Z10 !s108 1760280282.000000
-Z11 !s90 -93|../rtl/cnc_pkg.vhd|../rtl/bresenham_axis.vhd|
-Z12 !s107 ../rtl/bresenham_axis.vhd|../rtl/cnc_pkg.vhd|
+Z10 !s108 1760288490.000000
+Z11 !s90 -93|../rtl/cnc_pkg.vhd|../rtl/bresenham_axis.vhd|../rtl/encoder_decoder.vhd|../rtl/cnc_3axis_controller.vhd|../rtl/step_dir_generator.vhd|
+Z12 !s107 ../rtl/step_dir_generator.vhd|../rtl/cnc_3axis_controller.vhd|../rtl/encoder_decoder.vhd|../rtl/bresenham_axis.vhd|../rtl/cnc_pkg.vhd|
 !i113 1
 o-93
 Z13 tExplicit 1 CvgOpt 0
@@ -40,10 +40,55 @@ R4
 R5
 DEx4 work 14 bresenham_axis 0 22 YN0oj4JP1DY@n=a1`cPe22
 !i122 0
-l66
-L44 150
-VV`O[Ih`WTa^C<Yl:[H=?e2
-!s100 2U5;0eYMX?@cW@=fb^z901
+l69
+L44 169
+VC72jc?gWoFNNL>AK_G0dJ3
+!s100 PWSe9mRW9[6hD2Oei24ab2
+R8
+31
+R9
+!i10b 1
+R10
+R11
+R12
+!i113 1
+o-93
+R13
+Ecnc_3axis_controller
+Z14 w1760278190
+R2
+R3
+R4
+R5
+!i122 0
+R0
+Z15 8../rtl/cnc_3axis_controller.vhd
+Z16 F../rtl/cnc_3axis_controller.vhd
+l0
+L17 1
+V4>^QUEcghOfm28C^;jDTO1
+!s100 ^CQQJ2hTIB>G2_YkD2_X=1
+R8
+31
+R9
+!i10b 1
+R10
+R11
+R12
+!i113 1
+o-93
+R13
+Artl
+R2
+R3
+R4
+R5
+DEx4 work 20 cnc_3axis_controller 0 22 4>^QUEcghOfm28C^;jDTO1
+!i122 0
+l189
+L95 407
+ViQFiE_92<X:CekC?5c?J[0
+!s100 _RADFMRTcP41K[6H`3g]W1
 R8
 31
 R9
@@ -59,10 +104,10 @@ R3
 R4
 R5
 !i122 0
-Z14 w1760279054
+Z17 w1760279054
 R0
-Z15 8../rtl/cnc_pkg.vhd
-Z16 F../rtl/cnc_pkg.vhd
+Z18 8../rtl/cnc_pkg.vhd
+Z19 F../rtl/cnc_pkg.vhd
 l0
 L12 1
 ViOVfh]Azz7GK^e:g6DOdL0
@@ -98,48 +143,138 @@ R12
 !i113 1
 o-93
 R13
-Etb_bresenham
-Z17 w1760280766
+Eencoder_decoder
+Z20 w1760279863
 R2
 R3
 R4
 R5
-!i122 3
+!i122 0
 R0
-Z18 8tb_bresenham.vhd
-Z19 Ftb_bresenham.vhd
+Z21 8../rtl/encoder_decoder.vhd
+Z22 F../rtl/encoder_decoder.vhd
 l0
-L16 1
-Vd93HLJJbe5EMSYGOHQW0=0
+Z23 L16 1
+V>XZ:jk]S3;T^bhT`1ofLK3
+!s100 fc0=6B]4O3UT;RXRMVSzg1
+R8
+31
+R9
+!i10b 1
+R10
+R11
+R12
+!i113 1
+o-93
+R13
+Artl
+R2
+R3
+R4
+R5
+DEx4 work 15 encoder_decoder 0 22 >XZ:jk]S3;T^bhT`1ofLK3
+!i122 0
+l66
+L42 155
+VW@E6Z@R22aBMf=ngid[990
+!s100 JZ[fLN`famo6ID[I>C?:T3
+R8
+31
+R9
+!i10b 1
+R10
+R11
+R12
+!i113 1
+o-93
+R13
+Estep_dir_generator
+Z24 w1760278944
+R2
+R3
+R4
+R5
+!i122 0
+R0
+Z25 8../rtl/step_dir_generator.vhd
+Z26 F../rtl/step_dir_generator.vhd
+l0
+R23
+VLbAQ:[A]ZJoz1VLo_=Jcg2
+!s100 >za]@6SR;7K]5h]R1_?_42
+R8
+31
+R9
+!i10b 1
+R10
+R11
+R12
+!i113 1
+o-93
+R13
+Artl
+R2
+R3
+R4
+R5
+DEx4 work 18 step_dir_generator 0 22 LbAQ:[A]ZJoz1VLo_=Jcg2
+!i122 0
+l66
+L46 102
+V:CNQJn:1I8^NWV5be[a4I3
+!s100 EME4;QRh9k;]3RnJ30@km1
+R8
+31
+R9
+!i10b 1
+R10
+R11
+R12
+!i113 1
+o-93
+R13
+Etb_bresenham
+Z27 w1760293948
+R2
+R3
+R4
+R5
+!i122 4
+R0
+Z28 8tb_bresenham.vhd
+Z29 Ftb_bresenham.vhd
+l0
+R23
+VD@CDzYUDFdKKGJPe0GZzL0
 !s100 hIlg@HG81z8]X399?_[H@2
 R8
 31
-Z20 !s110 1760280769
+Z30 !s110 1760293955
 !i10b 1
-Z21 !s108 1760280769.000000
-Z22 !s90 -93|tb_bresenham.vhd|
-!s107 tb_bresenham.vhd|
+Z31 !s108 1760293955.000000
+Z32 !s90 -93|-work|work|tb_bresenham.vhd|
+Z33 !s107 tb_bresenham.vhd|
 !i113 1
-o-93
+Z34 o-93 -work work
 R13
 Asim
 R2
 R3
 R4
 R5
-DEx4 work 12 tb_bresenham 0 22 d93HLJJbe5EMSYGOHQW0=0
-!i122 3
+Z35 DEx4 work 12 tb_bresenham 0 22 D@CDzYUDFdKKGJPe0GZzL0
+!i122 4
 l72
-L19 184
-V=X1dn1N@QbSe4^>8QK1Na2
-!s100 eoN<bcUh>30RTiVk:6bdo2
+L19 354
+V<glRKh^?^e`K@nKPXS[We0
+!s100 0C4g<HaLS[QK0@3;e>2h03
 R8
 31
-R20
+R30
 !i10b 1
-R21
-R22
-Z23 !s107 tb_bresenham.vhd|
+R31
+R32
+R33
 !i113 1
-o-93
+R34
 R13

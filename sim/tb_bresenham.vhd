@@ -157,7 +157,13 @@ begin
             report "ERROR: Y position incorrect!" severity error;
         
         wait for 1 us;
-        
+
+        -- Reset tra test per posizione pulita
+        rst <= '1';
+        wait for 100 ns;
+        rst <= '0';
+        wait for 100 ns;
+
         -- Test 2: Abort durante movimento
         report "=== TEST 2: Abort durante movimento ===";
         start_x <= '1';
@@ -171,16 +177,180 @@ begin
         abort_x <= '1';
         wait for CLK_PERIOD;
         abort_x <= '0';
-        
-        wait until busy_x = '0' and busy_y = '0';
+
+        -- Attendi che busy torni a 0 (con timeout)
+        wait for 1 us;  -- Dai tempo al sistema di andare in DONE
+        if busy_x = '1' or busy_y = '1' then
+            report "WARNING: Busy still high after abort!" severity warning;
+        end if;
         
         report "Abort test: X pos = " & integer'image(to_integer(pos_x));
         report "Abort test: Y pos = " & integer'image(to_integer(pos_y));
-        
+
         wait for 1 us;
-        
+
+        -- Reset tra test per posizione pulita
+        rst <= '1';
+        wait for 100 ns;
+        rst <= '0';
+        wait for 100 ns;
+
+        -- Test 3: Movimento negativo (-50,-25)
+        report "=== TEST 3: Movimento negativo (-50,-25) ===";
+        delta_major <= to_unsigned(50, POSITION_WIDTH);
+        delta_x <= to_unsigned(50, POSITION_WIDTH);
+        delta_y <= to_unsigned(25, POSITION_WIDTH);
+        is_major_x <= '1';
+        is_major_y <= '0';
+        dir_x <= '0';  -- Direzione negativa
+        dir_y <= '0';  -- Direzione negativa
+        step_period <= to_unsigned(10, 16);
+
+        start_x <= '1';
+        start_y <= '1';
+        wait for CLK_PERIOD;
+        start_x <= '0';
+        start_y <= '0';
+
+        wait until busy_x = '0' and busy_y = '0';
+        wait for 1 us;
+
+        report "Test 3 - X final position: " & integer'image(to_integer(pos_x));
+        report "Test 3 - Y final position: " & integer'image(to_integer(pos_y));
+
+        -- Verifica risultati (dovrebbe essere -50, -25)
+        assert to_integer(pos_x) = -50
+            report "ERROR: Test 3 X position incorrect!" severity error;
+        assert to_integer(pos_y) = -25
+            report "ERROR: Test 3 Y position incorrect!" severity error;
+
+        wait for 1 us;
+
+        -- Reset tra test per posizione pulita
+        rst <= '1';
+        wait for 100 ns;
+        rst <= '0';
+        wait for 100 ns;
+
+        -- Test 4: Major axis solo (100,0) - edge case
+        report "=== TEST 4: Major axis solo X=100, Y=0 ===";
+        delta_major <= to_unsigned(100, POSITION_WIDTH);
+        delta_x <= to_unsigned(100, POSITION_WIDTH);
+        delta_y <= to_unsigned(0, POSITION_WIDTH);  -- Y non si muove
+        is_major_x <= '1';
+        is_major_y <= '0';
+        dir_x <= '1';  -- Direzione positiva
+        dir_y <= '1';
+        step_period <= to_unsigned(10, 16);
+
+        start_x <= '1';
+        start_y <= '1';
+        wait for CLK_PERIOD;
+        start_x <= '0';
+        start_y <= '0';
+
+        wait until busy_x = '0' and busy_y = '0';
+        wait for 1 us;
+
+        report "Test 4 - X final position: " & integer'image(to_integer(pos_x));
+        report "Test 4 - Y final position: " & integer'image(to_integer(pos_y));
+        report "Test 4 - X steps done: " & integer'image(to_integer(steps_x));
+        report "Test 4 - Y steps done: " & integer'image(to_integer(steps_y));
+
+        -- Verifica risultati (X dovrebbe avanzare 100, Y restare a 0)
+        assert to_integer(pos_x) = 100
+            report "ERROR: Test 4 X position incorrect!" severity error;
+        assert to_integer(pos_y) = 0
+            report "ERROR: Test 4 Y position should stay at 0!" severity error;
+        assert to_integer(steps_y) = 0
+            report "ERROR: Test 4 Y should not step!" severity error;
+
+        wait for 1 us;
+
+        -- Reset tra test per posizione pulita
+        rst <= '1';
+        wait for 100 ns;
+        rst <= '0';
+        wait for 100 ns;
+
+        -- Test 5: Diagonale 45° (100,100)
+        report "=== TEST 5: Diagonale 45 gradi (100,100) ===";
+        delta_major <= to_unsigned(100, POSITION_WIDTH);
+        delta_x <= to_unsigned(100, POSITION_WIDTH);
+        delta_y <= to_unsigned(100, POSITION_WIDTH);
+        is_major_x <= '1';  -- X è major (arbitrario, sono uguali)
+        is_major_y <= '0';
+        dir_x <= '1';  -- Direzione positiva
+        dir_y <= '1';  -- Direzione positiva
+        step_period <= to_unsigned(10, 16);
+
+        start_x <= '1';
+        start_y <= '1';
+        wait for CLK_PERIOD;
+        start_x <= '0';
+        start_y <= '0';
+
+        wait until busy_x = '0' and busy_y = '0';
+        wait for 1 us;
+
+        report "Test 5 - X final position: " & integer'image(to_integer(pos_x));
+        report "Test 5 - Y final position: " & integer'image(to_integer(pos_y));
+        report "Test 5 - X steps done: " & integer'image(to_integer(steps_x));
+        report "Test 5 - Y steps done: " & integer'image(to_integer(steps_y));
+
+        -- Verifica risultati (dovrebbe essere 100, 100 partendo da 0, 0)
+        assert to_integer(pos_x) = 100
+            report "ERROR: Test 5 X position incorrect!" severity error;
+        assert to_integer(pos_y) = 100
+            report "ERROR: Test 5 Y position incorrect!" severity error;
+        assert to_integer(steps_x) = 100
+            report "ERROR: Test 5 X steps incorrect!" severity error;
+        assert to_integer(steps_y) = 100
+            report "ERROR: Test 5 Y steps incorrect!" severity error;
+
+        wait for 1 us;
+
+        -- Reset tra test per posizione pulita
+        rst <= '1';
+        wait for 100 ns;
+        rst <= '0';
+        wait for 100 ns;
+
+        -- Test 6: Movimento lento (step_period=1000)
+        report "=== TEST 6: Movimento lento step_period=1000 (50,25) ===";
+        delta_major <= to_unsigned(50, POSITION_WIDTH);
+        delta_x <= to_unsigned(50, POSITION_WIDTH);
+        delta_y <= to_unsigned(25, POSITION_WIDTH);
+        is_major_x <= '1';
+        is_major_y <= '0';
+        dir_x <= '1';  -- Direzione positiva
+        dir_y <= '1';  -- Direzione positiva
+        step_period <= to_unsigned(1000, 16);  -- Movimento lento
+
+        start_x <= '1';
+        start_y <= '1';
+        wait for CLK_PERIOD;
+        start_x <= '0';
+        start_y <= '0';
+
+        wait until busy_x = '0' and busy_y = '0';
+        wait for 1 us;
+
+        report "Test 6 - X final position: " & integer'image(to_integer(pos_x));
+        report "Test 6 - Y final position: " & integer'image(to_integer(pos_y));
+        report "Test 6 - X steps done: " & integer'image(to_integer(steps_x));
+        report "Test 6 - Y steps done: " & integer'image(to_integer(steps_y));
+
+        -- Verifica risultati (dovrebbe essere 50, 25 partendo da 0, 0)
+        assert to_integer(pos_x) = 50
+            report "ERROR: Test 6 X position incorrect!" severity error;
+        assert to_integer(pos_y) = 25
+            report "ERROR: Test 6 Y position incorrect!" severity error;
+
+        wait for 1 us;
+
         -- Fine simulazione
-        report "=== SIMULAZIONE COMPLETATA ===";
+        report "=== SIMULAZIONE COMPLETATA - 6/6 TEST ===";
         wait;
     end process;
 
