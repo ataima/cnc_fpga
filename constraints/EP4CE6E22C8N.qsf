@@ -1,0 +1,173 @@
+# ============================================================================
+# Quartus II Constraints File (.qsf)
+# Target: EP4CE6E22C8N (Cyclone IV E)
+# Package: 144-EQFP
+# ============================================================================
+
+# Device configuration
+set_global_assignment -name FAMILY "Cyclone IV E"
+set_global_assignment -name DEVICE EP4CE6E22C8N
+set_global_assignment -name TOP_LEVEL_ENTITY cnc_3axis_controller
+
+# ============================================================================
+# CLOCK E RESET
+# ============================================================================
+set_location_assignment PIN_23 -to clk
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to clk
+
+set_location_assignment PIN_25 -to rst
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to rst
+
+# Clock constraints
+create_clock -name clk -period 20.000 [get_ports {clk}]
+derive_pll_clocks
+derive_clock_uncertainty
+
+# ============================================================================
+# ENCODER INPUTS (Asse X)
+# ============================================================================
+set_location_assignment PIN_88 -to enc_x_a
+set_location_assignment PIN_89 -to enc_x_b
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to enc_x_a
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to enc_x_b
+
+# ENCODER INPUTS (Asse Y)
+set_location_assignment PIN_90 -to enc_y_a
+set_location_assignment PIN_91 -to enc_y_b
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to enc_y_a
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to enc_y_b
+
+# ENCODER INPUTS (Asse Z)
+set_location_assignment PIN_98 -to enc_z_a
+set_location_assignment PIN_99 -to enc_z_b
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to enc_z_a
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to enc_z_b
+
+# ============================================================================
+# LIMIT SWITCHES
+# ============================================================================
+# X axis limits
+set_location_assignment PIN_100 -to limit_x_min
+set_location_assignment PIN_101 -to limit_x_max
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to limit_x_min
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to limit_x_max
+
+# Y axis limits
+set_location_assignment PIN_103 -to limit_y_min
+set_location_assignment PIN_104 -to limit_y_max
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to limit_y_min
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to limit_y_max
+
+# Z axis limits
+set_location_assignment PIN_105 -to limit_z_min
+set_location_assignment PIN_106 -to limit_z_max
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to limit_z_min
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to limit_z_max
+
+# ============================================================================
+# STEP/DIR/ENABLE OUTPUTS (TB6600 drivers)
+# ============================================================================
+# X axis
+set_location_assignment PIN_133 -to step_x
+set_location_assignment PIN_135 -to dir_x
+set_location_assignment PIN_136 -to enable_x
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to step_x
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to dir_x
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to enable_x
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to step_x
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to dir_x
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to enable_x
+
+# Y axis
+set_location_assignment PIN_137 -to step_y
+set_location_assignment PIN_141 -to dir_y
+set_location_assignment PIN_142 -to enable_y
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to step_y
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to dir_y
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to enable_y
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to step_y
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to dir_y
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to enable_y
+
+# Z axis
+set_location_assignment PIN_143 -to step_z
+set_location_assignment PIN_144 -to dir_z
+set_location_assignment PIN_1 -to enable_z
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to step_z
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to dir_z
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to enable_z
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to step_z
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to dir_z
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to enable_z
+
+# ============================================================================
+# CONTROL INTERFACE
+# ============================================================================
+# NOTE: The following signals are NOT assigned to pins due to insufficient
+# pin count (144 pins available, 211+ needed for full parallel interface):
+#   - target_x[31:0]       (32 pins)
+#   - target_y[31:0]       (32 pins)
+#   - target_z[31:0]       (32 pins)
+#   - step_period_in[15:0] (16 pins)
+#   - pos_x[31:0]          (32 pins)
+#   - pos_y[31:0]          (32 pins)
+#   - pos_z[31:0]          (32 pins)
+#   - state_debug[3:0]     (4 pins)
+#
+# RECOMMENDATION: Implement one of these solutions:
+#   1. SPI/UART serial interface (~10 pins)
+#   2. NIOS II soft processor with Avalon-MM bus
+#   3. Simplified 16-bit parallel interface with multiplexing
+#
+# See docs/INTERFACE_SPEC.md for details.
+
+set_location_assignment PIN_42 -to move_start
+set_location_assignment PIN_43 -to move_abort
+set_location_assignment PIN_44 -to enable
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to move_start
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to move_abort
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to enable
+
+# ============================================================================
+# STATUS OUTPUTS (LED debug)
+# ============================================================================
+set_location_assignment PIN_87 -to busy
+set_location_assignment PIN_86 -to fault
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to busy
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to fault
+
+# ============================================================================
+# OPTIMIZATION SETTINGS
+# ============================================================================
+set_global_assignment -name OPTIMIZATION_MODE "HIGH PERFORMANCE EFFORT"
+set_global_assignment -name ALLOW_ANY_RAM_SIZE_FOR_RECOGNITION ON
+set_global_assignment -name AUTO_RAM_RECOGNITION ON
+set_global_assignment -name PHYSICAL_SYNTHESIS_COMBO_LOGIC ON
+set_global_assignment -name PHYSICAL_SYNTHESIS_REGISTER_RETIMING ON
+
+# Timing constraints
+set_global_assignment -name TIMEQUEST_MULTICORNER_ANALYSIS ON
+set_global_assignment -name TIMEQUEST_DO_CCPP_REMOVAL ON
+
+# Power optimization
+set_global_assignment -name OPTIMIZE_POWER_DURING_SYNTHESIS "NORMAL COMPILATION"
+
+# ============================================================================
+# FILE ASSIGNMENTS
+# ============================================================================
+set_global_assignment -name VHDL_FILE ../rtl/cnc_pkg.vhd
+set_global_assignment -name VHDL_FILE ../rtl/encoder_decoder.vhd
+set_global_assignment -name VHDL_FILE ../rtl/bresenham_axis.vhd
+set_global_assignment -name VHDL_FILE ../rtl/step_dir_generator.vhd
+set_global_assignment -name VHDL_FILE ../rtl/cnc_3axis_controller.vhd
+
+# ============================================================================
+# SYNTHESIS SETTINGS
+# ============================================================================
+set_global_assignment -name NUM_PARALLEL_PROCESSORS ALL
+set_global_assignment -name USE_CONFIGURATION_DEVICE OFF
+set_global_assignment -name CYCLONEII_RESERVE_NCEO_AFTER_CONFIGURATION "USE AS REGULAR IO"
+set_global_assignment -name RESERVE_DATA0_AFTER_CONFIGURATION "USE AS REGULAR IO"
+set_global_assignment -name RESERVE_DATA1_AFTER_CONFIGURATION "USE AS REGULAR IO"
+set_global_assignment -name RESERVE_FLASH_NCE_AFTER_CONFIGURATION "USE AS REGULAR IO"
+set_global_assignment -name RESERVE_DCLK_AFTER_CONFIGURATION "USE AS REGULAR IO"

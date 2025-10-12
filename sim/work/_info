@@ -1,0 +1,145 @@
+m255
+K4
+z2
+!s11e vcom 2020.1 2020.02, Feb 28 2020
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 d/home/angelocoppi/quartus_wb/cnc_fpga/sim
+Ebresenham_axis
+Z1 w1760278711
+Z2 DPx4 work 7 cnc_pkg 0 22 iOVfh]Azz7GK^e:g6DOdL0
+Z3 DPx4 ieee 11 numeric_std 0 22 aU^R8eGcicLcUFIaBQSL>3
+Z4 DPx3 std 6 textio 0 22 zE1`LPoLg^DX3Oz^4Fj1K3
+Z5 DPx4 ieee 14 std_logic_1164 0 22 cVAk:aDinOX8^VGI1ekP<3
+!i122 0
+R0
+Z6 8../rtl/bresenham_axis.vhd
+Z7 F../rtl/bresenham_axis.vhd
+l0
+L15 1
+VYN0oj4JP1DY@n=a1`cPe22
+!s100 e?Z;cPj58Bc4ViRI813fg0
+Z8 OV;C;2020.1;71
+31
+Z9 !s110 1760280282
+!i10b 1
+Z10 !s108 1760280282.000000
+Z11 !s90 -93|../rtl/cnc_pkg.vhd|../rtl/bresenham_axis.vhd|
+Z12 !s107 ../rtl/bresenham_axis.vhd|../rtl/cnc_pkg.vhd|
+!i113 1
+o-93
+Z13 tExplicit 1 CvgOpt 0
+Artl
+R2
+R3
+R4
+R5
+DEx4 work 14 bresenham_axis 0 22 YN0oj4JP1DY@n=a1`cPe22
+!i122 0
+l66
+L44 150
+VV`O[Ih`WTa^C<Yl:[H=?e2
+!s100 2U5;0eYMX?@cW@=fb^z901
+R8
+31
+R9
+!i10b 1
+R10
+R11
+R12
+!i113 1
+o-93
+R13
+Pcnc_pkg
+R3
+R4
+R5
+!i122 0
+Z14 w1760279054
+R0
+Z15 8../rtl/cnc_pkg.vhd
+Z16 F../rtl/cnc_pkg.vhd
+l0
+L12 1
+ViOVfh]Azz7GK^e:g6DOdL0
+!s100 []3TTfJ7[Kn3ZGjWZ5]>M3
+R8
+31
+b1
+R9
+!i10b 1
+R10
+R11
+R12
+!i113 1
+o-93
+R13
+Bbody
+R2
+R3
+R4
+R5
+!i122 0
+l0
+L58 1
+VCUQe9cVSMlMdP77jXU0f>2
+!s100 k_PIlGUDAMQN@m0;:eOb]0
+R8
+31
+R9
+!i10b 1
+R10
+R11
+R12
+!i113 1
+o-93
+R13
+Etb_bresenham
+Z17 w1760280766
+R2
+R3
+R4
+R5
+!i122 3
+R0
+Z18 8tb_bresenham.vhd
+Z19 Ftb_bresenham.vhd
+l0
+L16 1
+Vd93HLJJbe5EMSYGOHQW0=0
+!s100 hIlg@HG81z8]X399?_[H@2
+R8
+31
+Z20 !s110 1760280769
+!i10b 1
+Z21 !s108 1760280769.000000
+Z22 !s90 -93|tb_bresenham.vhd|
+!s107 tb_bresenham.vhd|
+!i113 1
+o-93
+R13
+Asim
+R2
+R3
+R4
+R5
+DEx4 work 12 tb_bresenham 0 22 d93HLJJbe5EMSYGOHQW0=0
+!i122 3
+l72
+L19 184
+V=X1dn1N@QbSe4^>8QK1Na2
+!s100 eoN<bcUh>30RTiVk:6bdo2
+R8
+31
+R20
+!i10b 1
+R21
+R22
+Z23 !s107 tb_bresenham.vhd|
+!i113 1
+o-93
+R13

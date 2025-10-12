@@ -1,0 +1,235 @@
+m255
+K4
+z2
+!s11e MIXED_VERSIONS
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 d/home/angelocoppi/quartus_wb/cnc_fpga/rtl
+Ebresenham_axis
+Z1 w1760278711
+Z2 DPx4 work 7 cnc_pkg 0 22 iOVfh]Azz7GK^e:g6DOdL0
+Z3 DPx4 ieee 11 numeric_std 0 22 aU^R8eGcicLcUFIaBQSL>3
+Z4 DPx3 std 6 textio 0 22 zE1`LPoLg^DX3Oz^4Fj1K3
+Z5 DPx4 ieee 14 std_logic_1164 0 22 cVAk:aDinOX8^VGI1ekP<3
+!i122 11
+R0
+Z6 8bresenham_axis.vhd
+Z7 Fbresenham_axis.vhd
+l0
+L15 1
+VYN0oj4JP1DY@n=a1`cPe22
+!s100 e?Z;cPj58Bc4ViRI813fg0
+Z8 OV;C;2020.1;71
+31
+Z9 !s110 1760280179
+!i10b 1
+Z10 !s108 1760280179.000000
+Z11 !s90 -93|cnc_pkg.vhd|encoder_decoder.vhd|bresenham_axis.vhd|step_dir_generator.vhd|cnc_3axis_controller.vhd|
+Z12 !s107 cnc_3axis_controller.vhd|step_dir_generator.vhd|bresenham_axis.vhd|encoder_decoder.vhd|cnc_pkg.vhd|
+!i113 1
+o-93
+Z13 tExplicit 1 CvgOpt 0
+Artl
+R2
+R3
+R4
+R5
+Z14 DEx4 work 14 bresenham_axis 0 22 YN0oj4JP1DY@n=a1`cPe22
+!i122 11
+l66
+Z15 L44 150
+Z16 VV`O[Ih`WTa^C<Yl:[H=?e2
+Z17 !s100 2U5;0eYMX?@cW@=fb^z901
+R8
+31
+R9
+!i10b 1
+R10
+R11
+R12
+!i113 1
+o-93
+R13
+Ecnc_3axis_controller
+Z18 w1760278190
+R2
+R3
+R4
+R5
+!i122 11
+R0
+Z19 8cnc_3axis_controller.vhd
+Z20 Fcnc_3axis_controller.vhd
+l0
+L17 1
+V4>^QUEcghOfm28C^;jDTO1
+!s100 ^CQQJ2hTIB>G2_YkD2_X=1
+R8
+31
+R9
+!i10b 1
+R10
+R11
+R12
+!i113 1
+o-93
+R13
+Artl
+R2
+R3
+R4
+R5
+Z21 DEx4 work 20 cnc_3axis_controller 0 22 4>^QUEcghOfm28C^;jDTO1
+!i122 11
+l189
+Z22 L95 407
+Z23 ViQFiE_92<X:CekC?5c?J[0
+Z24 !s100 _RADFMRTcP41K[6H`3g]W1
+R8
+31
+R9
+!i10b 1
+R10
+R11
+R12
+!i113 1
+o-93
+R13
+Pcnc_pkg
+R3
+R4
+R5
+!i122 11
+Z25 w1760279054
+R0
+Z26 8cnc_pkg.vhd
+Z27 Fcnc_pkg.vhd
+l0
+L12 1
+ViOVfh]Azz7GK^e:g6DOdL0
+!s100 []3TTfJ7[Kn3ZGjWZ5]>M3
+R8
+31
+b1
+R9
+!i10b 1
+R10
+R11
+R12
+!i113 1
+o-93
+R13
+Bbody
+R2
+R3
+R4
+R5
+!i122 11
+l0
+Z28 L58 1
+Z29 VCUQe9cVSMlMdP77jXU0f>2
+Z30 !s100 k_PIlGUDAMQN@m0;:eOb]0
+R8
+31
+R9
+!i10b 1
+R10
+R11
+R12
+!i113 1
+o-93
+R13
+Eencoder_decoder
+Z31 w1760279863
+R2
+R3
+R4
+R5
+!i122 11
+R0
+Z32 8encoder_decoder.vhd
+Z33 Fencoder_decoder.vhd
+l0
+Z34 L16 1
+V>XZ:jk]S3;T^bhT`1ofLK3
+!s100 fc0=6B]4O3UT;RXRMVSzg1
+R8
+31
+R9
+!i10b 1
+R10
+R11
+R12
+!i113 1
+o-93
+R13
+Artl
+R2
+R3
+R4
+R5
+Z35 DEx4 work 15 encoder_decoder 0 22 >XZ:jk]S3;T^bhT`1ofLK3
+!i122 11
+l66
+Z36 L42 155
+Z37 VW@E6Z@R22aBMf=ngid[990
+Z38 !s100 JZ[fLN`famo6ID[I>C?:T3
+R8
+31
+R9
+!i10b 1
+R10
+R11
+R12
+!i113 1
+o-93
+R13
+Estep_dir_generator
+Z39 w1760278944
+R2
+R3
+R4
+R5
+!i122 11
+R0
+Z40 8step_dir_generator.vhd
+Z41 Fstep_dir_generator.vhd
+l0
+R34
+VLbAQ:[A]ZJoz1VLo_=Jcg2
+!s100 >za]@6SR;7K]5h]R1_?_42
+R8
+31
+R9
+!i10b 1
+R10
+R11
+R12
+!i113 1
+o-93
+R13
+Artl
+R2
+R3
+R4
+R5
+Z42 DEx4 work 18 step_dir_generator 0 22 LbAQ:[A]ZJoz1VLo_=Jcg2
+!i122 11
+l66
+Z43 L46 102
+Z44 V:CNQJn:1I8^NWV5be[a4I3
+Z45 !s100 EME4;QRh9k;]3RnJ30@km1
+R8
+31
+R9
+!i10b 1
+R10
+R11
+R12
+!i113 1
+o-93
+R13

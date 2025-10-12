@@ -1,0 +1,53 @@
+# vsim work.tb_bresenham -do "run -all" 
+# Start time: 16:53:02 on Oct 12,2025
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading ieee.numeric_std(body)
+# Loading work.cnc_pkg(body)
+# Loading work.tb_bresenham(sim)
+# Loading work.bresenham_axis(rtl)
+# run -all
+# ** Note: === TEST 1: Movimento (0,0) -> (100,50) ===
+#    Time: 200 ns  Iteration: 0  Instance: /tb_bresenham
+# ** Fatal: (vsim-3420) Array lengths do not match. Left is 34 (33 downto 0). Right is 33 (32 downto 0).
+#    Time: 210 ns  Iteration: 1  Process: /tb_bresenham/dut_x/line__71 File: ../rtl/bresenham_axis.vhd
+# Fatal error in Process line__71 at ../rtl/bresenham_axis.vhd line 107
+# 
+# HDL call sequence:
+# Stopped at ../rtl/bresenham_axis.vhd 107 Process line__71
+# 
+# Load canceled
+step
+# Cannot continue because of fatal error.
+# HDL call sequence:
+# Stopped at ../rtl/bresenham_axis.vhd 107 Process line__71
+# 
+step
+# Cannot continue because of fatal error.
+# HDL call sequence:
+# Stopped at ../rtl/bresenham_axis.vhd 107 Process line__71
+# 
+step
+# Cannot continue because of fatal error.
+# HDL call sequence:
+# Stopped at ../rtl/bresenham_axis.vhd 107 Process line__71
+# 
+step
+# Cannot continue because of fatal error.
+# HDL call sequence:
+# Stopped at ../rtl/bresenham_axis.vhd 107 Process line__71
+# 
+step
+# Cannot continue because of fatal error.
+# HDL call sequence:
+# Stopped at ../rtl/bresenham_axis.vhd 107 Process line__71
+# 
+step
+# Cannot continue because of fatal error.
+# HDL call sequence:
+# Stopped at ../rtl/bresenham_axis.vhd 107 Process line__71
+# 
+# Break key hit
+# End time: 16:56:57 on Oct 12,2025, Elapsed time: 0:03:55
+# Errors: 1, Warnings: 0
