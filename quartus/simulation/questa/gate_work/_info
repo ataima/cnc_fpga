@@ -1,0 +1,113 @@
+m255
+K4
+z2
+!s11e vcom 2024.3 2024.09, Sep 10 2024
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 d/home/angelocoppi/quartus_wb/cnc_fpga/quartus/simulation/questa
+Ecnc_3axis_rom_top
+Z1 w1760303893
+Z2 DPx10 cycloneive 20 cycloneive_atom_pack 0 22 <oBA^TV6^3hIUSGc1gUlL2
+Z3 DPx10 cycloneive 21 cycloneive_components 0 22 WZCadi`[9>nzDh;d3kfAO0
+Z4 DPx4 ieee 16 vital_primitives 0 22 G>kiXP8Q9dRClKfK1Zn7j1
+Z5 DPx6 altera 11 dffeas_pack 0 22 Z6Df0YUMimcBlDK61l?KR3
+Z6 DPx4 ieee 12 vital_timing 0 22 J>EBealN09f8GzldA[z2>3
+Z7 DPx3 std 6 textio 0 22 zE1`LPoLg^DX3Oz^4Fj1K3
+Z8 DPx4 ieee 14 std_logic_1164 0 22 cVAk:aDinOX8^VGI1ekP<3
+Z9 DPx6 altera 28 altera_primitives_components 0 22 Z06gDT=8W=YNhNg@C=?S02
+!i122 0
+R0
+Z10 8cnc_3axis_fpga.vho
+Z11 Fcnc_3axis_fpga.vho
+l0
+L80 1
+VZFBQOO4cdQlLNQ6JfR<WP2
+!s100 :3`K<LL@1]fJV@e7CI;gF2
+Z12 OL;C;2024.3;79
+31
+Z13 !s110 1760303896
+!i10b 1
+Z14 !s108 1760303896.000000
+Z15 !s90 -reportprogress|300|-93|-work|work|cnc_3axis_fpga.vho|
+!s107 cnc_3axis_fpga.vho|
+!i113 0
+Z16 o-93 -work work
+Z17 tExplicit 1 CvgOpt 0
+Astructure
+R2
+R3
+R4
+R5
+R6
+R7
+R8
+R9
+DEx4 work 17 cnc_3axis_rom_top 0 22 ZFBQOO4cdQlLNQ6JfR<WP2
+!i122 0
+l2089
+L160 32366
+VS6TOl>T^<An<OP4TkHBgZ0
+!s100 A6[I_joB40J9nP5MNcPV41
+R12
+31
+R13
+!i10b 1
+R14
+R15
+Z18 !s107 cnc_3axis_fpga.vho|
+!i113 0
+R16
+R17
+Ehard_block
+R1
+R4
+R2
+R6
+R7
+R8
+R3
+!i122 0
+R0
+R10
+R11
+l0
+L35 1
+Vi9a_SfXm?YhLI2dhm1j^51
+!s100 >mXi5[`cD`bFC`UBKA<om3
+R12
+31
+R13
+!i10b 1
+R14
+R15
+R18
+!i113 0
+R16
+R17
+Astructure
+R4
+R2
+R6
+R7
+R8
+R3
+DEx4 work 10 hard_block 0 22 i9a_SfXm?YhLI2dhm1j^51
+!i122 0
+l65
+L51 20
+VWdBQm4eNm6eGHO;iQNz`j1
+!s100 [5;Wd8QGQ>@2NGoJ1I]Y43
+R12
+31
+R13
+!i10b 1
+R14
+R15
+R18
+!i113 0
+R16
+R17

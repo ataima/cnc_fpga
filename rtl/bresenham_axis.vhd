@@ -130,7 +130,7 @@ begin
                         minor_steps <= (others => '0');
                         step_timer <= (others => '0');
 
-                    elsif step_counter < total_steps and step_period > 0 then
+                    elsif step_counter < delta_major and step_period > 0 then
 
                         -- Timer per rate limiting (major ticks)
                         -- Nota: conta da 0 a (step_period-1) per avere esattamente step_period cicli

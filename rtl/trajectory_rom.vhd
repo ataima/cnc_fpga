@@ -31,11 +31,11 @@ architecture rtl of trajectory_rom is
     -- Pre-programmed trajectory: Square pattern with Z lift
     -- Pattern: 50mm square (assuming 200 steps/mm = 10000 steps per side)
     constant ROM_X : position_array := (
-        -- Home position and lift Z (0-3)
+        -- Home position and small 3-axis test move (0-3)
         to_signed(0, 32),       -- 0: Origin
-        to_signed(0, 32),       -- 1: Stay
-        to_signed(0, 32),       -- 2: Stay
-        to_signed(0, 32),       -- 3: Stay
+        to_signed(50, 32),      -- 1: Small move +X (TEST 3-AXIS)
+        to_signed(100, 32),     -- 2: Continue +X
+        to_signed(0, 32),       -- 3: Return to origin
 
         -- First side: Move +X (4-7)
         to_signed(2500, 32),    -- 4: +X quarter
@@ -97,11 +97,11 @@ architecture rtl of trajectory_rom is
     );
 
     constant ROM_Y : position_array := (
-        -- Home position and lift Z (0-3)
+        -- Home position and small 3-axis test move (0-3)
         to_signed(0, 32),       -- 0: Origin
-        to_signed(0, 32),       -- 1: Stay
-        to_signed(0, 32),       -- 2: Stay
-        to_signed(0, 32),       -- 3: Stay
+        to_signed(50, 32),      -- 1: Small move +Y (TEST 3-AXIS)
+        to_signed(100, 32),     -- 2: Continue +Y
+        to_signed(0, 32),       -- 3: Return to origin
 
         -- First side: Move +X, Y stays (4-7)
         to_signed(0, 32),       -- 4
@@ -165,9 +165,9 @@ architecture rtl of trajectory_rom is
     constant ROM_Z : position_array := (
         -- Z lift sequence (0-3)
         to_signed(0, 32),       -- 0: Z down (start)
-        to_signed(1000, 32),    -- 1: Z up 5mm (clearance)
-        to_signed(1000, 32),    -- 2: Z stay up
-        to_signed(1000, 32),    -- 3: Z stay up
+        to_signed(50, 32),      -- 1: Small move +Z (TEST 3-AXIS)
+        to_signed(100, 32),     -- 2: Continue +Z
+        to_signed(0, 32),       -- 3: Return to origin
 
         -- Z stays up during XY movements (4-35)
         to_signed(1000, 32), to_signed(1000, 32), to_signed(1000, 32), to_signed(1000, 32),  -- 4-7

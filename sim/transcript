@@ -1,67 +1,41 @@
-# vsim -c work.tb_bresenham -do "run 150 ms; quit -f" 
-# Start time: 20:32:44 on Oct 12,2025
+# vsim -c work.tb_3axis_test -do "run 15 ms; quit -f" 
+# Start time: 08:22:41 on Oct 13,2025
 # Loading std.standard
 # Loading std.textio(body)
 # Loading ieee.std_logic_1164(body)
 # Loading ieee.numeric_std(body)
+# Loading ieee.std_logic_textio(body)
 # Loading work.cnc_pkg(body)
-# Loading work.tb_bresenham(sim)
+# Loading work.tb_3axis_test(behavioral)
+# Loading work.cnc_3axis_rom_top(structural)
+# Loading work.trajectory_rom(rtl)
+# Loading work.rom_controller(rtl)
+# Loading work.encoder_simulator(rtl)
+# Loading work.cnc_3axis_controller(rtl)
+# Loading work.encoder_decoder(rtl)
 # Loading work.bresenham_axis(rtl)
-# run 150 ms
-# ** Note: === TEST 1: Movimento (0,0) -> (100,50) ===
-#    Time: 200 ns  Iteration: 0  Instance: /tb_bresenham
-# ** Note: X final position: 100
-#    Time: 23230 ns  Iteration: 0  Instance: /tb_bresenham
-# ** Note: Y final position: 50
-#    Time: 23230 ns  Iteration: 0  Instance: /tb_bresenham
-# ** Note: X steps done: 100
-#    Time: 23230 ns  Iteration: 0  Instance: /tb_bresenham
-# ** Note: Y steps done: 50
-#    Time: 23230 ns  Iteration: 0  Instance: /tb_bresenham
-# ** Note: === TEST 2: Abort durante movimento ===
-#    Time: 24430 ns  Iteration: 0  Instance: /tb_bresenham
-# ** Note: Abort test: X pos = 22
-#    Time: 30470 ns  Iteration: 0  Instance: /tb_bresenham
-# ** Note: Abort test: Y pos = 11
-#    Time: 30470 ns  Iteration: 0  Instance: /tb_bresenham
-# ** Note: === TEST 3: Movimento negativo (-50,-25) ===
-#    Time: 31670 ns  Iteration: 0  Instance: /tb_bresenham
-# ** Note: Test 3 - X final position: -50
-#    Time: 43690 ns  Iteration: 0  Instance: /tb_bresenham
-# ** Note: Test 3 - Y final position: -25
-#    Time: 43690 ns  Iteration: 0  Instance: /tb_bresenham
-# ** Note: === TEST 4: Major axis solo X=100, Y=0 ===
-#    Time: 44890 ns  Iteration: 0  Instance: /tb_bresenham
-# ** Note: Test 4 - X final position: 100
-#    Time: 67910 ns  Iteration: 0  Instance: /tb_bresenham
-# ** Note: Test 4 - Y final position: 0
-#    Time: 67910 ns  Iteration: 0  Instance: /tb_bresenham
-# ** Note: Test 4 - X steps done: 100
-#    Time: 67910 ns  Iteration: 0  Instance: /tb_bresenham
-# ** Note: Test 4 - Y steps done: 0
-#    Time: 67910 ns  Iteration: 0  Instance: /tb_bresenham
-# ** Note: === TEST 5: Diagonale 45 gradi (100,100) ===
-#    Time: 69110 ns  Iteration: 0  Instance: /tb_bresenham
-# ** Note: Test 5 - X final position: 100
-#    Time: 92130 ns  Iteration: 0  Instance: /tb_bresenham
-# ** Note: Test 5 - Y final position: 100
-#    Time: 92130 ns  Iteration: 0  Instance: /tb_bresenham
-# ** Note: Test 5 - X steps done: 100
-#    Time: 92130 ns  Iteration: 0  Instance: /tb_bresenham
-# ** Note: Test 5 - Y steps done: 100
-#    Time: 92130 ns  Iteration: 0  Instance: /tb_bresenham
-# ** Note: === TEST 6: Movimento lento step_period=1000 (50,25) ===
-#    Time: 93330 ns  Iteration: 0  Instance: /tb_bresenham
-# ** Note: Test 6 - X final position: 50
-#    Time: 1095350 ns  Iteration: 0  Instance: /tb_bresenham
-# ** Note: Test 6 - Y final position: 25
-#    Time: 1095350 ns  Iteration: 0  Instance: /tb_bresenham
-# ** Note: Test 6 - X steps done: 50
-#    Time: 1095350 ns  Iteration: 0  Instance: /tb_bresenham
-# ** Note: Test 6 - Y steps done: 25
-#    Time: 1095350 ns  Iteration: 0  Instance: /tb_bresenham
-# ** Note: === SIMULAZIONE COMPLETATA - 6/6 TEST ===
-#    Time: 1096350 ns  Iteration: 0  Instance: /tb_bresenham
+# Loading work.step_dir_generator(rtl)
+# run 15 ms
+# === 3-AXIS DIAGONAL MOVEMENT TEST ===
+# Position 1: (50, 50, 50) - diagonal move
+# Expected: All 3 axes move together (Bresenham)
+# 
+# [INFO] Enable set, waiting for movement...
+# ** Note: ROM_CTRL: Position 0 delta_x=0 delta_y=0 delta_z=0
+#    Time: 470 ns  Iteration: 0  Instance: /tb_3axis_test/dut/u_rom_controller
+# [POS 1] Position loaded at 510 ns
+# [BUSY] Movement started at 530 ns
+# ** Note: ROM_CTRL: Position 1 delta_x=50 delta_y=50 delta_z=50
+#    Time: 590 ns  Iteration: 0  Instance: /tb_3axis_test/dut/u_rom_controller
+# [POS 1] Movement in progress...
+# [DONE] Movement complete at 5000670 ns
+# 
+# === RESULTS ===
+# X steps: 49 (expected: 50)
+# Y steps: 49 (expected: 50)
+# Z steps: 49 (expected: 50)
+# 
+# *** TEST FAIL *** Step counts incorrect!
 #  quit -f
-# End time: 20:32:49 on Oct 12,2025, Elapsed time: 0:00:05
+# End time: 08:22:44 on Oct 13,2025, Elapsed time: 0:00:03
 # Errors: 0, Warnings: 0

@@ -1,0 +1,175 @@
+[N
+16
+15
+17 cnc_3axis_rom_top
+1
+72 /home/angelocoppi/quartus_wb/cnc_fpga/quartus/simulation/questa/rtl_work
+9
+13 FILTER_STAGES
+13
+14 rom_controller
+6
+12 DIR_SETUP_US
+2
+18 step_dir_generator
+3
+3 rtl
+8
+15 encoder_decoder
+10
+10 VEL_WINDOW
+7
+11 DIR_HOLD_US
+4
+11 CLK_FREQ_HZ
+5
+13 STEP_WIDTH_US
+12
+8 DELAY_US
+11
+17 encoder_simulator
+16
+10 structural
+14
+9 LOOP_MODE
+]
+[G
+1
+11
+3
+1
+12
+1
+0
+10
+0
+0 0
+0
+0
+]
+[G
+1
+2
+3
+1
+6
+0
+0
+1
+0
+0 0
+0
+0
+]
+[G
+1
+2
+3
+1
+7
+0
+0
+1
+0
+0 0
+0
+0
+]
+[G
+1
+13
+3
+1
+14
+0
+0
+0
+0
+0 0
+0
+0
+]
+[G
+1
+2
+3
+1
+5
+0
+0
+5
+0
+0 0
+0
+0
+]
+[G
+1
+2
+3
+1
+4
+0
+0
+50000000
+0
+0 0
+0
+0
+]
+[G
+1
+8
+3
+1
+9
+1
+0
+4
+0
+0 0
+0
+0
+]
+[G
+1
+8
+3
+1
+10
+0
+0
+1000
+0
+0 0
+0
+0
+]
+[G
+1
+15
+16
+1
+14
+0
+0
+0
+0
+0 0
+0
+0
+]
+[G
+1
+11
+3
+1
+4
+1
+0
+50000000
+0
+0 0
+0
+0
+]

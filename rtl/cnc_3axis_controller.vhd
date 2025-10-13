@@ -181,7 +181,7 @@ architecture rtl of cnc_3axis_controller is
     signal fault_x, fault_y, fault_z : std_logic;
 
     -- Controller state
-    type ctrl_state_t is (IDLE, CALC_PARAMS, MOVING, DONE);
+    type ctrl_state_t is (IDLE, CALC_PARAMS, START_MOVEMENT, MOVING, DONE);
     signal ctrl_state : ctrl_state_t;
     signal start_sig : std_logic;
 
@@ -338,6 +338,10 @@ begin
                         step_period <= to_unsigned(1000, 16);  -- Safe default (50 kHz)
                     end if;
 
+                    ctrl_state <= START_MOVEMENT;
+
+                when START_MOVEMENT =>
+                    -- Wait one cycle for bresenham cores to see start signal
                     ctrl_state <= MOVING;
 
                 when MOVING =>
@@ -360,7 +364,7 @@ begin
     -- BRESENHAM CORES (3 assi)
     -- ========================================================================
 
-    start_sig <= '1' when ctrl_state = MOVING else '0';
+    start_sig <= '1' when (ctrl_state = START_MOVEMENT or ctrl_state = MOVING) else '0';
 
     bresen_x : bresenham_axis
         port map (
@@ -495,6 +499,7 @@ begin
     -- Debug state
     state_debug <= "0001" when ctrl_state = IDLE else
                    "0010" when ctrl_state = CALC_PARAMS else
+                   "0011" when ctrl_state = START_MOVEMENT else
                    "0100" when ctrl_state = MOVING else
                    "1000";
 

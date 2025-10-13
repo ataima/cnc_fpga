@@ -1,0 +1,16 @@
+Fitter Status : Successful - Mon Oct 13 08:23:35 2025
+Quartus Prime Version : 24.1std.0 Build 1077 03/04/2025 SC Lite Edition
+Revision Name : cnc_3axis_fpga
+Top-level Entity Name : cnc_3axis_rom_top
+Family : Cyclone IV E
+Device : EP4CE6E22C8
+Timing Models : Final
+Total logic elements : 1,780 / 6,272 ( 28 % )
+    Total combinational functions : 1,598 / 6,272 ( 25 % )
+    Dedicated logic registers : 870 / 6,272 ( 14 % )
+Total registers : 870
+Total pins : 40 / 92 ( 43 % )
+Total virtual pins : 0
+Total memory bits : 2,240 / 276,480 ( < 1 % )
+Embedded Multiplier 9-bit elements : 0 / 30 ( 0 % )
+Total PLLs : 0 / 2 ( 0 % )

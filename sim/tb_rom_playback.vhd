@@ -40,13 +40,13 @@ architecture behavioral of tb_rom_playback is
     signal enc_a_z     : std_logic := '0';
     signal enc_b_z     : std_logic := '0';
 
-    -- Limit switches (not used, tie inactive)
-    signal limit_min_x : std_logic := '0';
-    signal limit_max_x : std_logic := '0';
-    signal limit_min_y : std_logic := '0';
-    signal limit_max_y : std_logic := '0';
-    signal limit_min_z : std_logic := '0';
-    signal limit_max_z : std_logic := '0';
+    -- Limit switches (active-low: '1'=not hit, tie inactive)
+    signal limit_min_x : std_logic := '1';
+    signal limit_max_x : std_logic := '1';
+    signal limit_min_y : std_logic := '1';
+    signal limit_max_y : std_logic := '1';
+    signal limit_min_z : std_logic := '1';
+    signal limit_max_z : std_logic := '1';
 
     -- Motor outputs
     signal step_x      : std_logic;

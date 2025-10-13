@@ -1,0 +1,299 @@
+Info: *******************************************************************
+Info: Running Quartus Prime Shell
+    Info: Version 24.1std.0 Build 1077 03/04/2025 SC Lite Edition
+    Info: Copyright (C) 2025  Altera Corporation. All rights reserved.
+    Info: Your use of Altera Corporation's design tools, logic functions 
+    Info: and other software and tools, and any partner logic 
+    Info: functions, and any output files from any of the foregoing 
+    Info: (including device programming or simulation files), and any 
+    Info: associated documentation or information are expressly subject 
+    Info: to the terms and conditions of the Altera Program License 
+    Info: Subscription Agreement, the Altera Quartus Prime License Agreement,
+    Info: the Altera IP License Agreement, or other applicable license
+    Info: agreement, including, without limitation, that your use is for
+    Info: the sole purpose of programming logic devices manufactured by
+    Info: Altera and sold by Altera or its authorized distributors.  Please
+    Info: refer to the Altera Software License Subscription Agreements 
+    Info: on the Quartus Prime software download page.
+    Info: Processing started: Mon Oct 13 07:58:15 2025
+Info: Command: quartus_sh --flow compile cnc_3axis_fpga
+Info: Quartus(args): compile cnc_3axis_fpga
+Info: Project Name = /home/angelocoppi/quartus_wb/cnc_fpga/quartus/cnc_3axis_fpga
+Info: Revision Name = cnc_3axis_fpga
+Info: *******************************************************************
+Info: Running Quartus Prime Analysis & Synthesis
+    Info: Version 24.1std.0 Build 1077 03/04/2025 SC Lite Edition
+    Info: Processing started: Mon Oct 13 07:58:16 2025
+Info: Command: quartus_map --read_settings_files=on --write_settings_files=off cnc_3axis_fpga -c cnc_3axis_fpga
+Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
+Info (20030): Parallel compilation is enabled and will use 10 of the 10 processors detected
+Info (12021): Found 2 design units, including 1 entities, in source file /home/angelocoppi/quartus_wb/cnc_fpga/rtl/step_dir_generator.vhd
+    Info (12022): Found design unit 1: step_dir_generator-rtl File: /home/angelocoppi/quartus_wb/cnc_fpga/rtl/step_dir_generator.vhd Line: 46
+    Info (12023): Found entity 1: step_dir_generator File: /home/angelocoppi/quartus_wb/cnc_fpga/rtl/step_dir_generator.vhd Line: 16
+Info (12021): Found 2 design units, including 1 entities, in source file /home/angelocoppi/quartus_wb/cnc_fpga/rtl/encoder_decoder.vhd
+    Info (12022): Found design unit 1: encoder_decoder-rtl File: /home/angelocoppi/quartus_wb/cnc_fpga/rtl/encoder_decoder.vhd Line: 42
+    Info (12023): Found entity 1: encoder_decoder File: /home/angelocoppi/quartus_wb/cnc_fpga/rtl/encoder_decoder.vhd Line: 16
+Info (12021): Found 2 design units, including 0 entities, in source file /home/angelocoppi/quartus_wb/cnc_fpga/rtl/cnc_pkg.vhd
+    Info (12022): Found design unit 1: cnc_pkg File: /home/angelocoppi/quartus_wb/cnc_fpga/rtl/cnc_pkg.vhd Line: 12
+    Info (12022): Found design unit 2: cnc_pkg-body File: /home/angelocoppi/quartus_wb/cnc_fpga/rtl/cnc_pkg.vhd Line: 58
+Info (12021): Found 2 design units, including 1 entities, in source file /home/angelocoppi/quartus_wb/cnc_fpga/rtl/cnc_3axis_controller.vhd
+    Info (12022): Found design unit 1: cnc_3axis_controller-rtl File: /home/angelocoppi/quartus_wb/cnc_fpga/rtl/cnc_3axis_controller.vhd Line: 95
+    Info (12023): Found entity 1: cnc_3axis_controller File: /home/angelocoppi/quartus_wb/cnc_fpga/rtl/cnc_3axis_controller.vhd Line: 17
+Info (12021): Found 2 design units, including 1 entities, in source file /home/angelocoppi/quartus_wb/cnc_fpga/rtl/bresenham_axis.vhd
+    Info (12022): Found design unit 1: bresenham_axis-rtl File: /home/angelocoppi/quartus_wb/cnc_fpga/rtl/bresenham_axis.vhd Line: 44
+    Info (12023): Found entity 1: bresenham_axis File: /home/angelocoppi/quartus_wb/cnc_fpga/rtl/bresenham_axis.vhd Line: 15
+Info (12021): Found 2 design units, including 1 entities, in source file /home/angelocoppi/quartus_wb/cnc_fpga/rtl/trajectory_rom.vhd
+    Info (12022): Found design unit 1: trajectory_rom-rtl File: /home/angelocoppi/quartus_wb/cnc_fpga/rtl/trajectory_rom.vhd Line: 26
+    Info (12023): Found entity 1: trajectory_rom File: /home/angelocoppi/quartus_wb/cnc_fpga/rtl/trajectory_rom.vhd Line: 16
+Info (12021): Found 2 design units, including 1 entities, in source file /home/angelocoppi/quartus_wb/cnc_fpga/rtl/rom_controller.vhd
+    Info (12022): Found design unit 1: rom_controller-rtl File: /home/angelocoppi/quartus_wb/cnc_fpga/rtl/rom_controller.vhd Line: 50
+    Info (12023): Found entity 1: rom_controller File: /home/angelocoppi/quartus_wb/cnc_fpga/rtl/rom_controller.vhd Line: 16
+Info (12021): Found 2 design units, including 1 entities, in source file /home/angelocoppi/quartus_wb/cnc_fpga/rtl/encoder_simulator.vhd
+    Info (12022): Found design unit 1: encoder_simulator-rtl File: /home/angelocoppi/quartus_wb/cnc_fpga/rtl/encoder_simulator.vhd Line: 42
+    Info (12023): Found entity 1: encoder_simulator File: /home/angelocoppi/quartus_wb/cnc_fpga/rtl/encoder_simulator.vhd Line: 22
+Info (12021): Found 2 design units, including 1 entities, in source file /home/angelocoppi/quartus_wb/cnc_fpga/rtl/cnc_3axis_rom_top.vhd
+    Info (12022): Found design unit 1: cnc_3axis_rom_top-structural File: /home/angelocoppi/quartus_wb/cnc_fpga/rtl/cnc_3axis_rom_top.vhd Line: 78
+    Info (12023): Found entity 1: cnc_3axis_rom_top File: /home/angelocoppi/quartus_wb/cnc_fpga/rtl/cnc_3axis_rom_top.vhd Line: 25
+Info (12127): Elaborating entity "cnc_3axis_rom_top" for the top level hierarchy
+Warning (10540): VHDL Signal Declaration warning at cnc_3axis_rom_top.vhd(92): used explicit default value for signal "move_abort" because signal was never assigned a value File: /home/angelocoppi/quartus_wb/cnc_fpga/rtl/cnc_3axis_rom_top.vhd Line: 92
+Warning (10036): Verilog HDL or VHDL warning at cnc_3axis_rom_top.vhd(96): object "pos_x" assigned a value but never read File: /home/angelocoppi/quartus_wb/cnc_fpga/rtl/cnc_3axis_rom_top.vhd Line: 96
+Warning (10036): Verilog HDL or VHDL warning at cnc_3axis_rom_top.vhd(97): object "pos_y" assigned a value but never read File: /home/angelocoppi/quartus_wb/cnc_fpga/rtl/cnc_3axis_rom_top.vhd Line: 97
+Warning (10036): Verilog HDL or VHDL warning at cnc_3axis_rom_top.vhd(98): object "pos_z" assigned a value but never read File: /home/angelocoppi/quartus_wb/cnc_fpga/rtl/cnc_3axis_rom_top.vhd Line: 98
+Info (12128): Elaborating entity "trajectory_rom" for hierarchy "trajectory_rom:u_trajectory_rom" File: /home/angelocoppi/quartus_wb/cnc_fpga/rtl/cnc_3axis_rom_top.vhd Line: 148
+Info (12128): Elaborating entity "rom_controller" for hierarchy "rom_controller:u_rom_controller" File: /home/angelocoppi/quartus_wb/cnc_fpga/rtl/cnc_3axis_rom_top.vhd Line: 160
+Info (12128): Elaborating entity "encoder_simulator" for hierarchy "encoder_simulator:u_encoder_sim_x" File: /home/angelocoppi/quartus_wb/cnc_fpga/rtl/cnc_3axis_rom_top.vhd Line: 193
+Info (12128): Elaborating entity "cnc_3axis_controller" for hierarchy "cnc_3axis_controller:u_cnc_controller" File: /home/angelocoppi/quartus_wb/cnc_fpga/rtl/cnc_3axis_rom_top.vhd Line: 241
+Warning (10036): Verilog HDL or VHDL warning at cnc_3axis_controller.vhd(166): object "enc_vel_x" assigned a value but never read File: /home/angelocoppi/quartus_wb/cnc_fpga/rtl/cnc_3axis_controller.vhd Line: 166
+Warning (10036): Verilog HDL or VHDL warning at cnc_3axis_controller.vhd(166): object "enc_vel_y" assigned a value but never read File: /home/angelocoppi/quartus_wb/cnc_fpga/rtl/cnc_3axis_controller.vhd Line: 166
+Warning (10036): Verilog HDL or VHDL warning at cnc_3axis_controller.vhd(166): object "enc_vel_z" assigned a value but never read File: /home/angelocoppi/quartus_wb/cnc_fpga/rtl/cnc_3axis_controller.vhd Line: 166
+Info (12128): Elaborating entity "encoder_decoder" for hierarchy "cnc_3axis_controller:u_cnc_controller|encoder_decoder:enc_x" File: /home/angelocoppi/quartus_wb/cnc_fpga/rtl/cnc_3axis_controller.vhd Line: 195
+Info (12128): Elaborating entity "bresenham_axis" for hierarchy "cnc_3axis_controller:u_cnc_controller|bresenham_axis:bresen_x" File: /home/angelocoppi/quartus_wb/cnc_fpga/rtl/cnc_3axis_controller.vhd Line: 369
+Warning (10036): Verilog HDL or VHDL warning at bresenham_axis.vhd(57): object "total_steps" assigned a value but never read File: /home/angelocoppi/quartus_wb/cnc_fpga/rtl/bresenham_axis.vhd Line: 57
+Info (12128): Elaborating entity "step_dir_generator" for hierarchy "cnc_3axis_controller:u_cnc_controller|step_dir_generator:stepgen_x" File: /home/angelocoppi/quartus_wb/cnc_fpga/rtl/cnc_3axis_controller.vhd Line: 427
+Info (19000): Inferred 1 megafunctions from design logic
+    Info (276031): Inferred altsyncram megafunction from the following design logic: "trajectory_rom:u_trajectory_rom|Mux31_rtl_0"
+        Info (286033): Parameter OPERATION_MODE set to ROM
+        Info (286033): Parameter WIDTH_A set to 32
+        Info (286033): Parameter WIDTHAD_A set to 6
+        Info (286033): Parameter NUMWORDS_A set to 64
+        Info (286033): Parameter OUTDATA_REG_A set to UNREGISTERED
+        Info (286033): Parameter RAM_BLOCK_TYPE set to AUTO
+        Info (286033): Parameter INIT_FILE set to cnc_3axis_fpga.cnc_3axis_rom_top0.rtl.mif
+Info (12130): Elaborated megafunction instantiation "trajectory_rom:u_trajectory_rom|altsyncram:Mux31_rtl_0"
+Info (12133): Instantiated megafunction "trajectory_rom:u_trajectory_rom|altsyncram:Mux31_rtl_0" with the following parameter:
+    Info (12134): Parameter "OPERATION_MODE" = "ROM"
+    Info (12134): Parameter "WIDTH_A" = "32"
+    Info (12134): Parameter "WIDTHAD_A" = "6"
+    Info (12134): Parameter "NUMWORDS_A" = "64"
+    Info (12134): Parameter "OUTDATA_REG_A" = "UNREGISTERED"
+    Info (12134): Parameter "RAM_BLOCK_TYPE" = "AUTO"
+    Info (12134): Parameter "INIT_FILE" = "cnc_3axis_fpga.cnc_3axis_rom_top0.rtl.mif"
+Info (12021): Found 1 design units, including 1 entities, in source file db/altsyncram_1711.tdf
+    Info (12023): Found entity 1: altsyncram_1711 File: /home/angelocoppi/quartus_wb/cnc_fpga/quartus/db/altsyncram_1711.tdf Line: 28
+Warning (13024): Output pins are stuck at VCC or GND
+    Warning (13410): Pin "sequence_done" is stuck at GND File: /home/angelocoppi/quartus_wb/cnc_fpga/rtl/cnc_3axis_rom_top.vhd Line: 71
+Info (286030): Timing-Driven Synthesis is running
+Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
+    Info (16011): Adding 0 node(s), including 0 DDIO, 0 PLL, 0 transceiver and 0 LCELL
+Info (21057): Implemented 1391 device resources after synthesis - the final resource count might be different
+    Info (21058): Implemented 17 input pins
+    Info (21059): Implemented 23 output pins
+    Info (21061): Implemented 1319 logic cells
+    Info (21064): Implemented 32 RAM segments
+Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 11 warnings
+    Info: Peak virtual memory: 497 megabytes
+    Info: Processing ended: Mon Oct 13 07:58:24 2025
+    Info: Elapsed time: 00:00:08
+    Info: Total CPU time (on all processors): 00:00:19
+Info: *******************************************************************
+Info: Running Quartus Prime Fitter
+    Info: Version 24.1std.0 Build 1077 03/04/2025 SC Lite Edition
+    Info: Processing started: Mon Oct 13 07:58:25 2025
+Info: Command: quartus_fit --read_settings_files=off --write_settings_files=off cnc_3axis_fpga -c cnc_3axis_fpga
+Info: qfit2_default_script.tcl version: #1
+Info: Project  = cnc_3axis_fpga
+Info: Revision = cnc_3axis_fpga
+Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
+Info (20030): Parallel compilation is enabled and will use 10 of the 10 processors detected
+Info (119006): Selected device EP4CE6E22C8 for design "cnc_3axis_fpga"
+Info (21077): Low junction temperature is 0 degrees C
+Info (21077): High junction temperature is 85 degrees C
+Info (171003): Fitter is performing an Auto Fit compilation, which may decrease Fitter effort to reduce compilation time
+Warning (292013): Feature LogicLock is only available with a valid subscription license. You can purchase a software subscription to gain full access to this feature.
+Info (176444): Device migration not selected. If you intend to use device migration later, you may need to change the pin assignments as they may be incompatible with other devices
+    Info (176445): Device EP4CE10E22C8 is compatible
+    Info (176445): Device EP4CE15E22C8 is compatible
+    Info (176445): Device EP4CE22E22C8 is compatible
+Info (169124): Fitter converted 5 user pins into dedicated programming pins
+    Info (169125): Pin ~ALTERA_ASDO_DATA1~ is reserved at location 6
+    Info (169125): Pin ~ALTERA_FLASH_nCE_nCSO~ is reserved at location 8
+    Info (169125): Pin ~ALTERA_DCLK~ is reserved at location 12
+    Info (169125): Pin ~ALTERA_DATA0~ is reserved at location 13
+    Info (169125): Pin ~ALTERA_nCEO~ is reserved at location 101
+Warning (15714): Some pins have incomplete I/O assignments. Refer to the I/O Assignment Warnings report for details
+Info (176045): Design uses memory blocks. Violating setup or hold times of memory block address registers for either read or write operations could cause memory contents to be corrupted. Make sure that all memory block address registers meet the setup and hold time requirements.
+Critical Warning (169085): No exact pin location assignment(s) for 40 pins of 40 total pins. For the list of pins please refer to the I/O Assignment Warnings table in the fitter report.
+Critical Warning (332012): Synopsys Design Constraints File file not found: 'cnc_3axis_fpga.sdc'. A Synopsys Design Constraints File is required by the Timing Analyzer to get proper timing constraints. Without it, the Compiler will not properly optimize the design.
+Info (332144): No user constrained base clocks found in the design
+Info (332143): No user constrained clock uncertainty found in the design. Calling "derive_clock_uncertainty"
+Info (332154): The derive_clock_uncertainty command did not apply clock uncertainty to any clock-to-clock transfers.
+Info (332130): Timing requirements not specified -- quality metrics such as performance may be sacrificed to reduce compilation time.
+Info (176353): Automatically promoted node clk~input (placed in PIN 23 (CLK1, DIFFCLK_0n)) File: /home/angelocoppi/quartus_wb/cnc_fpga/rtl/cnc_3axis_rom_top.vhd Line: 31
+    Info (176355): Automatically promoted destinations to use location or clock signal Global Clock CLKCTRL_G2
+Info (176353): Automatically promoted node rst~input (placed in PIN 24 (CLK2, DIFFCLK_1p)) File: /home/angelocoppi/quartus_wb/cnc_fpga/rtl/cnc_3axis_rom_top.vhd Line: 32
+    Info (176355): Automatically promoted destinations to use location or clock signal Global Clock CLKCTRL_G4
+    Info (176356): Following destination nodes may be non-global or may not use global or regional clocks
+        Info (176357): Destination node rom_controller:u_rom_controller|delta_z[15]~14 File: /home/angelocoppi/quartus_wb/cnc_fpga/rtl/rom_controller.vhd Line: 110
+Info (176233): Starting register packing
+Info (176235): Finished register packing
+    Extra Info (176219): No registers were packed into other blocks
+Info (176214): Statistics of I/O pins that need to be placed that use the same VCCIO and VREF, before I/O pin placement
+    Info (176211): Number of I/O pins in group: 38 (unused VREF, 2.5V VCCIO, 15 input, 23 output, 0 bidirectional)
+        Info (176212): I/O standards used: 2.5 V.
+Info (176215): I/O bank details before I/O pin placement
+    Info (176214): Statistics of I/O banks
+        Info (176213): I/O bank number 1 does not use VREF pins and has undetermined VCCIO pins. 5 total pin(s) used --  6 pins available
+        Info (176213): I/O bank number 2 does not use VREF pins and has undetermined VCCIO pins. 1 total pin(s) used --  7 pins available
+        Info (176213): I/O bank number 3 does not use VREF pins and has undetermined VCCIO pins. 0 total pin(s) used --  11 pins available
+        Info (176213): I/O bank number 4 does not use VREF pins and has undetermined VCCIO pins. 0 total pin(s) used --  14 pins available
+        Info (176213): I/O bank number 5 does not use VREF pins and has undetermined VCCIO pins. 0 total pin(s) used --  13 pins available
+        Info (176213): I/O bank number 6 does not use VREF pins and has undetermined VCCIO pins. 1 total pin(s) used --  9 pins available
+        Info (176213): I/O bank number 7 does not use VREF pins and has undetermined VCCIO pins. 0 total pin(s) used --  13 pins available
+        Info (176213): I/O bank number 8 does not use VREF pins and has undetermined VCCIO pins. 0 total pin(s) used --  12 pins available
+Info (171121): Fitter preparation operations ending: elapsed time is 00:00:01
+Info (14896): Fitter has disabled Advanced Physical Optimization because it is not supported for the current family.
+Info (170189): Fitter placement preparation operations beginning
+Info (170190): Fitter placement preparation operations ending: elapsed time is 00:00:00
+Info (170191): Fitter placement operations beginning
+Info (170137): Fitter placement was successful
+Info (170192): Fitter placement operations ending: elapsed time is 00:00:02
+Info (170193): Fitter routing operations beginning
+Info (170195): Router estimated average interconnect usage is 2% of the available device resources
+    Info (170196): Router estimated peak interconnect usage is 8% of the available device resources in the region that extends from location X11_Y12 to location X22_Y24
+Info (170199): The Fitter performed an Auto Fit compilation.  Optimizations were skipped to reduce compilation time.
+    Info (170201): Optimizations that may affect the design's routability were skipped
+Info (170194): Fitter routing operations ending: elapsed time is 00:00:01
+Info (11888): Total time spent on timing analysis during the Fitter is 0.57 seconds.
+Info (334003): Started post-fitting delay annotation
+Info (334004): Delay annotation completed successfully
+Info (334003): Started post-fitting delay annotation
+Info (334004): Delay annotation completed successfully
+Info (11218): Fitter post-fit operations ending: elapsed time is 00:00:01
+Info (144001): Generated suppressed messages file /home/angelocoppi/quartus_wb/cnc_fpga/quartus/cnc_3axis_fpga.fit.smsg
+Info: Quartus Prime Fitter was successful. 0 errors, 5 warnings
+    Info: Peak virtual memory: 1445 megabytes
+    Info: Processing ended: Mon Oct 13 07:58:33 2025
+    Info: Elapsed time: 00:00:08
+    Info: Total CPU time (on all processors): 00:00:14
+Info: *******************************************************************
+Info: Running Quartus Prime Assembler
+    Info: Version 24.1std.0 Build 1077 03/04/2025 SC Lite Edition
+    Info: Processing started: Mon Oct 13 07:58:34 2025
+Info: Command: quartus_asm --read_settings_files=off --write_settings_files=off cnc_3axis_fpga -c cnc_3axis_fpga
+Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
+Info (115031): Writing out detailed assembly data for power analysis
+Info (115030): Assembler is generating device programming files
+Info: Quartus Prime Assembler was successful. 0 errors, 1 warning
+    Info: Peak virtual memory: 347 megabytes
+    Info: Processing ended: Mon Oct 13 07:58:34 2025
+    Info: Elapsed time: 00:00:00
+    Info: Total CPU time (on all processors): 00:00:01
+Info (293026): Skipped module Power Analyzer due to the assignment FLOW_ENABLE_POWER_ANALYZER
+Info: *******************************************************************
+Info: Running Quartus Prime Timing Analyzer
+    Info: Version 24.1std.0 Build 1077 03/04/2025 SC Lite Edition
+    Info: Processing started: Mon Oct 13 07:58:35 2025
+Info: Command: quartus_sta cnc_3axis_fpga -c cnc_3axis_fpga
+Info: qsta_default_script.tcl version: #1
+Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
+Info (20030): Parallel compilation is enabled and will use 10 of the 10 processors detected
+Info (21077): Low junction temperature is 0 degrees C
+Info (21077): High junction temperature is 85 degrees C
+Critical Warning (332012): Synopsys Design Constraints File file not found: 'cnc_3axis_fpga.sdc'. A Synopsys Design Constraints File is required by the Timing Analyzer to get proper timing constraints. Without it, the Compiler will not properly optimize the design.
+Info (332142): No user constrained base clocks found in the design. Calling "derive_clocks -period 1.0"
+Info (332105): Deriving Clocks
+    Info (332105): create_clock -period 1.000 -name clk clk
+Info (332143): No user constrained clock uncertainty found in the design. Calling "derive_clock_uncertainty"
+Info (332123): Deriving Clock Uncertainty. Please refer to report_sdc in the Timing Analyzer to see clock uncertainties.
+Info: Found TIMING_ANALYZER_REPORT_SCRIPT_INCLUDE_DEFAULT_ANALYSIS = ON
+Info: Analyzing Slow 1200mV 85C Model
+Critical Warning (332148): Timing requirements not met
+    Info (11105): For recommendations on closing timing, run Report Timing Closure Recommendations in the Timing Analyzer.
+Info (332146): Worst-case setup slack is -9.414
+    Info (332119):     Slack       End Point TNS Clock 
+    Info (332119): ========= =================== =====================
+    Info (332119):    -9.414           -2903.638 clk 
+Info (332146): Worst-case hold slack is 0.452
+    Info (332119):     Slack       End Point TNS Clock 
+    Info (332119): ========= =================== =====================
+    Info (332119):     0.452               0.000 clk 
+Info (332140): No Recovery paths to report
+Info (332140): No Removal paths to report
+Info (332146): Worst-case minimum pulse width slack is -3.201
+    Info (332119):     Slack       End Point TNS Clock 
+    Info (332119): ========= =================== =====================
+    Info (332119):    -3.201            -855.278 clk 
+Info: Analyzing Slow 1200mV 0C Model
+Info (334003): Started post-fitting delay annotation
+Info (334004): Delay annotation completed successfully
+Info (332123): Deriving Clock Uncertainty. Please refer to report_sdc in the Timing Analyzer to see clock uncertainties.
+Critical Warning (332148): Timing requirements not met
+    Info (11105): For recommendations on closing timing, run Report Timing Closure Recommendations in the Timing Analyzer.
+Info (332146): Worst-case setup slack is -8.918
+    Info (332119):     Slack       End Point TNS Clock 
+    Info (332119): ========= =================== =====================
+    Info (332119):    -8.918           -2678.869 clk 
+Info (332146): Worst-case hold slack is 0.400
+    Info (332119):     Slack       End Point TNS Clock 
+    Info (332119): ========= =================== =====================
+    Info (332119):     0.400               0.000 clk 
+Info (332140): No Recovery paths to report
+Info (332140): No Removal paths to report
+Info (332146): Worst-case minimum pulse width slack is -3.201
+    Info (332119):     Slack       End Point TNS Clock 
+    Info (332119): ========= =================== =====================
+    Info (332119):    -3.201            -855.278 clk 
+Info: Analyzing Fast 1200mV 0C Model
+Info (332123): Deriving Clock Uncertainty. Please refer to report_sdc in the Timing Analyzer to see clock uncertainties.
+Critical Warning (332148): Timing requirements not met
+    Info (11105): For recommendations on closing timing, run Report Timing Closure Recommendations in the Timing Analyzer.
+Info (332146): Worst-case setup slack is -3.586
+    Info (332119):     Slack       End Point TNS Clock 
+    Info (332119): ========= =================== =====================
+    Info (332119):    -3.586            -937.610 clk 
+Info (332146): Worst-case hold slack is 0.186
+    Info (332119):     Slack       End Point TNS Clock 
+    Info (332119): ========= =================== =====================
+    Info (332119):     0.186               0.000 clk 
+Info (332140): No Recovery paths to report
+Info (332140): No Removal paths to report
+Info (332146): Worst-case minimum pulse width slack is -3.000
+    Info (332119):     Slack       End Point TNS Clock 
+    Info (332119): ========= =================== =====================
+    Info (332119):    -3.000            -614.038 clk 
+Info (332102): Design is not fully constrained for setup requirements
+Info (332102): Design is not fully constrained for hold requirements
+Info: Quartus Prime Timing Analyzer was successful. 0 errors, 5 warnings
+    Info: Peak virtual memory: 520 megabytes
+    Info: Processing ended: Mon Oct 13 07:58:37 2025
+    Info: Elapsed time: 00:00:02
+    Info: Total CPU time (on all processors): 00:00:02
+Info: *******************************************************************
+Info: Running Quartus Prime EDA Netlist Writer
+    Info: Version 24.1std.0 Build 1077 03/04/2025 SC Lite Edition
+    Info: Processing started: Mon Oct 13 07:58:38 2025
+Info: Command: quartus_eda --read_settings_files=off --write_settings_files=off cnc_3axis_fpga -c cnc_3axis_fpga
+Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
+Info (204019): Generated file cnc_3axis_fpga.vho in folder "/home/angelocoppi/quartus_wb/cnc_fpga/quartus/simulation/questa/" for EDA simulation tool
+Info: Quartus Prime EDA Netlist Writer was successful. 0 errors, 1 warning
+    Info: Peak virtual memory: 582 megabytes
+    Info: Processing ended: Mon Oct 13 07:58:38 2025
+    Info: Elapsed time: 00:00:00
+    Info: Total CPU time (on all processors): 00:00:00
+Info (293000): Quartus Prime Full Compilation was successful. 0 errors, 23 warnings
+Info (23030): Evaluation of Tcl script /opt/quartus/quartus/common/tcl/internal/qsh_flow.tcl was successful
+Info: Quartus Prime Shell was successful. 0 errors, 23 warnings
+    Info: Peak virtual memory: 461 megabytes
+    Info: Processing ended: Mon Oct 13 07:58:39 2025
+    Info: Elapsed time: 00:00:24
+    Info: Total CPU time (on all processors): 00:00:39

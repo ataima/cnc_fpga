@@ -1,0 +1,141 @@
+# do cnc_3axis_fpga_run_msim_rtl_vhdl.do
+# if {[file exists rtl_work]} {
+# 	vdel -lib rtl_work -all
+# }
+# vlib rtl_work
+# vmap work rtl_work
+# Questa Intel Starter FPGA Edition-64 vmap 2024.3 Lib Mapping Utility 2024.09 Sep 10 2024
+# vmap work rtl_work 
+# Modifying modelsim.ini
+# 
+# vcom -93 -work work {/home/angelocoppi/quartus_wb/cnc_fpga/rtl/cnc_pkg.vhd}
+# Questa Intel Starter FPGA Edition-64 vcom 2024.3 Compiler 2024.09 Sep 10 2024
+# Start time: 23:08:31 on Oct 12,2025
+# vcom -93 -work work /home/angelocoppi/quartus_wb/cnc_fpga/rtl/cnc_pkg.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling package cnc_pkg
+# -- Compiling package body cnc_pkg
+# -- Loading package cnc_pkg
+# End time: 23:08:31 on Oct 12,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vcom -93 -work work {/home/angelocoppi/quartus_wb/cnc_fpga/rtl/trajectory_rom.vhd}
+# Questa Intel Starter FPGA Edition-64 vcom 2024.3 Compiler 2024.09 Sep 10 2024
+# Start time: 23:08:31 on Oct 12,2025
+# vcom -93 -work work /home/angelocoppi/quartus_wb/cnc_fpga/rtl/trajectory_rom.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity trajectory_rom
+# -- Compiling architecture rtl of trajectory_rom
+# End time: 23:08:31 on Oct 12,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vcom -93 -work work {/home/angelocoppi/quartus_wb/cnc_fpga/rtl/rom_controller.vhd}
+# Questa Intel Starter FPGA Edition-64 vcom 2024.3 Compiler 2024.09 Sep 10 2024
+# Start time: 23:08:31 on Oct 12,2025
+# vcom -93 -work work /home/angelocoppi/quartus_wb/cnc_fpga/rtl/rom_controller.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity rom_controller
+# -- Compiling architecture rtl of rom_controller
+# End time: 23:08:31 on Oct 12,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vcom -93 -work work {/home/angelocoppi/quartus_wb/cnc_fpga/rtl/encoder_simulator.vhd}
+# Questa Intel Starter FPGA Edition-64 vcom 2024.3 Compiler 2024.09 Sep 10 2024
+# Start time: 23:08:31 on Oct 12,2025
+# vcom -93 -work work /home/angelocoppi/quartus_wb/cnc_fpga/rtl/encoder_simulator.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity encoder_simulator
+# -- Compiling architecture rtl of encoder_simulator
+# End time: 23:08:31 on Oct 12,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vcom -93 -work work {/home/angelocoppi/quartus_wb/cnc_fpga/rtl/step_dir_generator.vhd}
+# Questa Intel Starter FPGA Edition-64 vcom 2024.3 Compiler 2024.09 Sep 10 2024
+# Start time: 23:08:31 on Oct 12,2025
+# vcom -93 -work work /home/angelocoppi/quartus_wb/cnc_fpga/rtl/step_dir_generator.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Loading package cnc_pkg
+# -- Compiling entity step_dir_generator
+# -- Compiling architecture rtl of step_dir_generator
+# End time: 23:08:31 on Oct 12,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vcom -93 -work work {/home/angelocoppi/quartus_wb/cnc_fpga/rtl/encoder_decoder.vhd}
+# Questa Intel Starter FPGA Edition-64 vcom 2024.3 Compiler 2024.09 Sep 10 2024
+# Start time: 23:08:31 on Oct 12,2025
+# vcom -93 -work work /home/angelocoppi/quartus_wb/cnc_fpga/rtl/encoder_decoder.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Loading package cnc_pkg
+# -- Compiling entity encoder_decoder
+# -- Compiling architecture rtl of encoder_decoder
+# End time: 23:08:32 on Oct 12,2025, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 0
+# vcom -93 -work work {/home/angelocoppi/quartus_wb/cnc_fpga/rtl/cnc_3axis_controller.vhd}
+# Questa Intel Starter FPGA Edition-64 vcom 2024.3 Compiler 2024.09 Sep 10 2024
+# Start time: 23:08:32 on Oct 12,2025
+# vcom -93 -work work /home/angelocoppi/quartus_wb/cnc_fpga/rtl/cnc_3axis_controller.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Loading package cnc_pkg
+# -- Compiling entity cnc_3axis_controller
+# -- Compiling architecture rtl of cnc_3axis_controller
+# End time: 23:08:32 on Oct 12,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vcom -93 -work work {/home/angelocoppi/quartus_wb/cnc_fpga/rtl/bresenham_axis.vhd}
+# Questa Intel Starter FPGA Edition-64 vcom 2024.3 Compiler 2024.09 Sep 10 2024
+# Start time: 23:08:32 on Oct 12,2025
+# vcom -93 -work work /home/angelocoppi/quartus_wb/cnc_fpga/rtl/bresenham_axis.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Loading package cnc_pkg
+# -- Compiling entity bresenham_axis
+# -- Compiling architecture rtl of bresenham_axis
+# End time: 23:08:32 on Oct 12,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vcom -93 -work work {/home/angelocoppi/quartus_wb/cnc_fpga/rtl/cnc_3axis_rom_top.vhd}
+# Questa Intel Starter FPGA Edition-64 vcom 2024.3 Compiler 2024.09 Sep 10 2024
+# Start time: 23:08:32 on Oct 12,2025
+# vcom -93 -work work /home/angelocoppi/quartus_wb/cnc_fpga/rtl/cnc_3axis_rom_top.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Loading package cnc_pkg
+# -- Compiling entity cnc_3axis_rom_top
+# -- Compiling architecture structural of cnc_3axis_rom_top
+# -- Loading entity trajectory_rom
+# -- Loading entity rom_controller
+# -- Loading entity encoder_simulator
+# -- Loading entity cnc_3axis_controller
+# End time: 23:08:32 on Oct 12,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# 
+# 
+# vsim -voptargs=+acc work.tb_cnc_3axis_rom_top
+# vsim -voptargs="+acc" work.tb_cnc_3axis_rom_top 
+# Start time: 23:08:32 on Oct 12,2025
+# ** Note: (vsim-3812) Design is being optimized...
+# ** Warning: (vopt-10908) Some optimizations are turned off because the +acc switch is in effect.
+# ** Error: (vopt-11) Could not find work.tb_cnc_3axis_rom_top.
+# Optimization failed
+# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=1, Warnings=1.
+# Error loading design
+# End time: 23:08:32 on Oct 12,2025, Elapsed time: 0:00:00
+# Errors: 1, Warnings: 1

@@ -1,0 +1,220 @@
+# //  Questa Intel Starter FPGA Edition-64
+# //  Version 2024.3 linux_x86_64 Sep 10 2024
+# //
+# // Unpublished work. Copyright 2024 Siemens
+# //
+# // This material contains trade secrets or otherwise confidential information
+# // owned by Siemens Industry Software Inc. or its affiliates (collectively,
+# // "SISW"), or its licensors. Access to and use of this information is strictly
+# // limited as set forth in the Customer's applicable agreements with SISW.
+# //
+# // This material may not be copied, distributed, or otherwise disclosed outside
+# // of the Customer's facilities without the express written permission of SISW,
+# // and may not be used in any way not expressly authorized by SISW.
+# //
+# do cnc_3axis_fpga_run_msim_rtl_vhdl.do
+# if {[file exists rtl_work]} {
+# 	vdel -lib rtl_work -all
+# }
+# vlib rtl_work
+# vmap work rtl_work
+# Questa Intel Starter FPGA Edition-64 vmap 2024.3 Lib Mapping Utility 2024.09 Sep 10 2024
+# vmap work rtl_work 
+# Copying /opt/quartus/questa_fse/linux_x86_64/../modelsim.ini to modelsim.ini
+# Modifying modelsim.ini
+# 
+# vcom -93 -work work {/home/angelocoppi/quartus_wb/cnc_fpga/rtl/cnc_pkg.vhd}
+# Questa Intel Starter FPGA Edition-64 vcom 2024.3 Compiler 2024.09 Sep 10 2024
+# Start time: 08:23:56 on Oct 13,2025
+# vcom -reportprogress 300 -93 -work work /home/angelocoppi/quartus_wb/cnc_fpga/rtl/cnc_pkg.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling package cnc_pkg
+# -- Compiling package body cnc_pkg
+# -- Loading package cnc_pkg
+# End time: 08:23:56 on Oct 13,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vcom -93 -work work {/home/angelocoppi/quartus_wb/cnc_fpga/rtl/trajectory_rom.vhd}
+# Questa Intel Starter FPGA Edition-64 vcom 2024.3 Compiler 2024.09 Sep 10 2024
+# Start time: 08:23:56 on Oct 13,2025
+# vcom -reportprogress 300 -93 -work work /home/angelocoppi/quartus_wb/cnc_fpga/rtl/trajectory_rom.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity trajectory_rom
+# -- Compiling architecture rtl of trajectory_rom
+# End time: 08:23:56 on Oct 13,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vcom -93 -work work {/home/angelocoppi/quartus_wb/cnc_fpga/rtl/rom_controller.vhd}
+# Questa Intel Starter FPGA Edition-64 vcom 2024.3 Compiler 2024.09 Sep 10 2024
+# Start time: 08:23:56 on Oct 13,2025
+# vcom -reportprogress 300 -93 -work work /home/angelocoppi/quartus_wb/cnc_fpga/rtl/rom_controller.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity rom_controller
+# -- Compiling architecture rtl of rom_controller
+# End time: 08:23:56 on Oct 13,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vcom -93 -work work {/home/angelocoppi/quartus_wb/cnc_fpga/rtl/encoder_simulator.vhd}
+# Questa Intel Starter FPGA Edition-64 vcom 2024.3 Compiler 2024.09 Sep 10 2024
+# Start time: 08:23:56 on Oct 13,2025
+# vcom -reportprogress 300 -93 -work work /home/angelocoppi/quartus_wb/cnc_fpga/rtl/encoder_simulator.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity encoder_simulator
+# -- Compiling architecture rtl of encoder_simulator
+# End time: 08:23:56 on Oct 13,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vcom -93 -work work {/home/angelocoppi/quartus_wb/cnc_fpga/rtl/step_dir_generator.vhd}
+# Questa Intel Starter FPGA Edition-64 vcom 2024.3 Compiler 2024.09 Sep 10 2024
+# Start time: 08:23:56 on Oct 13,2025
+# vcom -reportprogress 300 -93 -work work /home/angelocoppi/quartus_wb/cnc_fpga/rtl/step_dir_generator.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Loading package cnc_pkg
+# -- Compiling entity step_dir_generator
+# -- Compiling architecture rtl of step_dir_generator
+# End time: 08:23:56 on Oct 13,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vcom -93 -work work {/home/angelocoppi/quartus_wb/cnc_fpga/rtl/encoder_decoder.vhd}
+# Questa Intel Starter FPGA Edition-64 vcom 2024.3 Compiler 2024.09 Sep 10 2024
+# Start time: 08:23:56 on Oct 13,2025
+# vcom -reportprogress 300 -93 -work work /home/angelocoppi/quartus_wb/cnc_fpga/rtl/encoder_decoder.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Loading package cnc_pkg
+# -- Compiling entity encoder_decoder
+# -- Compiling architecture rtl of encoder_decoder
+# End time: 08:23:56 on Oct 13,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vcom -93 -work work {/home/angelocoppi/quartus_wb/cnc_fpga/rtl/cnc_3axis_controller.vhd}
+# Questa Intel Starter FPGA Edition-64 vcom 2024.3 Compiler 2024.09 Sep 10 2024
+# Start time: 08:23:56 on Oct 13,2025
+# vcom -reportprogress 300 -93 -work work /home/angelocoppi/quartus_wb/cnc_fpga/rtl/cnc_3axis_controller.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Loading package cnc_pkg
+# -- Compiling entity cnc_3axis_controller
+# -- Compiling architecture rtl of cnc_3axis_controller
+# End time: 08:23:56 on Oct 13,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vcom -93 -work work {/home/angelocoppi/quartus_wb/cnc_fpga/rtl/bresenham_axis.vhd}
+# Questa Intel Starter FPGA Edition-64 vcom 2024.3 Compiler 2024.09 Sep 10 2024
+# Start time: 08:23:56 on Oct 13,2025
+# vcom -reportprogress 300 -93 -work work /home/angelocoppi/quartus_wb/cnc_fpga/rtl/bresenham_axis.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Loading package cnc_pkg
+# -- Compiling entity bresenham_axis
+# -- Compiling architecture rtl of bresenham_axis
+# End time: 08:23:56 on Oct 13,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vcom -93 -work work {/home/angelocoppi/quartus_wb/cnc_fpga/rtl/cnc_3axis_rom_top.vhd}
+# Questa Intel Starter FPGA Edition-64 vcom 2024.3 Compiler 2024.09 Sep 10 2024
+# Start time: 08:23:56 on Oct 13,2025
+# vcom -reportprogress 300 -93 -work work /home/angelocoppi/quartus_wb/cnc_fpga/rtl/cnc_3axis_rom_top.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Loading package cnc_pkg
+# -- Compiling entity cnc_3axis_rom_top
+# -- Compiling architecture structural of cnc_3axis_rom_top
+# -- Loading entity trajectory_rom
+# -- Loading entity rom_controller
+# -- Loading entity encoder_simulator
+# -- Loading entity cnc_3axis_controller
+# End time: 08:23:56 on Oct 13,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# 
+vcom -work work /home/angelocoppi/quartus_wb/cnc_fpga/sim/tb_3axis_test.vhd
+# Questa Intel Starter FPGA Edition-64 vcom 2024.3 Compiler 2024.09 Sep 10 2024
+# Start time: 08:24:33 on Oct 13,2025
+# vcom -reportprogress 300 -work work /home/angelocoppi/quartus_wb/cnc_fpga/sim/tb_3axis_test.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Loading package std_logic_textio
+# -- Compiling entity tb_3axis_test
+# -- Compiling architecture behavioral of tb_3axis_test
+# -- Loading package cnc_pkg
+# -- Loading entity cnc_3axis_rom_top
+# End time: 08:24:33 on Oct 13,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+vism work.tb_3axis_test.vhd
+# invalid command name "vism"
+vsim work.tb_3axis_test.vhd
+# vsim work.tb_3axis_test.vhd 
+# Start time: 08:24:58 on Oct 13,2025
+# ** Error (suppressible): (vsim-19) Failed to access library 'work.tb_3axis_test' at "work.tb_3axis_test".
+# No such file or directory. (errno = ENOENT)
+# Error loading design
+# End time: 08:24:58 on Oct 13,2025, Elapsed time: 0:00:00
+# Errors: 1, Warnings: 0
+vsim work.tb_3axis_test
+# vsim work.tb_3axis_test 
+# Start time: 08:25:13 on Oct 13,2025
+# ** Note: (vsim-3812) Design is being optimized...
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading ieee.numeric_std(body)
+# Loading ieee.std_logic_textio(body)
+# Loading work.cnc_pkg(body)
+# Loading work.tb_3axis_test(behavioral)#1
+# Loading work.cnc_3axis_rom_top(structural)#1
+# Loading work.cnc_3axis_controller(rtl)#1
+# Loading work.encoder_decoder(rtl)#1
+add wave -position insertpoint  \
+sim:/tb_3axis_test/step_x \
+sim:/tb_3axis_test/dir_x \
+sim:/tb_3axis_test/enable_x \
+sim:/tb_3axis_test/step_y \
+sim:/tb_3axis_test/dir_y \
+sim:/tb_3axis_test/enable_y \
+sim:/tb_3axis_test/step_z \
+sim:/tb_3axis_test/dir_z \
+sim:/tb_3axis_test/enable_z \
+sim:/tb_3axis_test/busy \
+sim:/tb_3axis_test/fault
+add wave -position insertpoint  \
+sim:/tb_3axis_test/step_x_count \
+sim:/tb_3axis_test/step_y_count \
+sim:/tb_3axis_test/step_z_count
+run -all
+# === 3-AXIS DIAGONAL MOVEMENT TEST ===
+# Position 1: (50, 50, 50) - diagonal move
+# Expected: All 3 axes move together (Bresenham)
+# 
+# [INFO] Enable set, waiting for movement...
+# ** Note: ROM_CTRL: Position 0 delta_x=0 delta_y=0 delta_z=0
+#    Time: 470 ns  Iteration: 0  Instance: /tb_3axis_test/dut/u_rom_controller
+# [POS 1] Position loaded at 510 ns
+# [BUSY] Movement started at 530 ns
+# ** Note: ROM_CTRL: Position 1 delta_x=50 delta_y=50 delta_z=50
+#    Time: 590 ns  Iteration: 0  Instance: /tb_3axis_test/dut/u_rom_controller
+# [POS 1] Movement in progress...
+# [DONE] Movement complete at 5000670 ns
+# 
+# === RESULTS ===
+# X steps: 49 (expected: 50)
+# Y steps: 49 (expected: 50)
+# Z steps: 49 (expected: 50)
+# 
+# *** TEST FAIL *** Step counts incorrect!

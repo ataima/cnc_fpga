@@ -1,0 +1,476 @@
+m255
+K4
+z2
+!s12c _opt
+Z0 !s99 nomlopt
+!s11e vcom 2024.3 2024.09, Sep 10 2024
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z1 d/home/angelocoppi/quartus_wb/cnc_fpga/quartus/simulation/questa
+T_opt
+!s110 1760336714
+V[T<iFb?@;?oeC2HSB3SlH1
+04 13 10 work tb_3axis_test behavioral 1
+=1-000ae431a4f1-68ec9b49-f022f-4cbe
+R0
+!s12f OEM100
+!s12b OEM100
+!s124 OEM10U17 
+!s135 nogc
+o-quiet -auto_acc_if_foreign -work work
+tCvgOpt 0
+n@_opt
+OL;O;2024.3;79
+Ebresenham_axis
+Z2 w1760335036
+Z3 DPx4 work 7 cnc_pkg 0 22 _a48[hIO3Kn>ND:TeNLz23
+Z4 DPx4 ieee 11 numeric_std 0 22 aU^R8eGcicLcUFIaBQSL>3
+Z5 DPx3 std 6 textio 0 22 zE1`LPoLg^DX3Oz^4Fj1K3
+Z6 DPx4 ieee 14 std_logic_1164 0 22 cVAk:aDinOX8^VGI1ekP<3
+!i122 7
+R1
+Z7 8/home/angelocoppi/quartus_wb/cnc_fpga/rtl/bresenham_axis.vhd
+Z8 F/home/angelocoppi/quartus_wb/cnc_fpga/rtl/bresenham_axis.vhd
+l0
+L15 1
+VdGbXDjSJWTZ0^lLBMRK8T0
+!s100 e?Z;cPj58Bc4ViRI813fg0
+Z9 OL;C;2024.3;79
+31
+Z10 !s110 1760336636
+!i10b 1
+Z11 !s108 1760336636.000000
+Z12 !s90 -reportprogress|300|-93|-work|work|/home/angelocoppi/quartus_wb/cnc_fpga/rtl/bresenham_axis.vhd|
+Z13 !s107 /home/angelocoppi/quartus_wb/cnc_fpga/rtl/bresenham_axis.vhd|
+!i113 0
+Z14 o-93 -work work
+Z15 tExplicit 1 CvgOpt 0
+Artl
+R3
+R4
+R5
+R6
+DEx4 work 14 bresenham_axis 0 22 dGbXDjSJWTZ0^lLBMRK8T0
+!i122 7
+l69
+L44 170
+V`iFXA[BcX[hXfd6iPfD]R0
+!s100 aMTSVUFSzN<Ph>6dR>9Da3
+R9
+31
+R10
+!i10b 1
+R11
+R12
+R13
+!i113 0
+R14
+R15
+Ecnc_3axis_controller
+Z16 w1760333603
+R3
+R4
+R5
+R6
+!i122 6
+R1
+Z17 8/home/angelocoppi/quartus_wb/cnc_fpga/rtl/cnc_3axis_controller.vhd
+Z18 F/home/angelocoppi/quartus_wb/cnc_fpga/rtl/cnc_3axis_controller.vhd
+l0
+L17 1
+V9MOhOPMgHU;O]DnN5=lSl1
+!s100 ^CQQJ2hTIB>G2_YkD2_X=1
+R9
+31
+R10
+!i10b 1
+R11
+Z19 !s90 -reportprogress|300|-93|-work|work|/home/angelocoppi/quartus_wb/cnc_fpga/rtl/cnc_3axis_controller.vhd|
+Z20 !s107 /home/angelocoppi/quartus_wb/cnc_fpga/rtl/cnc_3axis_controller.vhd|
+!i113 0
+R14
+R15
+Artl
+R3
+R4
+R5
+R6
+Z21 DEx4 work 20 cnc_3axis_controller 0 22 9MOhOPMgHU;O]DnN5=lSl1
+!i122 6
+l189
+L95 412
+V6F>iKJGU[LGQdTBFLTi5g0
+!s100 ?LDzOlcSI@FaKEgmj0^]k0
+R9
+31
+R10
+!i10b 1
+R11
+R19
+R20
+!i113 0
+R14
+R15
+Ecnc_3axis_rom_top
+Z22 w1760298236
+R3
+R4
+R5
+R6
+!i122 8
+R1
+Z23 8/home/angelocoppi/quartus_wb/cnc_fpga/rtl/cnc_3axis_rom_top.vhd
+Z24 F/home/angelocoppi/quartus_wb/cnc_fpga/rtl/cnc_3axis_rom_top.vhd
+l0
+L25 1
+VecBRnL2:Rnj@?j6[fndd^0
+!s100 YW9ZWoB_?Y8]UA;L>G?eX3
+R9
+31
+R10
+!i10b 1
+R11
+Z25 !s90 -reportprogress|300|-93|-work|work|/home/angelocoppi/quartus_wb/cnc_fpga/rtl/cnc_3axis_rom_top.vhd|
+Z26 !s107 /home/angelocoppi/quartus_wb/cnc_fpga/rtl/cnc_3axis_rom_top.vhd|
+!i113 0
+R14
+R15
+Astructural
+R21
+Z27 DEx4 work 17 encoder_simulator 0 22 hmUd9e]>WG0g0P8Zc4ERI2
+Z28 DEx4 work 14 rom_controller 0 22 A:9aN?06MRIa9z_[QS_6Z2
+Z29 DEx4 work 14 trajectory_rom 0 22 @]3A=g[[<MM]5;g0dRSLa3
+R3
+R4
+R5
+R6
+Z30 DEx4 work 17 cnc_3axis_rom_top 0 22 ecBRnL2:Rnj@?j6[fndd^0
+!i122 8
+l118
+L78 218
+VOQRzhVQ;2VE6@k9Qi?hX`0
+!s100 31VabZ<o<L]7m1C[_R?_F1
+R9
+31
+R10
+!i10b 1
+R11
+R25
+R26
+!i113 0
+R14
+R15
+Pcnc_pkg
+R4
+R5
+R6
+!i122 0
+Z31 w1760279054
+R1
+Z32 8/home/angelocoppi/quartus_wb/cnc_fpga/rtl/cnc_pkg.vhd
+Z33 F/home/angelocoppi/quartus_wb/cnc_fpga/rtl/cnc_pkg.vhd
+l0
+L12 45
+V_a48[hIO3Kn>ND:TeNLz23
+!s100 []3TTfJ7[Kn3ZGjWZ5]>M3
+R9
+31
+b1
+R10
+!i10b 1
+R11
+Z34 !s90 -reportprogress|300|-93|-work|work|/home/angelocoppi/quartus_wb/cnc_fpga/rtl/cnc_pkg.vhd|
+Z35 !s107 /home/angelocoppi/quartus_wb/cnc_fpga/rtl/cnc_pkg.vhd|
+!i113 0
+R14
+R15
+Bbody
+R3
+R4
+R5
+R6
+!i122 0
+l0
+L58 56
+VB0:PJCKU<OjhQ`JaJ7jKG3
+!s100 k_PIlGUDAMQN@m0;:eOb]0
+R9
+31
+R10
+!i10b 1
+R11
+R34
+R35
+!i113 0
+R14
+R15
+Eencoder_decoder
+Z36 w1760279863
+R3
+R4
+R5
+R6
+!i122 5
+R1
+Z37 8/home/angelocoppi/quartus_wb/cnc_fpga/rtl/encoder_decoder.vhd
+Z38 F/home/angelocoppi/quartus_wb/cnc_fpga/rtl/encoder_decoder.vhd
+l0
+Z39 L16 1
+VShAL7nenZ_z624RcYeQP42
+!s100 fc0=6B]4O3UT;RXRMVSzg1
+R9
+31
+R10
+!i10b 1
+R11
+Z40 !s90 -reportprogress|300|-93|-work|work|/home/angelocoppi/quartus_wb/cnc_fpga/rtl/encoder_decoder.vhd|
+Z41 !s107 /home/angelocoppi/quartus_wb/cnc_fpga/rtl/encoder_decoder.vhd|
+!i113 0
+R14
+R15
+Artl
+R3
+R4
+R5
+R6
+DEx4 work 15 encoder_decoder 0 22 ShAL7nenZ_z624RcYeQP42
+!i122 5
+l66
+L42 155
+Vmb>zkcUWWf;4agOYH]b6W2
+!s100 JZ[fLN`famo6ID[I>C?:T3
+R9
+31
+R10
+!i10b 1
+R11
+R40
+R41
+!i113 0
+R14
+R15
+Eencoder_simulator
+Z42 w1760298115
+R4
+R5
+R6
+!i122 3
+R1
+Z43 8/home/angelocoppi/quartus_wb/cnc_fpga/rtl/encoder_simulator.vhd
+Z44 F/home/angelocoppi/quartus_wb/cnc_fpga/rtl/encoder_simulator.vhd
+l0
+L22 1
+VhmUd9e]>WG0g0P8Zc4ERI2
+!s100 bAej87nlKo5S]DNZ<:Eh;0
+R9
+31
+R10
+!i10b 1
+R11
+Z45 !s90 -reportprogress|300|-93|-work|work|/home/angelocoppi/quartus_wb/cnc_fpga/rtl/encoder_simulator.vhd|
+Z46 !s107 /home/angelocoppi/quartus_wb/cnc_fpga/rtl/encoder_simulator.vhd|
+!i113 0
+R14
+R15
+Artl
+R4
+R5
+R6
+R27
+!i122 3
+l66
+L42 133
+VfIjMPML<M4WHgCTX;Bm9J2
+!s100 9AonWZ]dnU[NLhggfMeI;0
+R9
+31
+R10
+!i10b 1
+R11
+R45
+R46
+!i113 0
+R14
+R15
+Erom_controller
+Z47 w1760336517
+R4
+R5
+R6
+!i122 2
+R1
+Z48 8/home/angelocoppi/quartus_wb/cnc_fpga/rtl/rom_controller.vhd
+Z49 F/home/angelocoppi/quartus_wb/cnc_fpga/rtl/rom_controller.vhd
+l0
+R39
+VA:9aN?06MRIa9z_[QS_6Z2
+!s100 =[:NU2hQI49OhKAbFXh6B1
+R9
+31
+R10
+!i10b 1
+R11
+Z50 !s90 -reportprogress|300|-93|-work|work|/home/angelocoppi/quartus_wb/cnc_fpga/rtl/rom_controller.vhd|
+Z51 !s107 /home/angelocoppi/quartus_wb/cnc_fpga/rtl/rom_controller.vhd|
+!i113 0
+R14
+R15
+Artl
+R4
+R5
+R6
+R28
+!i122 2
+l94
+L50 170
+VUN2n0MjSCKoPiEU7^TThb2
+!s100 YFT:cXD@N<V3>oYBTR9LB0
+R9
+31
+R10
+!i10b 1
+R11
+R50
+R51
+!i113 0
+R14
+R15
+Estep_dir_generator
+Z52 w1760335061
+R3
+R4
+R5
+R6
+!i122 4
+R1
+Z53 8/home/angelocoppi/quartus_wb/cnc_fpga/rtl/step_dir_generator.vhd
+Z54 F/home/angelocoppi/quartus_wb/cnc_fpga/rtl/step_dir_generator.vhd
+l0
+R39
+VX<IM0`[8hAz[Z[@@EMSWm1
+!s100 >za]@6SR;7K]5h]R1_?_42
+R9
+31
+R10
+!i10b 1
+R11
+Z55 !s90 -reportprogress|300|-93|-work|work|/home/angelocoppi/quartus_wb/cnc_fpga/rtl/step_dir_generator.vhd|
+Z56 !s107 /home/angelocoppi/quartus_wb/cnc_fpga/rtl/step_dir_generator.vhd|
+!i113 0
+R14
+R15
+Artl
+R3
+R4
+R5
+R6
+DEx4 work 18 step_dir_generator 0 22 X<IM0`[8hAz[Z[@@EMSWm1
+!i122 4
+l66
+L46 102
+VgXN7hWcJc>>j2mj<PUCJ^0
+!s100 EME4;QRh9k;]3RnJ30@km1
+R9
+31
+R10
+!i10b 1
+R11
+R55
+R56
+!i113 0
+R14
+R15
+Etb_3axis_test
+Z57 w1760336547
+Z58 DPx4 ieee 16 std_logic_textio 0 22 8]8<fKiYoHe;_IDO3kmNH2
+R4
+R5
+R6
+!i122 9
+R1
+Z59 8/home/angelocoppi/quartus_wb/cnc_fpga/sim/tb_3axis_test.vhd
+Z60 F/home/angelocoppi/quartus_wb/cnc_fpga/sim/tb_3axis_test.vhd
+l0
+L13 1
+VFd9LdH]3BBgBCjl3A3JjL1
+!s100 Ne426kB>abjDfQMMmd:J82
+R9
+32
+Z61 !s110 1760336673
+!i10b 1
+Z62 !s108 1760336673.000000
+Z63 !s90 -reportprogress|300|-work|work|/home/angelocoppi/quartus_wb/cnc_fpga/sim/tb_3axis_test.vhd|
+Z64 !s107 /home/angelocoppi/quartus_wb/cnc_fpga/sim/tb_3axis_test.vhd|
+!i113 0
+Z65 o-work work
+R15
+Abehavioral
+R3
+R30
+R58
+R4
+R5
+R6
+DEx4 work 13 tb_3axis_test 0 22 Fd9LdH]3BBgBCjl3A3JjL1
+!i122 9
+l48
+L16 200
+Vb9V5KI>YH1Rk<fD:MHB6O3
+!s100 64OS1V7[An7jjT2BL0:dQ1
+R9
+32
+R61
+!i10b 1
+R62
+R63
+R64
+!i113 0
+R65
+R15
+Etrajectory_rom
+Z66 w1760336283
+R4
+R5
+R6
+!i122 1
+R1
+Z67 8/home/angelocoppi/quartus_wb/cnc_fpga/rtl/trajectory_rom.vhd
+Z68 F/home/angelocoppi/quartus_wb/cnc_fpga/rtl/trajectory_rom.vhd
+l0
+R39
+V@]3A=g[[<MM]5;g0dRSLa3
+!s100 cC2FEDKE[KH4FUKIK?KPf3
+R9
+31
+R10
+!i10b 1
+R11
+Z69 !s90 -reportprogress|300|-93|-work|work|/home/angelocoppi/quartus_wb/cnc_fpga/rtl/trajectory_rom.vhd|
+Z70 !s107 /home/angelocoppi/quartus_wb/cnc_fpga/rtl/trajectory_rom.vhd|
+!i113 0
+R14
+R15
+Artl
+R4
+R5
+R6
+R29
+!i122 1
+l197
+L26 184
+V?16ID2S1BT]T6>C9g9UZz1
+!s100 nIoZCH6^OFeoZeIcN@[6g3
+R9
+31
+R10
+!i10b 1
+R11
+R69
+R70
+!i113 0
+R14
+R15

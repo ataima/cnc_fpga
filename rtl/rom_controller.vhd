@@ -76,10 +76,10 @@ architecture rtl of rom_controller is
     signal prev_y : signed(31 downto 0) := (others => '0');
     signal prev_z : signed(31 downto 0) := (others => '0');
 
-    -- Delta (relative movement for CNC controller)
-    signal delta_x : signed(31 downto 0);
-    signal delta_y : signed(31 downto 0);
-    signal delta_z : signed(31 downto 0);
+    -- Delta (relative movement for CNC controller) - REGISTERED
+    signal delta_x : signed(31 downto 0) := (others => '0');
+    signal delta_y : signed(31 downto 0) := (others => '0');
+    signal delta_z : signed(31 downto 0) := (others => '0');
 
     -- Fixed step period (10000 steps/sec @ 50MHz)
     -- step_period = 50_000_000 / 10_000 = 5000 cycles
@@ -92,11 +92,6 @@ architecture rtl of rom_controller is
     signal done_flag : std_logic := '0';
 
 begin
-
-    -- Calculate delta (relative movement)
-    delta_x <= target_x_reg - prev_x;
-    delta_y <= target_y_reg - prev_y;
-    delta_z <= target_z_reg - prev_z;
 
     -- Output assignments
     rom_address     <= position_counter;
@@ -146,6 +141,11 @@ begin
                     target_x_reg <= rom_target_x;
                     target_y_reg <= rom_target_y;
                     target_z_reg <= rom_target_z;
+
+                    -- Calculate delta (relative movement) - REGISTERED FOR STABILITY
+                    delta_x <= rom_target_x - prev_x;
+                    delta_y <= rom_target_y - prev_y;
+                    delta_z <= rom_target_z - prev_z;
 
                     -- Check if CNC controller is ready
                     if busy = '0' then
