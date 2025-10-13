@@ -1,7 +1,7 @@
 # CNC 3-Axis FPGA Controller - Project Context
 
-**Last Updated:** 2025-10-12
-**Status:** ✅ ROM-based design complete, closed-loop testing successful
+**Last Updated:** 2025-10-13
+**Status:** 🔄 Major redesign in progress - ROM/RAM hybrid + SPI interface + new control logic
 **Target Device:** Intel/Altera Cyclone IV EP4CE6E22C8N (6272 LE, 144-pin EQFP)
 
 ---
@@ -326,8 +326,545 @@ The controller uses **Bresenham's line algorithm** for 3D interpolation:
 - SPI/UART interface (for runtime position updates)
 - Acceleration profiles (currently constant velocity)
 
+🚀 **NEXT MILESTONE - OCTOBER 2025 REDESIGN**
+
+---
+
+## 🔄 NEW REQUIREMENTS (2025-10-13) - TO BE IMPLEMENTED
+
+### ⚠️ Git Status
+- Repository cleaned up
+- **IMPORTANT:** Ask before adding new files to git
+
+### 📋 Task List - Major Redesign
+
+#### 1. **ROM Geometry Update (24 positions)** 🔴 TODO
+**File to modify:** `rtl/trajectory_rom.vhd`
+
+**New geometry:**
+- Total positions: **24** (was 64)
+- Cube + Double Pyramid inscribed structure:
+  - **Cube external:** 2000×2000×2000 (8 vertices)
+  - **Pyramid inferior (base down):** 1000×1000×1000 base, vertex at center (0,0,0) (5 points: 4 base vertices + 1 center vertex)
+  - **Pyramid superior (base up):** 1000×1000×1000 base, vertex at center (0,0,0) (5 points: 4 base vertices + 1 center vertex)
+  - The two pyramid vertices touch at center (0,0,0)
+  - **Last position:** (0, 0, 0)
+
+**Coordinate calculation (assuming center cube at origin):**
+
+```
+Cube vertices (8 positions):
+  1. (-1000, -1000, -1000)  # Bottom-front-left
+  2. (+1000, -1000, -1000)  # Bottom-front-right
+  3. (+1000, +1000, -1000)  # Bottom-back-right
+  4. (-1000, +1000, -1000)  # Bottom-back-left
+  5. (-1000, -1000, +1000)  # Top-front-left
+  6. (+1000, -1000, +1000)  # Top-front-right
+  7. (+1000, +1000, +1000)  # Top-back-right
+  8. (-1000, +1000, +1000)  # Top-back-left
+
+Inferior pyramid (base at bottom, 5 positions):
+  9.  (-500, -500, -1000)   # Base vertex 1
+  10. (+500, -500, -1000)   # Base vertex 2
+  11. (+500, +500, -1000)   # Base vertex 3
+  12. (-500, +500, -1000)   # Base vertex 4
+  13. (   0,    0,     0)   # Vertex (center)
+
+Superior pyramid (base at top, 5 positions):
+  14. (-500, -500, +1000)   # Base vertex 1
+  15. (+500, -500, +1000)   # Base vertex 2
+  16. (+500, +500, +1000)   # Base vertex 3
+  17. (-500, +500, +1000)   # Base vertex 4
+  18. (   0,    0,     0)   # Vertex (center) - same as #13
+
+Total unique positions: 18
+Add 5 intermediate positions to reach 23, then:
+  24. (0, 0, 0)             # Final return home
+```
+
+**Visit order:** Optimize for shortest path (minimize travel distance)
+
+**Changes needed:**
+- Update ROM size: 24 positions × 3 axes × 32 bits = 2304 bits (288 bytes)
+- Update address width: 5 bits (0-23, was 6 bits for 0-63)
+- Pre-calculate optimized trajectory order
+- Update `cnc_pkg.vhd` constants if ROM_SIZE is defined there
+
+---
+
+#### 2. **RAM Implementation (2048 positions)** 🔴 TODO
+**New file:** `rtl/trajectory_ram.vhd`
+
+**Specifications:**
+- Size: **2048 positions** (2^11)
+- Data format: 3 × 32-bit per position (X, Y, Z) = 96 bits/position
+- Total RAM: 2048 × 96 = 196,608 bits (~24 KB)
+- Available RAM: 276,480 bits (Cyclone IV), usage: 71% (within margin)
+- Address width: 11 bits (0-2047)
+- Port configuration:
+  - **Port A (write):** External SPI interface writes here
+  - **Port B (read):** CNC controller reads positions sequentially
+- Dual-port Block RAM (M9K)
+- Write enable controlled by SPI interface
+- Synchronous read/write
+
+**Future enhancement:** Dual-buffer mode (ping-pong)
+- Buffer 0: CNC reads (active processing)
+- Buffer 1: SPI writes (data loading)
+- Swap buffers on command
+- Requires 2× RAM (393,216 bits = 142% available) ⚠️ **NOT FEASIBLE NOW**
+- Defer to future when requested
+
+---
+
+#### 3. **SPI Parallel Interface (4-bit data bus)** 🔴 TODO
+**New file:** `rtl/spi_parallel_interface.vhd`
+
+**Interface signals:**
+- `spi_clk` : Input - SPI clock from external microprocessor
+- `spi_cs` : Input - Chip Select (active low)
+- `spi_wr` : Input - Write enable (active high)
+- `spi_data[3:0]` : Input - 4-bit parallel data bus
+- `spi_addr[10:0]` : Input - RAM address (11 bits for 2048 positions)
+- `spi_axis[1:0]` : Input - Axis select (00=X, 01=Y, 10=Z, 11=reserved)
+- `spi_byte_sel[1:0]` : Input - Byte select within 32-bit word (0-3)
+
+**Protocol:**
+1. External µP asserts `spi_cs = '0'`
+2. Sets address (`spi_addr`), axis (`spi_axis`), byte selector (`spi_byte_sel`)
+3. Places data on `spi_data[3:0]` (4 bits)
+4. Pulses `spi_wr = '1'` for 1+ clock cycles
+5. Repeats for all bytes of position (8 nibbles per axis, 24 nibbles total per position)
+6. De-asserts `spi_cs = '1'` when done
+
+**Total pins for SPI interface:**
+- 1× spi_clk
+- 1× spi_cs
+- 1× spi_wr
+- 4× spi_data[3:0]
+- 11× spi_addr[10:0]
+- 2× spi_axis[1:0]
+- 2× spi_byte_sel[1:0]
+- **Total: 21 pins**
+
+**State machine:**
+- IDLE: Wait for `spi_cs = '0'`
+- WRITE: On `spi_wr` rising edge, write nibble to RAM at specified position/axis/byte
+- Reconstruct 32-bit word from 8 nibbles (requires temporary holding register per axis)
+
+---
+
+#### 4. **TEST Pin - ROM/RAM Selector** 🔴 TODO
+**Files to modify:** `rtl/rom_controller.vhd`, `rtl/cnc_3axis_rom_top.vhd` (or create new top)
+
+**New pin:**
+- `test` : Input - Source selector
+  - `test = '0'` → Use internal ROM (24 positions, fixed geometry)
+  - `test = '1'` → Use external RAM (2048 positions, loaded via SPI)
+
+**Implementation:**
+- Add MUX in memory controller
+- Select ROM or RAM output based on `test` signal
+- ROM address: 5 bits (0-23)
+- RAM address: 11 bits (0-2047)
+- Use unified controller interface (target_x/y/z outputs)
+
+---
+
+#### 5. **Enhanced RESET Logic with READY Signal** 🔴 TODO
+**Files to modify:** `rtl/cnc_3axis_controller.vhd`, top-level
+
+**New behavior:**
+
+```
+RESET active (rst='1'):
+  - All motor outputs: step/dir/enable = '0'
+  - State machine → RESET state
+  - Timer reset
+  - Ready signal: ready = '0'
+
+RESET released (rst='0'):
+  - Wait 1 second (50,000,000 clock cycles @ 50 MHz)
+  - After 1 second: ready = '1'
+  - Ready remains HIGH until next reset
+  - Only after ready='1' can processing start
+
+State transitions:
+  RESET → WAIT_READY (1s timer) → IDLE (ready='1') → LOAD_POSITION (when run activated)
+```
+
+**New output pin:**
+- `ready` : Output - System ready indicator (HIGH after 1s post-reset)
+
+---
+
+#### 6. **RUN Control with Dual Outputs** 🔴 TODO
+**Files to modify:** Top-level, rom_controller or new sequencer
+
+**New pins:**
+- `run` : Input - Start processing (active LOW)
+- `run_led` : Output - LED indicator (inverted from run state)
+- `run_ack` : Output - Acknowledge to microprocessor (opposite of run_led)
+
+**Logic:**
+
+```
+When ready='1' AND run='0' (active):
+  - Start sequence processing (ROM or RAM based on test pin)
+  - run_led = '0' (LED ON, active low)
+  - run_ack = '1' (acknowledge to µP)
+  - State machine: IDLE → LOAD_POSITION → MOVING → ...
+
+When sequence completes:
+  - Stop at last position
+  - run_led = '1' (LED OFF)
+  - run_ack = '0'
+  - Wait for next run='0' pulse to restart
+
+Behavior:
+  - Single-shot mode (no auto-loop)
+  - Requires new run='0' pulse after each sequence completion
+  - ready must be '1' before run can start processing
+```
+
+---
+
+#### 7. **Updated Pin Assignment** 🔴 TODO
+**File to modify:** `constraints/EP4CE6E22C8N.qsf`
+
+**New pin count estimate:**
+
+```
+System & Control:
+  - 1× clk (50 MHz)
+  - 1× rst (active high)
+  - 1× test (ROM/RAM selector)
+  - 1× run (active low)
+  - 1× open_loop (encoder source: sim/external)
+  Total: 5 pins
+
+SPI Interface (when test='1'):
+  - 1× spi_clk
+  - 1× spi_cs
+  - 1× spi_wr
+  - 4× spi_data[3:0]
+  - 11× spi_addr[10:0]
+  - 2× spi_axis[1:0]
+  - 2× spi_byte_sel[1:0]
+  Total: 21 pins
+
+Encoders (when open_loop='1'):
+  - 6× enc_a/b_x/y/z
+  Total: 6 pins
+
+Limit Switches:
+  - 6× limit_min/max_x/y/z
+  Total: 6 pins
+
+Motor Outputs:
+  - 9× step/dir/enable for X/Y/Z
+  Total: 9 pins
+
+Status/Debug:
+  - 1× ready
+  - 1× run_led
+  - 1× run_ack
+  - 1× busy
+  - 1× fault
+  - 1× sequence_active
+  - 1× sequence_done
+  - 4× state_debug[3:0]
+  Total: 11 pins
+
+Optional Debug:
+  - 11× current_addr[10:0] (RAM address display)
+  Total: 11 pins (optional)
+
+TOTAL (without optional debug): 5 + 21 + 6 + 6 + 9 + 11 = 58 pins
+TOTAL (with optional debug): 58 + 11 = 69 pins
+```
+
+**Pin usage: 58-69 pins (40-48% of 144 available)** ✅ Acceptable
+
+---
+
+#### 8. **Updated Architecture Diagram** 📝 TODO
+
+```
+┌──────────────────────────────────────────────────────────────────────┐
+│                     cnc_3axis_hybrid_top (NEW TOP)                   │
+├──────────────────────────────────────────────────────────────────────┤
+│                                                                      │
+│  ┌──────────────┐          ┌──────────────┐                        │
+│  │trajectory_rom│          │trajectory_ram│                        │
+│  │ 24 positions │          │2048 positions│                        │
+│  │   (288 B)    │          │  (24 KB)     │                        │
+│  └──────┬───────┘          └──────┬───────┘                        │
+│         │                         │                                 │
+│         │                         │ ▲                               │
+│         │                         │ │ write                         │
+│         │                         │ │                               │
+│         │                  ┌──────┴─┴─────────┐                    │
+│         │                  │  spi_parallel_   │                    │
+│         │                  │    interface     │                    │
+│         │                  │  (4-bit data)    │                    │
+│         │                  └──────────────────┘                    │
+│         │                         ▲                                 │
+│         │                         │ SPI pins (21)                   │
+│         │                         │                                 │
+│         └─────────┬───────────────┘                                 │
+│                   │                                                 │
+│                   ▼                                                 │
+│         ┌─────────────────┐                                         │
+│         │   test MUX      │  (test pin: 0=ROM, 1=RAM)              │
+│         │   ROM/RAM       │                                         │
+│         └────────┬────────┘                                         │
+│                  │ position data                                    │
+│                  ▼                                                  │
+│         ┌─────────────────┐                                         │
+│         │ memory_sequencer│  (enhanced rom_controller)             │
+│         │  - run control  │                                         │
+│         │  - ready logic  │                                         │
+│         │  - 1s timer     │                                         │
+│         └────────┬────────┘                                         │
+│                  │ target_x/y/z (relative)                          │
+│                  ▼                                                  │
+│         ┌──────────────────────────────────┐                       │
+│         │    cnc_3axis_controller          │                       │
+│         │  (Bresenham + Step/Dir + Enc)    │                       │
+│         └──┬───────────────────┬───────────┘                       │
+│            │ STEP/DIR/EN       │ ENC_A/B                            │
+│            ▼                   ▼                                    │
+│    ┌──────────┐       ┌────────────────┐                           │
+│    │ Motors   │       │  open_loop MUX │                           │
+│    │(outputs) │       │  (sim or ext)  │                           │
+│    └──────────┘       └────────┬───────┘                           │
+│                                │                                    │
+│                     ┌──────────┴────────────┐                      │
+│                     │                       │                      │
+│                     ▼                       ▼                      │
+│              ┌─────────────┐        ┌────────────┐                │
+│              │  encoder_   │        │  External  │                │
+│              │  simulator  │        │  Encoders  │                │
+│              │  (3 axes)   │        │  (A/B × 3) │                │
+│              └─────────────┘        └────────────┘                │
+│                                                                      │
+└──────────────────────────────────────────────────────────────────────┘
+
+Control Flow:
+1. Reset → Wait 1s → ready='1'
+2. run='0' (active) → Start sequence from position 0
+3. Read position from ROM or RAM (based on test pin)
+4. Execute movement (Bresenham)
+5. Advance to next position
+6. Repeat until last position
+7. Stop → run_led='1', run_ack='0' (idle)
+8. Wait for next run pulse
+```
+
+---
+
+#### 9. **Files to Create** 📝
+
+1. `rtl/trajectory_ram.vhd` - Dual-port RAM (2048 positions)
+2. `rtl/spi_parallel_interface.vhd` - 4-bit parallel SPI interface
+3. `rtl/memory_sequencer.vhd` - Enhanced ROM/RAM controller with run/ready logic
+4. `rtl/cnc_3axis_hybrid_top.vhd` - New top-level with ROM/RAM/SPI
+5. `sim/tb_spi_interface.vhd` - Testbench for SPI writes
+6. `sim/tb_hybrid_system.vhd` - Full system test (ROM mode + RAM mode)
+
+---
+
+#### 10. **Files to Modify** 📝
+
+1. `rtl/trajectory_rom.vhd` - Update to 24 positions with cube+pyramid geometry
+2. `rtl/cnc_pkg.vhd` - Update constants (ROM_SIZE=24, RAM_SIZE=2048, address widths)
+3. `rtl/cnc_3axis_controller.vhd` - Add RESET→WAIT_READY→IDLE state transition with 1s timer
+4. `constraints/EP4CE6E22C8N.qsf` - Update pin assignments (58-69 pins)
+5. `CLAUDE.md` - This file (updated ✅)
+
+---
+
+#### 11. **Simulation Strategy** 🧪
+
+**Test sequence:**
+
+1. **Test ROM mode (test='0'):**
+   - Reset → wait 1s → check ready='1'
+   - Pulse run='0' → verify 24 positions executed
+   - Check run_led and run_ack signals
+   - Verify cube+pyramid trajectory
+
+2. **Test RAM mode (test='1'):**
+   - Load 10 test positions via SPI (write nibbles)
+   - Reset → ready → run
+   - Verify positions read from RAM correctly
+   - Check sequence stops after position 9
+
+3. **Test SPI interface:**
+   - Write full 32-bit position (8 nibbles × 3 axes = 24 nibbles)
+   - Read back from RAM
+   - Verify data integrity
+
+4. **Test reset timing:**
+   - Assert reset → check all motors disabled
+   - Release reset → measure 1s delay
+   - Verify ready='1' after exactly 50M cycles
+
+---
+
+#### 12. **Resource Estimation** 📊
+
+| Resource | Current | New Design | Available | Usage |
+|----------|---------|------------|-----------|-------|
+| Logic Elements (LE) | ~1850 | ~2500 | 6272 | 40% |
+| RAM bits (M9K) | 2,304 | 196,608 | 276,480 | 71% |
+| Pins | 39 | 58-69 | 144 | 40-48% |
+
+**Notes:**
+- RAM usage: 71% (within spec, 10% margin used)
+- Dual-buffer mode would require 142% RAM ⚠️ **NOT FEASIBLE** - defer to future
+- Pin count increased from 39 to 58-69 due to SPI interface (21 pins)
+- LE increase due to SPI controller, memory MUX, enhanced sequencer
+
+---
+
+#### 13. **Implementation Priority** 🎯
+
+**Phase 1 - Core Memory System:**
+1. Update `cnc_pkg.vhd` with new constants
+2. Modify `trajectory_rom.vhd` to 24 positions (cube+pyramid)
+3. Create `trajectory_ram.vhd` (2048 positions, dual-port)
+4. Create `memory_sequencer.vhd` with ROM/RAM MUX
+
+**Phase 2 - SPI Interface:**
+5. Create `spi_parallel_interface.vhd`
+6. Integrate SPI → RAM write path
+7. Create `tb_spi_interface.vhd` testbench
+
+**Phase 3 - Control Logic:**
+8. Update `cnc_3axis_controller.vhd` with RESET→READY logic (1s timer)
+9. Add run/run_led/run_ack control to memory_sequencer
+10. Create new top-level `cnc_3axis_hybrid_top.vhd`
+
+**Phase 4 - Integration & Test:**
+11. Update pin constraints `EP4CE6E22C8N.qsf`
+12. Create `tb_hybrid_system.vhd` full system testbench
+13. Simulate ROM mode + RAM mode
+14. Synthesize and verify timing/resources
+
+**Phase 5 - Documentation:**
+15. Update `INTERFACE_SPEC.md`
+16. Create `REDESIGN_2025_10_13.md` with change log
+17. Update `CLAUDE.md` (this file) when complete
+
+---
+
+#### 14. **Cube + Pyramid Geometry Details** 📐
+
+**Visual representation:**
+
+```
+        Top view (Z=+1000):
+
+        Superior pyramid base
+        ┌─────────────────┐
+        │  14          15 │
+        │     \     /     │
+        │       \ /       │
+        │   17   *   18   │  * = vertex (0,0,0)
+        │       / \       │
+        │     /     \     │
+        │  16          17 │
+        └─────────────────┘
+
+
+        Middle (Z=0):
+        Center point (0, 0, 0)
+        Vertices #13 and #18 meet here
+
+
+        Bottom view (Z=-1000):
+
+        Inferior pyramid base
+        ┌─────────────────┐
+        │   9          10 │
+        │     \     /     │
+        │       \ /       │
+        │   12   *   11   │  * = vertex (0,0,0)
+        │       / \       │
+        │     /     \     │
+        │  12          9  │
+        └─────────────────┘
+
+
+        Cube vertices (8 corners):
+        Z=-1000: (±1000, ±1000, -1000)  [positions 1-4]
+        Z=+1000: (±1000, ±1000, +1000)  [positions 5-8]
+```
+
+**Trajectory order (optimized for minimal travel):**
+```
+Start: (0, 0, 0)
+1. Cube bottom-front-left
+2. Cube bottom-front-right
+3. Cube bottom-back-right
+4. Cube bottom-back-left
+5. Return to origin (traverse inferior pyramid vertex)
+6. Inferior pyramid base vertex 1
+7. Inferior pyramid base vertex 2
+8. Inferior pyramid base vertex 3
+9. Inferior pyramid base vertex 4
+10. Back to origin (center)
+11. Superior pyramid base vertex 1
+12. Superior pyramid base vertex 2
+13. Superior pyramid base vertex 3
+14. Superior pyramid base vertex 4
+15. Back to origin
+16. Cube top-front-left
+17. Cube top-front-right
+18. Cube top-back-right
+19. Cube top-back-left
+20. Diagonal to bottom-front-left
+21. Diagonal to top-back-right
+22. Diagonal to bottom-back-left
+23. Diagonal to top-front-right
+24. Final return to origin (0, 0, 0)
+```
+
+---
+
+## 📝 Summary of Changes
+
+### What's staying the same:
+- ✅ Bresenham interpolation algorithm
+- ✅ Encoder decoder (quadrature feedback)
+- ✅ Step/Dir pulse generator
+- ✅ Encoder simulator
+- ✅ CNC core controller logic
+- ✅ VHDL-93 compatibility
+- ✅ 50 MHz clock, deterministic timing
+
+### What's changing:
+- 🔄 ROM: 64 → 24 positions (cube + double pyramid geometry)
+- 🔄 Add RAM: 2048 positions (71% of available RAM)
+- 🔄 Add SPI parallel interface (4-bit data bus, 21 pins)
+- 🔄 Add test pin (ROM/RAM selector)
+- 🔄 Enhanced reset logic (1s delay → ready signal)
+- 🔄 New run control (active low, dual outputs: run_led + run_ack)
+- 🔄 Single-shot mode (no auto-loop, requires run pulse per sequence)
+- 🔄 Pin count: 39 → 58-69 pins (still 40-48% of 144 available)
+
+### Future enhancements (NOT in this phase):
+- ⏭️ Dual-buffer RAM (ping-pong) - requires 2× RAM (not enough space now)
+- ⏭️ Acceleration profiles
+- ⏭️ Variable encoder delay
+- ⏭️ UART interface (alternative to SPI)
+
+---
+
 🚀 **NEXT MILESTONE**
-Synthesize → Program FPGA → Hardware test with TB6600 drivers
+Implement Phase 1-5 → Simulate → Synthesize → Hardware test
 
 ---
 

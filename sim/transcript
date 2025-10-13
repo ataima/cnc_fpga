@@ -1,12 +1,12 @@
-# vsim -c work.tb_3axis_test -do "run 15 ms; quit -f" 
-# Start time: 08:22:41 on Oct 13,2025
+# vsim -c -do "run 100 ms; quit -f" work.tb_rom_24positions 
+# Start time: 12:59:59 on Oct 13,2025
 # Loading std.standard
 # Loading std.textio(body)
 # Loading ieee.std_logic_1164(body)
 # Loading ieee.numeric_std(body)
 # Loading ieee.std_logic_textio(body)
 # Loading work.cnc_pkg(body)
-# Loading work.tb_3axis_test(behavioral)
+# Loading work.tb_rom_24positions(behavioral)
 # Loading work.cnc_3axis_rom_top(structural)
 # Loading work.trajectory_rom(rtl)
 # Loading work.rom_controller(rtl)
@@ -15,27 +15,19 @@
 # Loading work.encoder_decoder(rtl)
 # Loading work.bresenham_axis(rtl)
 # Loading work.step_dir_generator(rtl)
-# run 15 ms
-# === 3-AXIS DIAGONAL MOVEMENT TEST ===
-# Position 1: (50, 50, 50) - diagonal move
-# Expected: All 3 axes move together (Bresenham)
+# run 100 ms
+# ======================================================
+#   ROM 24-Position Test - Cube + Double Pyramid
+#   Cube: 2000x2000x2000 (+/-1000 from origin)
+#   Pyramids: 1000x1000x1000 base, vertices at (0,0,0)
+#   Using simulated encoders (10us delay)
+#   open_loop = 0 (encoder feedback enabled)
+# ======================================================
+# [INFO] Reset complete
+# [INFO] ROM playback enabled (ONE_SHOT mode)
 # 
-# [INFO] Enable set, waiting for movement...
-# ** Note: ROM_CTRL: Position 0 delta_x=0 delta_y=0 delta_z=0
-#    Time: 470 ns  Iteration: 0  Instance: /tb_3axis_test/dut/u_rom_controller
-# [POS 1] Position loaded at 510 ns
-# [BUSY] Movement started at 530 ns
-# ** Note: ROM_CTRL: Position 1 delta_x=50 delta_y=50 delta_z=50
-#    Time: 590 ns  Iteration: 0  Instance: /tb_3axis_test/dut/u_rom_controller
-# [POS 1] Movement in progress...
-# [DONE] Movement complete at 5000670 ns
-# 
-# === RESULTS ===
-# X steps: 49 (expected: 50)
-# Y steps: 49 (expected: 50)
-# Z steps: 49 (expected: 50)
-# 
-# *** TEST FAIL *** Step counts incorrect!
+#          [POS] X=0, Y=0, Z=0 steps
+#          [POS] X=0, Y=0, Z=0 steps
 #  quit -f
-# End time: 08:22:44 on Oct 13,2025, Elapsed time: 0:00:03
+# End time: 13:00:54 on Oct 13,2025, Elapsed time: 0:00:55
 # Errors: 0, Warnings: 0

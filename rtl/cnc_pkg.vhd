@@ -16,6 +16,12 @@ package cnc_pkg is
     constant POSITION_WIDTH   : integer := 32;          -- Bit per posizione assi
     constant VELOCITY_WIDTH   : integer := 16;          -- Bit per velocità
 
+    -- Configurazione ROM/RAM trajectory storage
+    constant ROM_SIZE         : integer := 24;          -- ROM positions (cube+pyramid geometry)
+    constant ROM_ADDR_WIDTH   : integer := 5;           -- 5 bits for 0-23 addressing
+    constant RAM_SIZE         : integer := 2048;        -- RAM positions (future implementation)
+    constant RAM_ADDR_WIDTH   : integer := 11;          -- 11 bits for 0-2047 addressing
+
     -- Configurazione encoder
     constant ENCODER_PPR      : integer := 600;         -- Pulses Per Revolution
     constant ENCODER_FILTER   : integer := 4;           -- Debounce filter stages

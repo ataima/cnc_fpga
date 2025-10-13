@@ -281,28 +281,29 @@ begin
                 when CALC_PARAMS =>
                     -- Calcola delta assoluti e direzioni (usando variabili temporanee)
                     -- IMPORTANTE: abs() per signed → unsigned corretto
+                    -- TB6600 convention: dir='0' forward (positive), dir='1' backward (negative)
                     if target_x >= 0 then
                         temp_delta_x := unsigned(target_x);
-                        bresen_dir_x <= '1';
+                        bresen_dir_x <= '0';  -- TB6600: '0' = forward (positive)
                     else
                         temp_delta_x := unsigned(abs(target_x));
-                        bresen_dir_x <= '0';
+                        bresen_dir_x <= '1';  -- TB6600: '1' = backward (negative)
                     end if;
 
                     if target_y >= 0 then
                         temp_delta_y := unsigned(target_y);
-                        bresen_dir_y <= '1';
+                        bresen_dir_y <= '0';  -- TB6600: '0' = forward (positive)
                     else
                         temp_delta_y := unsigned(abs(target_y));
-                        bresen_dir_y <= '0';
+                        bresen_dir_y <= '1';  -- TB6600: '1' = backward (negative)
                     end if;
 
                     if target_z >= 0 then
                         temp_delta_z := unsigned(target_z);
-                        bresen_dir_z <= '1';
+                        bresen_dir_z <= '0';  -- TB6600: '0' = forward (positive)
                     else
                         temp_delta_z := unsigned(abs(target_z));
-                        bresen_dir_z <= '0';
+                        bresen_dir_z <= '1';  -- TB6600: '1' = backward (negative)
                     end if;
 
                     -- Determina asse principale (major axis) usando le variabili temporanee

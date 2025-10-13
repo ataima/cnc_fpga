@@ -1,12 +1,13 @@
 --------------------------------------------------------------------------------
 -- File: trajectory_rom.vhd
 -- Description: Pre-programmed trajectory ROM for CNC testing
---              Stores 64 fixed positions (X, Y, Z) @ 32-bit each
---              Total: 64 × 3 × 4 bytes = 768 bytes
+--              Stores 24 fixed positions (X, Y, Z) @ 32-bit each
+--              Total: 24 × 3 × 4 bytes = 288 bytes
+--              Geometry: Cube (2000x2000x2000) + Double Pyramid (1000x1000x1000)
 --
 -- Usage: Provides hardcoded trajectory for FPGA testing without external interface
 -- Author: Generated for cnc_fpga project
--- Date: 2025-10-12
+-- Date: 2025-10-13 (Updated from 64 to 24 positions)
 --------------------------------------------------------------------------------
 
 library ieee;
@@ -16,7 +17,7 @@ use ieee.numeric_std.all;
 entity trajectory_rom is
     port (
         clk         : in  std_logic;
-        address     : in  unsigned(5 downto 0);  -- 0 to 63
+        address     : in  unsigned(4 downto 0);  -- 0 to 23 (5 bits)
         target_x    : out signed(31 downto 0);
         target_y    : out signed(31 downto 0);
         target_z    : out signed(31 downto 0)
@@ -25,173 +26,144 @@ end trajectory_rom;
 
 architecture rtl of trajectory_rom is
 
-    -- ROM type: 64 positions × 3 coordinates
-    type position_array is array (0 to 63) of signed(31 downto 0);
+    -- ROM type: 24 positions × 3 coordinates
+    type position_array is array (0 to 23) of signed(31 downto 0);
 
-    -- Pre-programmed trajectory: Square pattern with Z lift
-    -- Pattern: 50mm square (assuming 200 steps/mm = 10000 steps per side)
+    -- Pre-programmed trajectory: Cube (2000×2000×2000) + Double Pyramid (1000×1000×1000)
+    -- Cube centered at origin, vertices at (±1000, ±1000, ±1000)
+    -- Inferior pyramid: base at Z=-1000 (500×500), vertex at (0,0,0)
+    -- Superior pyramid: base at Z=+1000 (500×500), vertex at (0,0,0)
+    -- Optimized path to minimize travel distance
     constant ROM_X : position_array := (
-        -- Home position and small 3-axis test move (0-3)
-        to_signed(0, 32),       -- 0: Origin
-        to_signed(50, 32),      -- 1: Small move +X (TEST 3-AXIS)
-        to_signed(100, 32),     -- 2: Continue +X
-        to_signed(0, 32),       -- 3: Return to origin
+        -- Start at origin (0)
+        to_signed(0, 32),           -- 0: Origin (0, 0, 0)
 
-        -- First side: Move +X (4-7)
-        to_signed(2500, 32),    -- 4: +X quarter
-        to_signed(5000, 32),    -- 5: +X half
-        to_signed(7500, 32),    -- 6: +X three-quarter
-        to_signed(10000, 32),   -- 7: +X full (50mm)
+        -- Cube bottom vertices (1-4): Z = -1000
+        to_signed(-1000, 32),       -- 1: Bottom-front-left
+        to_signed(1000, 32),        -- 2: Bottom-front-right
+        to_signed(1000, 32),        -- 3: Bottom-back-right
+        to_signed(-1000, 32),       -- 4: Bottom-back-left
 
-        -- Second side: Move +Y (8-11)
-        to_signed(10000, 32),   -- 8: Stay X
-        to_signed(10000, 32),   -- 9: Stay X
-        to_signed(10000, 32),   -- 10: Stay X
-        to_signed(10000, 32),   -- 11: Stay X
+        -- Inferior pyramid base vertices (5-8): Z = -1000
+        to_signed(-500, 32),        -- 5: Inferior pyramid base vertex 1
+        to_signed(500, 32),         -- 6: Inferior pyramid base vertex 2
+        to_signed(500, 32),         -- 7: Inferior pyramid base vertex 3
+        to_signed(-500, 32),        -- 8: Inferior pyramid base vertex 4
 
-        -- Third side: Move -X (12-15)
-        to_signed(7500, 32),    -- 12: -X quarter
-        to_signed(5000, 32),    -- 13: -X half
-        to_signed(2500, 32),    -- 14: -X three-quarter
-        to_signed(0, 32),       -- 15: -X back to origin
+        -- Return to center (9): inferior pyramid vertex
+        to_signed(0, 32),           -- 9: Center (0, 0, 0) - inferior pyramid vertex
 
-        -- Fourth side: Move -Y (16-19)
-        to_signed(0, 32),       -- 16: Stay X
-        to_signed(0, 32),       -- 17: Stay X
-        to_signed(0, 32),       -- 18: Stay X
-        to_signed(0, 32),       -- 19: Stay X
+        -- Superior pyramid base vertices (10-13): Z = +1000
+        to_signed(-500, 32),        -- 10: Superior pyramid base vertex 1
+        to_signed(500, 32),         -- 11: Superior pyramid base vertex 2
+        to_signed(500, 32),         -- 12: Superior pyramid base vertex 3
+        to_signed(-500, 32),        -- 13: Superior pyramid base vertex 4
 
-        -- Diagonal test (20-27)
-        to_signed(5000, 32),    -- 20: Diagonal +X+Y
-        to_signed(10000, 32),   -- 21: Diagonal continue
-        to_signed(10000, 32),   -- 22: To corner
-        to_signed(5000, 32),    -- 23: Diagonal -X-Y
-        to_signed(0, 32),       -- 24: Back to origin
-        to_signed(-5000, 32),   -- 25: Diagonal -X-Y continue
-        to_signed(0, 32),       -- 26: Back to origin
-        to_signed(0, 32),       -- 27: Stay
+        -- Return to center (14): superior pyramid vertex
+        to_signed(0, 32),           -- 14: Center (0, 0, 0) - superior pyramid vertex
 
-        -- Circle approximation (8 points, 28-35)
-        to_signed(10000, 32),   -- 28: 0°   (R=10000)
-        to_signed(7071, 32),    -- 29: 45°  (R*cos(45))
-        to_signed(0, 32),       -- 30: 90°
-        to_signed(-7071, 32),   -- 31: 135°
-        to_signed(-10000, 32),  -- 32: 180°
-        to_signed(-7071, 32),   -- 33: 225°
-        to_signed(0, 32),       -- 34: 270°
-        to_signed(7071, 32),    -- 35: 315°
+        -- Cube top vertices (15-18): Z = +1000
+        to_signed(-1000, 32),       -- 15: Top-front-left
+        to_signed(1000, 32),        -- 16: Top-front-right
+        to_signed(1000, 32),        -- 17: Top-back-right
+        to_signed(-1000, 32),       -- 18: Top-back-left
 
-        -- Return home and rest (36-63)
-        to_signed(5000, 32),    -- 36: Move to center
-        to_signed(0, 32),       -- 37: Return X
-        to_signed(0, 32),       -- 38: Stay
-        to_signed(0, 32),       -- 39: Stay
+        -- Diagonal traversals (19-22)
+        to_signed(-1000, 32),       -- 19: Diagonal to bottom-front-left
+        to_signed(1000, 32),        -- 20: Diagonal to top-back-right
+        to_signed(-1000, 32),       -- 21: Diagonal to bottom-back-left
+        to_signed(1000, 32),        -- 22: Diagonal to top-front-right
 
-        -- Fill remaining with zeros
-        to_signed(0, 32), to_signed(0, 32), to_signed(0, 32), to_signed(0, 32),  -- 40-43
-        to_signed(0, 32), to_signed(0, 32), to_signed(0, 32), to_signed(0, 32),  -- 44-47
-        to_signed(0, 32), to_signed(0, 32), to_signed(0, 32), to_signed(0, 32),  -- 48-51
-        to_signed(0, 32), to_signed(0, 32), to_signed(0, 32), to_signed(0, 32),  -- 52-55
-        to_signed(0, 32), to_signed(0, 32), to_signed(0, 32), to_signed(0, 32),  -- 56-59
-        to_signed(0, 32), to_signed(0, 32), to_signed(0, 32), to_signed(0, 32)   -- 60-63
+        -- Final return to origin (23)
+        to_signed(0, 32)            -- 23: Return to origin (0, 0, 0)
     );
 
     constant ROM_Y : position_array := (
-        -- Home position and small 3-axis test move (0-3)
-        to_signed(0, 32),       -- 0: Origin
-        to_signed(50, 32),      -- 1: Small move +Y (TEST 3-AXIS)
-        to_signed(100, 32),     -- 2: Continue +Y
-        to_signed(0, 32),       -- 3: Return to origin
+        -- Start at origin (0)
+        to_signed(0, 32),           -- 0: Origin (0, 0, 0)
 
-        -- First side: Move +X, Y stays (4-7)
-        to_signed(0, 32),       -- 4
-        to_signed(0, 32),       -- 5
-        to_signed(0, 32),       -- 6
-        to_signed(0, 32),       -- 7
+        -- Cube bottom vertices (1-4): Z = -1000
+        to_signed(-1000, 32),       -- 1: Bottom-front-left
+        to_signed(-1000, 32),       -- 2: Bottom-front-right
+        to_signed(1000, 32),        -- 3: Bottom-back-right
+        to_signed(1000, 32),        -- 4: Bottom-back-left
 
-        -- Second side: Move +Y (8-11)
-        to_signed(2500, 32),    -- 8: +Y quarter
-        to_signed(5000, 32),    -- 9: +Y half
-        to_signed(7500, 32),    -- 10: +Y three-quarter
-        to_signed(10000, 32),   -- 11: +Y full
+        -- Inferior pyramid base vertices (5-8): Z = -1000
+        to_signed(-500, 32),        -- 5: Inferior pyramid base vertex 1
+        to_signed(-500, 32),        -- 6: Inferior pyramid base vertex 2
+        to_signed(500, 32),         -- 7: Inferior pyramid base vertex 3
+        to_signed(500, 32),         -- 8: Inferior pyramid base vertex 4
 
-        -- Third side: Move -X, Y stays (12-15)
-        to_signed(10000, 32),   -- 12: Stay Y
-        to_signed(10000, 32),   -- 13: Stay Y
-        to_signed(10000, 32),   -- 14: Stay Y
-        to_signed(10000, 32),   -- 15: Stay Y
+        -- Return to center (9): inferior pyramid vertex
+        to_signed(0, 32),           -- 9: Center (0, 0, 0) - inferior pyramid vertex
 
-        -- Fourth side: Move -Y (16-19)
-        to_signed(7500, 32),    -- 16: -Y quarter
-        to_signed(5000, 32),    -- 17: -Y half
-        to_signed(2500, 32),    -- 18: -Y three-quarter
-        to_signed(0, 32),       -- 19: -Y back to origin
+        -- Superior pyramid base vertices (10-13): Z = +1000
+        to_signed(-500, 32),        -- 10: Superior pyramid base vertex 1
+        to_signed(-500, 32),        -- 11: Superior pyramid base vertex 2
+        to_signed(500, 32),         -- 12: Superior pyramid base vertex 3
+        to_signed(500, 32),         -- 13: Superior pyramid base vertex 4
 
-        -- Diagonal test (20-27)
-        to_signed(5000, 32),    -- 20: Diagonal +X+Y
-        to_signed(10000, 32),   -- 21: Diagonal continue
-        to_signed(10000, 32),   -- 22: To corner
-        to_signed(5000, 32),    -- 23: Diagonal -X-Y
-        to_signed(0, 32),       -- 24: Back to origin
-        to_signed(-5000, 32),   -- 25: Diagonal -X-Y continue
-        to_signed(0, 32),       -- 26: Back to origin
-        to_signed(0, 32),       -- 27: Stay
+        -- Return to center (14): superior pyramid vertex
+        to_signed(0, 32),           -- 14: Center (0, 0, 0) - superior pyramid vertex
 
-        -- Circle approximation (8 points, 28-35)
-        to_signed(0, 32),       -- 28: 0°
-        to_signed(7071, 32),    -- 29: 45°
-        to_signed(10000, 32),   -- 30: 90°
-        to_signed(7071, 32),    -- 31: 135°
-        to_signed(0, 32),       -- 32: 180°
-        to_signed(-7071, 32),   -- 33: 225°
-        to_signed(-10000, 32),  -- 34: 270°
-        to_signed(-7071, 32),   -- 35: 315°
+        -- Cube top vertices (15-18): Z = +1000
+        to_signed(-1000, 32),       -- 15: Top-front-left
+        to_signed(-1000, 32),       -- 16: Top-front-right
+        to_signed(1000, 32),        -- 17: Top-back-right
+        to_signed(1000, 32),        -- 18: Top-back-left
 
-        -- Return home (36-63)
-        to_signed(-5000, 32),   -- 36: Move to center
-        to_signed(0, 32),       -- 37: Return Y
-        to_signed(0, 32),       -- 38: Stay
-        to_signed(0, 32),       -- 39: Stay
+        -- Diagonal traversals (19-22)
+        to_signed(-1000, 32),       -- 19: Diagonal to bottom-front-left
+        to_signed(1000, 32),        -- 20: Diagonal to top-back-right
+        to_signed(1000, 32),        -- 21: Diagonal to bottom-back-left
+        to_signed(-1000, 32),       -- 22: Diagonal to top-front-right
 
-        -- Fill remaining with zeros
-        to_signed(0, 32), to_signed(0, 32), to_signed(0, 32), to_signed(0, 32),  -- 40-43
-        to_signed(0, 32), to_signed(0, 32), to_signed(0, 32), to_signed(0, 32),  -- 44-47
-        to_signed(0, 32), to_signed(0, 32), to_signed(0, 32), to_signed(0, 32),  -- 48-51
-        to_signed(0, 32), to_signed(0, 32), to_signed(0, 32), to_signed(0, 32),  -- 52-55
-        to_signed(0, 32), to_signed(0, 32), to_signed(0, 32), to_signed(0, 32),  -- 56-59
-        to_signed(0, 32), to_signed(0, 32), to_signed(0, 32), to_signed(0, 32)   -- 60-63
+        -- Final return to origin (23)
+        to_signed(0, 32)            -- 23: Return to origin (0, 0, 0)
     );
 
     constant ROM_Z : position_array := (
-        -- Z lift sequence (0-3)
-        to_signed(0, 32),       -- 0: Z down (start)
-        to_signed(50, 32),      -- 1: Small move +Z (TEST 3-AXIS)
-        to_signed(100, 32),     -- 2: Continue +Z
-        to_signed(0, 32),       -- 3: Return to origin
+        -- Start at origin (0)
+        to_signed(0, 32),           -- 0: Origin (0, 0, 0)
 
-        -- Z stays up during XY movements (4-35)
-        to_signed(1000, 32), to_signed(1000, 32), to_signed(1000, 32), to_signed(1000, 32),  -- 4-7
-        to_signed(1000, 32), to_signed(1000, 32), to_signed(1000, 32), to_signed(1000, 32),  -- 8-11
-        to_signed(1000, 32), to_signed(1000, 32), to_signed(1000, 32), to_signed(1000, 32),  -- 12-15
-        to_signed(1000, 32), to_signed(1000, 32), to_signed(1000, 32), to_signed(1000, 32),  -- 16-19
-        to_signed(1000, 32), to_signed(1000, 32), to_signed(1000, 32), to_signed(1000, 32),  -- 20-23
-        to_signed(1000, 32), to_signed(1000, 32), to_signed(1000, 32), to_signed(1000, 32),  -- 24-27
-        to_signed(1000, 32), to_signed(1000, 32), to_signed(1000, 32), to_signed(1000, 32),  -- 28-31
-        to_signed(1000, 32), to_signed(1000, 32), to_signed(1000, 32), to_signed(1000, 32),  -- 32-35
+        -- Cube bottom vertices (1-4): Z = -1000
+        to_signed(-1000, 32),       -- 1: Bottom-front-left
+        to_signed(-1000, 32),       -- 2: Bottom-front-right
+        to_signed(-1000, 32),       -- 3: Bottom-back-right
+        to_signed(-1000, 32),       -- 4: Bottom-back-left
 
-        -- Z down at end (36-39)
-        to_signed(500, 32),     -- 36: Z halfway down
-        to_signed(0, 32),       -- 37: Z fully down
-        to_signed(0, 32),       -- 38: Z stay down
-        to_signed(0, 32),       -- 39: Z stay down
+        -- Inferior pyramid base vertices (5-8): Z = -1000
+        to_signed(-1000, 32),       -- 5: Inferior pyramid base vertex 1
+        to_signed(-1000, 32),       -- 6: Inferior pyramid base vertex 2
+        to_signed(-1000, 32),       -- 7: Inferior pyramid base vertex 3
+        to_signed(-1000, 32),       -- 8: Inferior pyramid base vertex 4
 
-        -- Fill remaining with zeros
-        to_signed(0, 32), to_signed(0, 32), to_signed(0, 32), to_signed(0, 32),  -- 40-43
-        to_signed(0, 32), to_signed(0, 32), to_signed(0, 32), to_signed(0, 32),  -- 44-47
-        to_signed(0, 32), to_signed(0, 32), to_signed(0, 32), to_signed(0, 32),  -- 48-51
-        to_signed(0, 32), to_signed(0, 32), to_signed(0, 32), to_signed(0, 32),  -- 52-55
-        to_signed(0, 32), to_signed(0, 32), to_signed(0, 32), to_signed(0, 32),  -- 56-59
-        to_signed(0, 32), to_signed(0, 32), to_signed(0, 32), to_signed(0, 32)   -- 60-63
+        -- Return to center (9): inferior pyramid vertex
+        to_signed(0, 32),           -- 9: Center (0, 0, 0) - inferior pyramid vertex
+
+        -- Superior pyramid base vertices (10-13): Z = +1000
+        to_signed(1000, 32),        -- 10: Superior pyramid base vertex 1
+        to_signed(1000, 32),        -- 11: Superior pyramid base vertex 2
+        to_signed(1000, 32),        -- 12: Superior pyramid base vertex 3
+        to_signed(1000, 32),        -- 13: Superior pyramid base vertex 4
+
+        -- Return to center (14): superior pyramid vertex
+        to_signed(0, 32),           -- 14: Center (0, 0, 0) - superior pyramid vertex
+
+        -- Cube top vertices (15-18): Z = +1000
+        to_signed(1000, 32),        -- 15: Top-front-left
+        to_signed(1000, 32),        -- 16: Top-front-right
+        to_signed(1000, 32),        -- 17: Top-back-right
+        to_signed(1000, 32),        -- 18: Top-back-left
+
+        -- Diagonal traversals (19-22)
+        to_signed(-1000, 32),       -- 19: Diagonal to bottom-front-left
+        to_signed(1000, 32),        -- 20: Diagonal to top-back-right
+        to_signed(-1000, 32),       -- 21: Diagonal to bottom-back-left
+        to_signed(1000, 32),        -- 22: Diagonal to top-front-right
+
+        -- Final return to origin (23)
+        to_signed(0, 32)            -- 23: Return to origin (0, 0, 0)
     );
 
 begin

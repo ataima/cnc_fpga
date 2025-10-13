@@ -10,12 +10,12 @@ z2
 cModel Technology
 Z0 d/home/angelocoppi/quartus_wb/cnc_fpga/rtl
 Ebresenham_axis
-Z1 w1760292941
-Z2 DPx4 work 7 cnc_pkg 0 22 iOVfh]Azz7GK^e:g6DOdL0
+Z1 w1760335036
+Z2 DPx4 work 7 cnc_pkg 0 22 <b@0^^7[0A4_gYXaG9HDZ1
 Z3 DPx4 ieee 11 numeric_std 0 22 aU^R8eGcicLcUFIaBQSL>3
 Z4 DPx3 std 6 textio 0 22 zE1`LPoLg^DX3Oz^4Fj1K3
 Z5 DPx4 ieee 14 std_logic_1164 0 22 cVAk:aDinOX8^VGI1ekP<3
-!i122 35
+!i122 46
 R0
 Z6 8bresenham_axis.vhd
 Z7 Fbresenham_axis.vhd
@@ -25,11 +25,11 @@ VYN0oj4JP1DY@n=a1`cPe22
 !s100 e?Z;cPj58Bc4ViRI813fg0
 Z8 OV;C;2020.1;71
 31
-Z9 !s110 1760297363
+Z9 !s110 1760353011
 !i10b 1
-Z10 !s108 1760297363.000000
-Z11 !s90 -93|bresenham_axis.vhd|
-Z12 !s107 bresenham_axis.vhd|
+Z10 !s108 1760353011.000000
+Z11 !s90 -93|encoder_decoder.vhd|encoder_simulator.vhd|bresenham_axis.vhd|step_dir_generator.vhd|cnc_3axis_controller.vhd|cnc_3axis_rom_top.vhd|
+Z12 !s107 cnc_3axis_rom_top.vhd|cnc_3axis_controller.vhd|step_dir_generator.vhd|bresenham_axis.vhd|encoder_simulator.vhd|encoder_decoder.vhd|
 !i113 1
 o-93
 Z13 tExplicit 1 CvgOpt 0
@@ -39,11 +39,11 @@ R3
 R4
 R5
 DEx4 work 14 bresenham_axis 0 22 YN0oj4JP1DY@n=a1`cPe22
-!i122 35
+!i122 46
 l69
 L44 170
-VgER8k[Sd9?IB@]6:@<1kz0
-!s100 TS0g90o?j7N`RN`XIK85>0
+VUAeh=^EgGMz1X>M]TTDGd2
+!s100 aMTSVUFSzN<Ph>6dR>9Da3
 R8
 31
 R9
@@ -55,17 +55,17 @@ R12
 o-93
 R13
 Ecnc_3axis_controller
-Z14 w1760278190
+Z14 w1760333603
 R2
 R3
 R4
 R5
-!i122 37
+!i122 46
 R0
 Z15 8cnc_3axis_controller.vhd
 Z16 Fcnc_3axis_controller.vhd
 l0
-L17 1
+Z17 L17 1
 V4>^QUEcghOfm28C^;jDTO1
 !s100 ^CQQJ2hTIB>G2_YkD2_X=1
 R8
@@ -73,8 +73,8 @@ R8
 R9
 !i10b 1
 R10
-Z17 !s90 -93|cnc_3axis_controller.vhd|
-Z18 !s107 cnc_3axis_controller.vhd|
+R11
+R12
 !i113 1
 o-93
 R13
@@ -83,91 +83,92 @@ R2
 R3
 R4
 R5
-Z19 DEx4 work 20 cnc_3axis_controller 0 22 4>^QUEcghOfm28C^;jDTO1
-!i122 37
+Z18 DEx4 work 20 cnc_3axis_controller 0 22 4>^QUEcghOfm28C^;jDTO1
+!i122 46
 l189
-L95 407
-ViQFiE_92<X:CekC?5c?J[0
-!s100 _RADFMRTcP41K[6H`3g]W1
+L95 412
+VP?B@aJDmU1S3m>hM1<SY92
+!s100 ?LDzOlcSI@FaKEgmj0^]k0
 R8
 31
 R9
 !i10b 1
 R10
-R17
-R18
+R11
+R12
 !i113 1
 o-93
 R13
 Ecnc_3axis_rom_top
-Z20 w1760297401
+Z19 w1760353047
 R2
 R3
 R4
 R5
-!i122 41
+!i122 48
 R0
-Z21 8cnc_3axis_rom_top.vhd
-Z22 Fcnc_3axis_rom_top.vhd
+Z20 8cnc_3axis_rom_top.vhd
+Z21 Fcnc_3axis_rom_top.vhd
 l0
 L25 1
-V0TlQnSXfiN24X_=5KSP:T2
-!s100 S@k4?CiPCmRIFAhUO1TTY1
+V7Z<I<nO[S2e0Yn^PTij@Z2
+!s100 <;4G83:_GL?La:nld[]]R3
 R8
 31
-Z23 !s110 1760297407
+Z22 !s110 1760353115
 !i10b 1
-Z24 !s108 1760297407.000000
-Z25 !s90 -93|cnc_3axis_rom_top.vhd|
-Z26 !s107 cnc_3axis_rom_top.vhd|
+Z23 !s108 1760353115.000000
+Z24 !s90 -93|-work|work|cnc_3axis_rom_top.vhd|
+Z25 !s107 cnc_3axis_rom_top.vhd|
 !i113 1
-o-93
+Z26 o-93 -work work
 R13
 Astructural
-R19
-Z27 DEx4 work 14 rom_controller 0 22 >HMTgN8I4h5>`Y?7b<8Lg0
-Z28 DEx4 work 14 trajectory_rom 0 22 R`nF?88_cT@>J>eboVn4n0
+R18
+Z27 DEx4 work 17 encoder_simulator 0 22 S>i1L_3Ob4JQE9PZl1V:80
+Z28 DEx4 work 14 rom_controller 0 22 Zfk06XYMW4G99RAR6TbIT2
+Z29 DEx4 work 14 trajectory_rom 0 22 CAbT=mKTTaNVaY8kgM1VX1
 R2
 R3
 R4
 R5
-DEx4 work 17 cnc_3axis_rom_top 0 22 0TlQnSXfiN24X_=5KSP:T2
-!i122 41
-l102
-L77 134
-VDTkgSQU`VfjGnLF57[caS1
-!s100 9jkXFaS85fWY>GB[n4Gi;0
+DEx4 work 17 cnc_3axis_rom_top 0 22 7Z<I<nO[S2e0Yn^PTij@Z2
+!i122 48
+l118
+Z30 L78 218
+VNZX=W96]Q_G?5`3?mkdO73
+Z31 !s100 IlAXKN27_mBb`YXgU:bcI1
 R8
 31
-R23
+R22
 !i10b 1
+R23
 R24
 R25
-R26
 !i113 1
-o-93
+R26
 R13
 Pcnc_pkg
 R3
 R4
 R5
-!i122 33
-Z29 w1760279054
+!i122 43
+Z32 w1760352728
 R0
-Z30 8cnc_pkg.vhd
-Z31 Fcnc_pkg.vhd
+Z33 8cnc_pkg.vhd
+Z34 Fcnc_pkg.vhd
 l0
 L12 1
-ViOVfh]Azz7GK^e:g6DOdL0
-!s100 []3TTfJ7[Kn3ZGjWZ5]>M3
+V<b@0^^7[0A4_gYXaG9HDZ1
+!s100 WYbQM]ZWh]IF[L;9g0m]W0
 R8
 31
 b1
-Z32 !s110 1760297353
+Z35 !s110 1760352994
 !i10b 1
-Z33 !s108 1760297353.000000
-Z34 !s90 -93|cnc_pkg.vhd|
-Z35 !s107 cnc_pkg.vhd|
+Z36 !s108 1760352994.000000
+Z37 !s90 -93|cnc_pkg.vhd|
+Z38 !s107 cnc_pkg.vhd|
 !i113 1
 o-93
 R13
@@ -176,33 +177,33 @@ R2
 R3
 R4
 R5
-!i122 33
+!i122 43
 l0
-L58 1
-VCUQe9cVSMlMdP77jXU0f>2
-!s100 k_PIlGUDAMQN@m0;:eOb]0
+L64 1
+VkN8c:LL_6Z1fFK`b`Xfo?2
+!s100 ^99ndX3hLIzfT4<48f`[70
 R8
 31
-R32
-!i10b 1
-R33
-R34
 R35
+!i10b 1
+R36
+R37
+R38
 !i113 1
 o-93
 R13
 Eencoder_decoder
-Z36 w1760279863
+Z39 w1760279863
 R2
 R3
 R4
 R5
-!i122 34
+!i122 46
 R0
-Z37 8encoder_decoder.vhd
-Z38 Fencoder_decoder.vhd
+Z40 8encoder_decoder.vhd
+Z41 Fencoder_decoder.vhd
 l0
-Z39 L16 1
+Z42 L16 1
 V>XZ:jk]S3;T^bhT`1ofLK3
 !s100 fc0=6B]4O3UT;RXRMVSzg1
 R8
@@ -210,8 +211,8 @@ R8
 R9
 !i10b 1
 R10
-Z40 !s90 -93|encoder_decoder.vhd|
-Z41 !s107 encoder_decoder.vhd|
+R11
+R12
 !i113 1
 o-93
 R13
@@ -221,7 +222,7 @@ R3
 R4
 R5
 DEx4 work 15 encoder_decoder 0 22 >XZ:jk]S3;T^bhT`1ofLK3
-!i122 34
+!i122 46
 l66
 L42 155
 VW@E6Z@R22aBMf=ngid[990
@@ -231,31 +232,31 @@ R8
 R9
 !i10b 1
 R10
-R40
-R41
+R11
+R12
 !i113 1
 o-93
 R13
-Erom_controller
-Z42 w1760297230
+Eencoder_simulator
+Z43 w1760298115
 R3
 R4
 R5
-!i122 39
+!i122 46
 R0
-Z43 8rom_controller.vhd
-Z44 From_controller.vhd
+Z44 8encoder_simulator.vhd
+Z45 Fencoder_simulator.vhd
 l0
-R39
-V>HMTgN8I4h5>`Y?7b<8Lg0
-!s100 =[:NU2hQI49OhKAbFXh6B1
+L22 1
+VS>i1L_3Ob4JQE9PZl1V:80
+!s100 bAej87nlKo5S]DNZ<:Eh;0
 R8
 31
-Z45 !s110 1760297373
+R9
 !i10b 1
-Z46 !s108 1760297373.000000
-Z47 !s90 -93|rom_controller.vhd|
-Z48 !s107 rom_controller.vhd|
+R10
+R11
+R12
 !i113 1
 o-93
 R13
@@ -264,33 +265,76 @@ R3
 R4
 R5
 R27
-!i122 39
-l84
-L50 143
-VJS2AY6oJ8_?1lHE;gIk_^3
-!s100 gYAWO<]bWz0UPDD@=3_MP2
+!i122 46
+l66
+L42 133
+VD?EbYzCX9@JWhznelRN1U2
+!s100 9AonWZ]dnU[NLhggfMeI;0
 R8
 31
-R45
+R9
 !i10b 1
-R46
-R47
-R48
+R10
+R11
+R12
+!i113 1
+o-93
+R13
+Erom_controller
+Z46 w1760352907
+R3
+R4
+R5
+!i122 45
+R0
+Z47 8rom_controller.vhd
+Z48 From_controller.vhd
+l0
+R42
+VZfk06XYMW4G99RAR6TbIT2
+!s100 Z680fc[Oeici[YjoLzjef3
+R8
+31
+Z49 !s110 1760353004
+!i10b 1
+Z50 !s108 1760353004.000000
+Z51 !s90 -93|rom_controller.vhd|
+Z52 !s107 rom_controller.vhd|
+!i113 1
+o-93
+R13
+Artl
+R3
+R4
+R5
+R28
+!i122 45
+l94
+L50 165
+V3:6AJXfa_>>`a0[EY6XN30
+!s100 kmnGW9M]7Y`]H^DZTFWB23
+R8
+31
+R49
+!i10b 1
+R50
+R51
+R52
 !i113 1
 o-93
 R13
 Estep_dir_generator
-Z49 w1760278944
+Z53 w1760335061
 R2
 R3
 R4
 R5
-!i122 36
+!i122 46
 R0
-Z50 8step_dir_generator.vhd
-Z51 Fstep_dir_generator.vhd
+Z54 8step_dir_generator.vhd
+Z55 Fstep_dir_generator.vhd
 l0
-R39
+R42
 VLbAQ:[A]ZJoz1VLo_=Jcg2
 !s100 >za]@6SR;7K]5h]R1_?_42
 R8
@@ -298,8 +342,8 @@ R8
 R9
 !i10b 1
 R10
-Z52 !s90 -93|step_dir_generator.vhd|
-Z53 !s107 step_dir_generator.vhd|
+R11
+R12
 !i113 1
 o-93
 R13
@@ -309,7 +353,7 @@ R3
 R4
 R5
 DEx4 work 18 step_dir_generator 0 22 LbAQ:[A]ZJoz1VLo_=Jcg2
-!i122 36
+!i122 46
 l66
 L46 102
 V:CNQJn:1I8^NWV5be[a4I3
@@ -319,31 +363,31 @@ R8
 R9
 !i10b 1
 R10
-R52
-R53
+R11
+R12
 !i113 1
 o-93
 R13
 Etrajectory_rom
-Z54 w1760297194
+Z56 w1760352839
 R3
 R4
 R5
-!i122 42
+!i122 44
 R0
-Z55 8trajectory_rom.vhd
-Z56 Ftrajectory_rom.vhd
+Z57 8trajectory_rom.vhd
+Z58 Ftrajectory_rom.vhd
 l0
-R39
-VR`nF?88_cT@>J>eboVn4n0
-!s100 cC2FEDKE[KH4FUKIK?KPf3
+R17
+VCAbT=mKTTaNVaY8kgM1VX1
+!s100 bICCldQHAZAcLazg9fY<P3
 R8
 31
-Z57 !s110 1760332552
+Z59 !s110 1760352999
 !i10b 1
-Z58 !s108 1760332552.000000
-Z59 !s90 -93|trajectory_rom.vhd|
-Z60 !s107 trajectory_rom.vhd|
+Z60 !s108 1760352999.000000
+Z61 !s90 -93|trajectory_rom.vhd|
+Z62 !s107 trajectory_rom.vhd|
 !i113 1
 o-93
 R13
@@ -351,19 +395,19 @@ Artl
 R3
 R4
 R5
-R28
-!i122 42
-l197
-Z61 L26 184
-Z62 VUGJZWYR540dSc>LhHIcdb1
-Z63 !s100 >1OYI`6LEhmIN<TmdnGYk2
+R29
+!i122 44
+l169
+L27 155
+VG]DmVi_ZbWhElnYK:45=?3
+!s100 NKQDEcTn=8^onZkQ^Q3L91
 R8
 31
-R57
-!i10b 1
-R58
 R59
+!i10b 1
 R60
+R61
+R62
 !i113 1
 o-93
 R13

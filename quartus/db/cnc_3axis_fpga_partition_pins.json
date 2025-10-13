@@ -88,10 +88,6 @@
 					"strict" : false
 				},
 				{
-					"name" : "current_step[5]",
-					"strict" : false
-				},
-				{
 					"name" : "enable",
 					"strict" : false
 				},

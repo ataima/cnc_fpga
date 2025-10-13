@@ -70,15 +70,15 @@ entity cnc_3axis_rom_top is
         sequence_active  : out std_logic;  -- ROM playback active
         sequence_done    : out std_logic;  -- ROM playback complete (ONE_SHOT)
 
-        -- Debug outputs (6 pins)
-        current_step     : out std_logic_vector(5 downto 0)  -- Current ROM position
+        -- Debug outputs (5 pins)
+        current_step     : out std_logic_vector(4 downto 0)  -- Current ROM position (0-23)
     );
 end cnc_3axis_rom_top;
 
 architecture structural of cnc_3axis_rom_top is
 
     -- Internal signals: ROM interface
-    signal rom_address   : unsigned(5 downto 0);
+    signal rom_address   : unsigned(4 downto 0);  -- 5 bits for 0-23
     signal rom_target_x  : signed(31 downto 0);
     signal rom_target_y  : signed(31 downto 0);
     signal rom_target_z  : signed(31 downto 0);
@@ -98,7 +98,7 @@ architecture structural of cnc_3axis_rom_top is
     signal pos_z         : signed(31 downto 0);
 
     -- Debug
-    signal current_step_int : unsigned(5 downto 0);
+    signal current_step_int : unsigned(4 downto 0);  -- 5 bits for 0-23
 
     -- Encoder simulator signals
     signal sim_enc_a_x, sim_enc_b_x : std_logic;

@@ -1,12 +1,12 @@
 --------------------------------------------------------------------------------
 -- File: rom_controller.vhd
 -- Description: Automatic sequencer for trajectory ROM playback
---              Auto-advances through 64 positions, triggers movements
+--              Auto-advances through 24 positions, triggers movements
 --              Modes: LOOP (infinite) or ONE_SHOT (run once)
 --
 -- Usage: Connects trajectory_rom to cnc_3axis_controller
 -- Author: Generated for cnc_fpga project
--- Date: 2025-10-12
+-- Date: 2025-10-13 (Updated from 64 to 24 positions)
 --------------------------------------------------------------------------------
 
 library ieee;
@@ -27,7 +27,7 @@ entity rom_controller is
         pause           : in  std_logic;  -- Pause playback (optional)
 
         -- ROM interface
-        rom_address     : out unsigned(5 downto 0);  -- 0 to 63
+        rom_address     : out unsigned(4 downto 0);  -- 0 to 23 (5 bits)
         rom_target_x    : in  signed(31 downto 0);
         rom_target_y    : in  signed(31 downto 0);
         rom_target_z    : in  signed(31 downto 0);
@@ -43,7 +43,7 @@ entity rom_controller is
         -- Status
         sequence_active : out std_logic;  -- High when running
         sequence_done   : out std_logic;  -- Pulse when complete (ONE_SHOT mode)
-        current_step    : out unsigned(5 downto 0)  -- Debug: current position index
+        current_step    : out unsigned(4 downto 0)  -- Debug: current position index (0-23)
     );
 end rom_controller;
 
@@ -64,7 +64,7 @@ architecture rtl of rom_controller is
     signal next_state : state_type;
 
     -- Position counter
-    signal position_counter : unsigned(5 downto 0) := (others => '0');
+    signal position_counter : unsigned(4 downto 0) := (others => '0');
 
     -- Target registers (loaded from ROM - absolute positions)
     signal target_x_reg : signed(31 downto 0) := (others => '0');
@@ -169,8 +169,8 @@ begin
                     end if;
 
                 when ADVANCE =>
-                    -- Check if sequence complete
-                    if position_counter = 63 then
+                    -- Check if sequence complete (24 positions: 0-23)
+                    if position_counter = 23 then
                         if LOOP_MODE then
                             -- Loop back to start
                             position_counter <= (others => '0');
