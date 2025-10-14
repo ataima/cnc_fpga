@@ -18,7 +18,7 @@ architecture behavioral of tb_rom_viewer is
     constant CLK_PERIOD : time := 20 ns;  -- 50 MHz
 
     signal clk     : std_logic := '0';
-    signal address : unsigned(5 downto 0) := (others => '0');
+    signal address : unsigned(4 downto 0) := (others => '0');
 
     signal target_x : signed(31 downto 0);
     signal target_y : signed(31 downto 0);
@@ -72,8 +72,8 @@ begin
         writeline(output, l);
 
         -- Read all 64 positions
-        for i in 0 to 63 loop
-            address <= to_unsigned(i, 6);
+        for i in 0 to 31 loop
+            address <= to_unsigned(i, 5);
             wait until rising_edge(clk);
             wait for 1 ns;  -- Let signals settle
 

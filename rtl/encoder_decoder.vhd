@@ -1,13 +1,3 @@
--- ============================================================================
--- Quadrature Encoder Decoder
--- ============================================================================
--- Decodifica encoder incrementale in quadratura
--- - Filtraggio digitale anti-rimbalzo
--- - Rilevamento direzione
--- - Contatore posizione 32-bit signed
--- - Uscita velocità istantanea
--- ============================================================================
-
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
@@ -47,28 +37,36 @@ architecture rtl of encoder_decoder is
     signal a_clean  : std_logic;
     signal b_clean  : std_logic;
     
+    -- Segnali ritardati per sincronizzazione
+    signal a_clean_d1 : std_logic;  -- a_clean ritardato di 1 ciclo
+    signal b_clean_d1 : std_logic;  -- b_clean ritardato di 1 ciclo
+    signal a_clean_d2 : std_logic;  -- a_clean ritardato di 2 cicli
+    signal b_clean_d2 : std_logic;  -- b_clean ritardato di 2 cicli
+    
+    -- Stato attuale e precedente (per quadratura)
+    signal current_state : std_logic_vector(1 downto 0);  -- [a_clean_d1, b_clean_d1]
+    signal prev_state    : std_logic_vector(1 downto 0);  -- [a_clean_d2, b_clean_d2]
+    
     -- Rilevamento fronti
-    signal a_prev   : std_logic;
-    signal b_prev   : std_logic;
-    signal state    : std_logic_vector(3 downto 0);
-    signal state_prev : std_logic_vector(3 downto 0);
+    signal pulse    : std_logic;            -- Segnale di impulso
+    signal dir      : std_logic;            -- Segnale di direzione
+    signal dir_internal : std_logic;        -- Segnale interno per direzione
     
     -- Posizione e velocità
     signal pos_counter : signed(POSITION_WIDTH-1 downto 0);
     signal vel_counter : signed(VELOCITY_WIDTH-1 downto 0);
     signal vel_timer   : unsigned(15 downto 0);
-    signal step_count  : unsigned(15 downto 0);
+    signal step_count  : signed(15 downto 0);
     
-    -- Direzione
-    signal dir_internal : std_logic;
+    -- Errore
     signal error_flag   : std_logic;
     
+    -- Segnale per ignorare il primo impulso spurio
+    signal first_pulse : std_logic;
+
 begin
 
-    -- ========================================================================
     -- Filtro digitale anti-rimbalzo
-    -- ========================================================================
-    -- Shift register per filtrare noise meccanico/elettrico
     process(clk, rst)
     begin
         if rst = '1' then
@@ -96,91 +94,116 @@ begin
         end if;
     end process;
 
-    -- ========================================================================
-    -- Decoder quadratura - State machine
-    -- ========================================================================
-    -- Stati encoder in quadratura (Gray code):
-    -- 00 -> 10 -> 11 -> 01 -> 00  (forward)
-    -- 00 -> 01 -> 11 -> 10 -> 00  (reverse)
-    
-    state <= a_clean & b_clean & a_prev & b_prev;
-    
+    -- Ritardo dei segnali puliti
     process(clk, rst)
     begin
         if rst = '1' then
-            a_prev <= '0';
-            b_prev <= '0';
-            state_prev <= (others => '0');
-            pos_counter <= (others => '0');
-            dir_internal <= '0';
-            error_flag <= '0';
-            
+            a_clean_d1 <= '0';
+            b_clean_d1 <= '0';
+            a_clean_d2 <= '0';
+            b_clean_d2 <= '0';
+            first_pulse <= '0';
         elsif rising_edge(clk) then
-            if enable = '1' then
-                -- Salva stato precedente
-                a_prev <= a_clean;
-                b_prev <= b_clean;
-                state_prev <= state;
-                
-                -- Reset posizione su comando
-                if position_set = '1' then
-                    pos_counter <= position_val;
-                else
-                    -- Decode transition
-                    case state is
-                        -- Forward transitions
-                        when "0000" | "1011" | "1101" | "0110" =>
-                            null; -- No change
-                            
-                        when "1000" | "0010" | "0111"  =>
-                            pos_counter <= pos_counter + 1;
-                            dir_internal <= '1';
-                            
-                        -- Reverse transitions  
-                        when "0100" | "0001" | "1110"  =>
-                            pos_counter <= pos_counter - 1;
-                            dir_internal <= '0';
-                            
-                        -- Invalid transitions (errore)
-                        when others =>
-                            error_flag <= '1';
-                    end case;
-                end if;
+            a_clean_d1 <= a_clean;
+            b_clean_d1 <= b_clean;
+            a_clean_d2 <= a_clean_d1;
+            b_clean_d2 <= b_clean_d1;
+            if enable = '1' and pulse = '1' then
+                first_pulse <= '1';  -- Ignora il primo impulso
             end if;
         end if;
     end process;
 
-    -- ========================================================================
+    -- Definizione stato attuale e precedente
+    current_state <= a_clean_d1 & b_clean_d1;
+    prev_state <= a_clean_d2 & b_clean_d2;
+
+    -- Generazione segnale pulse (rilevamento transizioni)
+    pulse <= (a_clean_d1 xor a_clean_d2) or (b_clean_d1 xor b_clean_d2);
+    
+    -- Logica di direzione basata su transizioni di stato
+    process(current_state, prev_state)
+    begin
+        case prev_state & current_state is
+            -- Transizioni avanti (clockwise): 00->10, 10->11, 11->01, 01->00
+            when "0010" | "1011" | "1101" | "0100" =>
+                dir <= '1';  -- Avanti
+            -- Transizioni indietro (counter-clockwise): 00->01, 01->11, 11->10, 10->00
+            when "0001" | "0111" | "1110" | "1000" =>
+                dir <= '0';  -- Indietro
+            -- Transizioni non valide o statiche
+            when others =>
+                dir <= dir;  -- Mantieni direzione precedente
+        end case;
+    end process;
+
+    -- Contatore posizione up/down
+    process(clk, rst)
+    begin
+        if rst = '1' then
+            pos_counter <= (others => '0');
+            dir_internal <= '0';
+            error_flag <= '0';
+        elsif rising_edge(clk) then
+            if enable = '1' then
+                -- Aggiorna direzione interna solo su impulso valido
+                if pulse = '1' and first_pulse = '1' then
+                    dir_internal <= dir;
+                end if;
+                
+                -- Reset posizione su comando
+                if position_set = '1' then
+                    pos_counter <= position_val;
+                elsif pulse = '1' and first_pulse = '1' then
+                    -- Aggiorna contatore in base a direzione
+                    if dir_internal = '1' then
+                        pos_counter <= pos_counter + 1;
+                    else
+                        pos_counter <= pos_counter - 1;
+                    end if;
+                end if;
+                
+                -- Rileva errore (transizioni non valide)
+                case prev_state & current_state is
+                    -- Transizioni valide
+                    when "0010" | "1011" | "1101" | "0100" |  -- Avanti
+                         "0001" | "0111" | "1110" | "1000" =>  -- Indietro
+                        error_flag <= '0';
+                    -- Stesso stato
+                    when "0000" | "0101" | "1010" | "1111" =>
+                        error_flag <= '0';
+                    -- Transizioni non valide
+                    when others =>
+                        error_flag <= '1';
+                end case;
+            end if;
+        end if;
+    end process;
+
     -- Misura velocità
-    -- ========================================================================
-    -- Conta step in finestra temporale fissa
     process(clk, rst)
     begin
         if rst = '1' then
             vel_timer <= (others => '0');
             step_count <= (others => '0');
             vel_counter <= (others => '0');
-            
         elsif rising_edge(clk) then
             if enable = '1' then
                 -- Timer finestra
-                if vel_timer < VEL_WINDOW then
+                if vel_timer < VEL_WINDOW - 1 then
                     vel_timer <= vel_timer + 1;
-                    
-                    -- Conta step
-                    if state /= state_prev then
-                        step_count <= step_count + 1;
+                    -- Accumula step signed
+                    if pulse = '1' and first_pulse = '1' then
+                        if dir_internal = '1' then
+                            step_count <= step_count + 1;
+                        else
+                            step_count <= step_count - 1;
+                        end if;
                     end if;
                 else
-                    -- Fine finestra: calcola velocità
+                    -- Fine finestra: output velocità
                     vel_timer <= (others => '0');
-                    
-                    if dir_internal = '1' then
-                        vel_counter <= resize(signed(step_count), VELOCITY_WIDTH);
-                    else
-                        vel_counter <= -resize(signed(step_count), VELOCITY_WIDTH);
-                    end if;
-                    
+                    vel_counter <= resize(step_count, VELOCITY_WIDTH);
                     step_count <= (others => '0');
                 end if;
             end if;
@@ -194,3 +217,4 @@ begin
     error <= error_flag;
 
 end rtl;
+

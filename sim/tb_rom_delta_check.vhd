@@ -26,7 +26,7 @@ architecture behavioral of tb_rom_delta_check is
     signal step_period_out : unsigned(15 downto 0);
     signal move_start : std_logic;
     signal sequence_active, sequence_done : std_logic;
-    signal current_step : unsigned(5 downto 0);
+    signal current_step : unsigned(4 downto 0);
 
     signal test_complete : boolean := false;
 

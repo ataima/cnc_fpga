@@ -39,6 +39,7 @@ architecture behavioral of tb_rom_playback is
     signal enc_b_y     : std_logic := '0';
     signal enc_a_z     : std_logic := '0';
     signal enc_b_z     : std_logic := '0';
+    signal open_loop   : std_logic := '0';
 
     -- Limit switches (active-low: '1'=not hit, tie inactive)
     signal limit_min_x : std_logic := '1';
@@ -65,7 +66,7 @@ architecture behavioral of tb_rom_playback is
     signal state_debug     : std_logic_vector(3 downto 0);
     signal sequence_active : std_logic;
     signal sequence_done   : std_logic;
-    signal current_step    : std_logic_vector(5 downto 0);
+    signal current_step    : std_logic_vector(4 downto 0);
 
     -- Test control
     signal test_complete : boolean := false;
@@ -106,6 +107,7 @@ begin
             enc_b_y          => enc_b_y,
             enc_a_z          => enc_a_z,
             enc_b_z          => enc_b_z,
+            open_loop        => open_loop,
 
             limit_min_x      => limit_min_x,
             limit_max_x      => limit_max_x,
@@ -154,6 +156,7 @@ begin
         wait for 100 ns;
         rst <= '0';
         wait for 100 ns;
+        open_loop <= '0';
 
         write(l, string'("[INFO] Reset complete, starting playback..."));
         writeline(output, l);

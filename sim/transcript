@@ -1,8 +1,0 @@
-# vsim -t 1us -voptargs="+acc" work.tb_encoder 
-# Start time: 07:27:36 on Oct 14,2025
-# ** Error: (vsim-3170) Could not find 'tb_encoder'.
-#         Searched libraries:
-#             /home/angelocoppi/quartus_wb/cnc_fpga/sim/work
-# Error loading design
-# End time: 07:27:36 on Oct 14,2025, Elapsed time: 0:00:00
-# Errors: 1, Warnings: 0
