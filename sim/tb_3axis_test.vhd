@@ -36,7 +36,7 @@ architecture behavioral of tb_3axis_test is
     signal state_debug     : std_logic_vector(3 downto 0);
     signal sequence_active : std_logic;
     signal sequence_done   : std_logic;
-    signal current_step    : std_logic_vector(5 downto 0);
+    signal current_step    : std_logic_vector(4 downto 0);
 
     signal test_complete : boolean := false;
 

@@ -1,33 +1,8 @@
-# vsim -c -do "run 100 ms; quit -f" work.tb_rom_24positions 
-# Start time: 12:59:59 on Oct 13,2025
-# Loading std.standard
-# Loading std.textio(body)
-# Loading ieee.std_logic_1164(body)
-# Loading ieee.numeric_std(body)
-# Loading ieee.std_logic_textio(body)
-# Loading work.cnc_pkg(body)
-# Loading work.tb_rom_24positions(behavioral)
-# Loading work.cnc_3axis_rom_top(structural)
-# Loading work.trajectory_rom(rtl)
-# Loading work.rom_controller(rtl)
-# Loading work.encoder_simulator(rtl)
-# Loading work.cnc_3axis_controller(rtl)
-# Loading work.encoder_decoder(rtl)
-# Loading work.bresenham_axis(rtl)
-# Loading work.step_dir_generator(rtl)
-# run 100 ms
-# ======================================================
-#   ROM 24-Position Test - Cube + Double Pyramid
-#   Cube: 2000x2000x2000 (+/-1000 from origin)
-#   Pyramids: 1000x1000x1000 base, vertices at (0,0,0)
-#   Using simulated encoders (10us delay)
-#   open_loop = 0 (encoder feedback enabled)
-# ======================================================
-# [INFO] Reset complete
-# [INFO] ROM playback enabled (ONE_SHOT mode)
-# 
-#          [POS] X=0, Y=0, Z=0 steps
-#          [POS] X=0, Y=0, Z=0 steps
-#  quit -f
-# End time: 13:00:54 on Oct 13,2025, Elapsed time: 0:00:55
-# Errors: 0, Warnings: 0
+# vsim -t 1us -voptargs="+acc" work.tb_encoder 
+# Start time: 07:27:36 on Oct 14,2025
+# ** Error: (vsim-3170) Could not find 'tb_encoder'.
+#         Searched libraries:
+#             /home/angelocoppi/quartus_wb/cnc_fpga/sim/work
+# Error loading design
+# End time: 07:27:36 on Oct 14,2025, Elapsed time: 0:00:00
+# Errors: 1, Warnings: 0

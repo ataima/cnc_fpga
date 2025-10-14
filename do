@@ -1,5 +1,4 @@
-cd rtl
-./do
-cd ..
+
 cd sim
-./do
+[ "A$1" == "A" ] && exit
+./do $1

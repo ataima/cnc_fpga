@@ -1,7 +1,40 @@
+#!/bin/bash
+#$1 risultato operazione 
+#$2 file
+error(){
+    if [ $1 -ne 0 ]
+    then
+        echo "ERROR ON FILE: $2"
+        exit -1
+    fi
+}
+
+#$1 file 
+vhdl(){
+    vcom -93 $1
+    error $? $1
+}
+
 vdel -lib work -all
 
-vcom -93 ../rtl/cnc_pkg.vhd ../rtl/bresenham_axis.vhd  ../rtl/encoder_decoder.vhd ../rtl/cnc_3axis_controller.vhd ../rtl/step_dir_generator.vhd
-vcom -93 tb_bresenham.vhd
+vhdl ../rtl/cnc_pkg.vhd  
+vhdl ../rtl/bresenham_axis.vhd  
+vhdl ../rtl/cnc_3axis_controller.vhd  
+vhdl ../rtl/encoder_decoder.vhd    
+vhdl ../rtl/rom_controller.vhd      
+vhdl ../rtl/trajectory_rom.vhd
+vhdl ../rtl/cnc_3axis_controller_synth.vhd  
+vhdl ../rtl/encoder_simulator.vhd  
+vhdl ../rtl/cnc_3axis_rom_top.vhd  
+vhdl ../rtl/step_dir_generator.vhd  
 
 
-vsim -t 1ns -voptargs="+acc"  work.tb_bresenham
+
+vcom -93 "./$1.vhd"
+if [ $? -ne 0 ]
+then
+exit -1
+fi
+
+vsim -t 1us -voptargs="+acc"  "work.$1"
+
