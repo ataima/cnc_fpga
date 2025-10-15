@@ -33,6 +33,8 @@ BWHITE='\033[1;37m'
 
 tbfile=""
 simfile=""
+declare -a vhd_files=()
+
 
 
 
@@ -132,7 +134,6 @@ select_vhd_file() {
     fi
 
     # Raccogli i file .vhd (case-insensitive) in un array
-    local -a vhd_files=()
     while IFS= read -r -d '' file; do
         vhd_files+=("$file")
     done < <(find "$dir_path" -maxdepth 1 -type f \( -iname "*.vhd" \) -print0 | sort -z)
@@ -190,10 +191,17 @@ then
         simfile="work."`basename $tbfile .vhd `
         if [ "A$1" == "A" ]
         then
-        vsim -c "$simfile" -do "run 100 ms; quit -f"
+        vsim -c "$simfile" -do "run -all; quit -f"
         else
                 vsim "$simfile" 
         fi
 fi
+
+echo "for graphic simulate can run :"
+for file in "${vhd_files[@]}"; do
+        echo -e "vsim work.$(basename "$file" .vhd)"
+done
+echo
+
 
 exit $?

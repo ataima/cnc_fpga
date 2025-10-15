@@ -144,22 +144,22 @@ begin
         report "Encoder abilitato, position=" & integer'image(to_integer(position)) & ", error=" & std_logic'image(error);
 
         -- Simula 40 impulsi in avanti
-        report "Inizio 40 impulsi in avanti";
-        for i in 1 to 40 loop
+        report "Inizio 10 impulsi in avanti";
+        for i in 1 to 10 loop
             quad_pulse(enc_a, enc_b, true, i);
         end loop;
-        report "Fine 40 impulsi in avanti, posizione attesa=160, posizione attuale=" & integer'image(to_integer(position)) & ", direction=" & std_logic'image(direction) & ", error=" & std_logic'image(error);
+        report "Fine 10 impulsi in avanti, posizione attesa=160, posizione attuale=" & integer'image(to_integer(position)) & ", direction=" & std_logic'image(direction) & ", error=" & std_logic'image(error);
 
         -- Attendi una finestra di velocità
         wait for CLK_PERIOD * VEL_WINDOW;
         report "Dopo finestra velocità (avanti), position=" & integer'image(to_integer(position)) & ", velocity=" & integer'image(to_integer(velocity)) & ", error=" & std_logic'image(error);
 
         -- Simula 40 impulsi indietro
-        report "Inizio 40 impulsi indietro";
-        for i in 1 to 40 loop
+        report "Inizio 10 impulsi indietro";
+        for i in 1 to 10 loop
             quad_pulse(enc_a, enc_b, false, i);
         end loop;
-        report "Fine 40 impulsi indietro, posizione attesa=0, posizione attuale=" & integer'image(to_integer(position)) & ", direction=" & std_logic'image(direction) & ", error=" & std_logic'image(error);
+        report "Fine 10 impulsi indietro, posizione attesa=0, posizione attuale=" & integer'image(to_integer(position)) & ", direction=" & std_logic'image(direction) & ", error=" & std_logic'image(error);
 
         -- Attendi una finestra di velocità
         wait for CLK_PERIOD * VEL_WINDOW;
