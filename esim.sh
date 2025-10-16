@@ -99,7 +99,9 @@ function compile_rtl() {
     log_info "Compile rtl files ..."
     local ALL_FILES="cnc_pkg.vhd  bresenham_axis.vhd  cnc_3axis_controller_synth.vhd  cnc_3axis_controller.vhd
                     trajectory_rom.vhd rom_controller.vhd   step_dir_generator.vhd
-                    encoder_decoder.vhd encoder_simulator.vhd cnc_3axis_rom_top.vhd"
+                    encoder_decoder.vhd encoder_simulator.vhd cnc_3axis_rom_top.vhd 
+                    axis_homing_v3.vhd axis_homing.vhd 
+                    homing_sequence.vhd homing_sequence_v2.vhd reset_z.vhd"
     for one in ${ALL_FILES}
     do
         vcom_exec " " "rtl/${one}"
@@ -113,7 +115,7 @@ function compile_testbench() {
     local ALL_FILES="   tb_encoder_decoder.vhd tb_single_move.vhd tb_rom_debug.vhd  tb_rom_full.vhd  tb_3axis_test.vhd   tb_rom_simple.vhd 
                     tb_clock.vhd    tb_rom_24positions.vhd  
                     tb_rom_delta_check.vhd  tb_rom_playback.vhd  tb_rom_viewer.vhd
-                    tb_bresenham.vhd     "
+                    tb_bresenham.vhd   tb_homing_sequence.vhd  tb_homing_sequence_v2.vhd  "
     for one in ${ALL_FILES}
     do
         vcom_exec " " "sim/${one}"
