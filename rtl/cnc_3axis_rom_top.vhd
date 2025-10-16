@@ -71,7 +71,12 @@ entity cnc_3axis_rom_top is
         sequence_done    : out std_logic;  -- ROM playback complete (ONE_SHOT)
 
         -- Debug outputs (5 pins)
-        current_step     : out std_logic_vector(4 downto 0)  -- Current ROM position (0-23)
+        current_step     : out std_logic_vector(4 downto 0);  -- Current ROM position (0-23)
+
+        -- Position feedback (for testing only)
+        position_x       : out signed(31 downto 0);
+        position_y       : out signed(31 downto 0);
+        position_z       : out signed(31 downto 0)
     );
 end cnc_3axis_rom_top;
 
@@ -120,6 +125,11 @@ begin
     -- Output assignments
     busy <= busy_int;
     current_step <= std_logic_vector(current_step_int);
+
+    -- Position feedback outputs (for testing)
+    position_x <= pos_x;
+    position_y <= pos_y;
+    position_z <= pos_z;
 
     -- Motor outputs (buffered)
     step_x   <= step_x_int;

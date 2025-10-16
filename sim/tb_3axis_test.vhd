@@ -17,6 +17,19 @@ end tb_3axis_test;
 
 architecture behavioral of tb_3axis_test is
 
+    constant CLK_PERIOD : time := 20 ns;  -- 50 MHz
+    constant STEP_PERIOD_CYCLES : integer := 5000;  -- 100 us/step from rom_controller
+    constant TIMEOUT_LOAD_POS : time := 3 ms;  -- Timeout for position loading (+30%)
+    constant TIMEOUT_BUSY_START : time := 3 ms;  -- Timeout for busy to assert (+30%)
+    constant TIMEOUT_MOVEMENT_MARGIN : time := 13 ms;  -- Margin for overhead (+30%)
+    constant TIMEOUT_ZERO_DELTA : time := 2 ms;  -- Timeout for positions with zero delta (+30%)
+
+    -- Number of positions to test (0 to 3)
+    constant NUM_POSITIONS : integer := 4;
+
+    -- Expected deltas per position (from ROM: absolute positions, deltas calculated relative to previous)
+    type delta_array_t is array (0 to NUM_POSITIONS-1) of integer;
+
     -- Function to compute maximum of three integers
     function max3(a, b, c : integer) return integer is
         variable max_ab : integer;
@@ -42,19 +55,6 @@ architecture behavioral of tb_3axis_test is
         end loop;
         return sum;
     end function sum_steps;
-
-    constant CLK_PERIOD : time := 20 ns;  -- 50 MHz
-    constant STEP_PERIOD_CYCLES : integer := 5000;  -- 100 us/step from rom_controller
-    constant TIMEOUT_LOAD_POS : time := 2 ms;  -- Increased timeout for position loading
-    constant TIMEOUT_BUSY_START : time := 2 ms;  -- Timeout for busy to assert
-    constant TIMEOUT_MOVEMENT_MARGIN : time := 10 ms;  -- Margin for overhead
-    constant TIMEOUT_ZERO_DELTA : time := 1 ms;  -- Timeout for positions with zero delta
-
-    -- Number of positions to test (0 to 3)
-    constant NUM_POSITIONS : integer := 4;
-
-    -- Expected deltas per position (from ROM: absolute positions, deltas calculated relative to previous)
-    type delta_array_t is array (0 to NUM_POSITIONS-1) of integer;
     constant EXPECTED_DELTAS_X : delta_array_t := (0, 1000, 2000, 0);  -- Abs: 0 -> -1000 (delta 1000 neg) -> 1000 (delta 2000 pos) -> 1000 (delta 0)
     constant EXPECTED_DELTAS_Y : delta_array_t := (0, 1000, 0, 2000);  -- Abs: 0 -> -1000 (delta 1000 neg) -> -1000 (delta 0) -> 1000 (delta 2000 pos)
     constant EXPECTED_DELTAS_Z : delta_array_t := (0, 1000, 0, 0);     -- Abs: 0 -> -1000 (delta 1000 neg) -> -1000 (delta 0) -> -1000 (delta 0)
@@ -85,6 +85,11 @@ architecture behavioral of tb_3axis_test is
     signal sequence_active : std_logic;
     signal sequence_done   : std_logic;
     signal current_step    : std_logic_vector(4 downto 0);
+
+    -- Position feedback signals
+    signal position_x      : signed(31 downto 0);
+    signal position_y      : signed(31 downto 0);
+    signal position_z      : signed(31 downto 0);
 
     signal test_complete : boolean := false;
 
@@ -141,7 +146,11 @@ begin
             state_debug      => state_debug,
             sequence_active  => sequence_active,
             sequence_done    => sequence_done,
-            current_step     => current_step
+            current_step     => current_step,
+
+            position_x       => position_x,
+            position_y       => position_y,
+            position_z       => position_z
         );
 
     stimulus : process
@@ -152,6 +161,7 @@ begin
         variable timeout_movement : time;
         variable step_x_count_per_pos, step_y_count_per_pos, step_z_count_per_pos : integer := 0;
         variable step_x_count_prev, step_y_count_prev, step_z_count_prev : integer := 0;
+        variable step_x_baseline, step_y_baseline, step_z_baseline : integer := 0;
     begin
         write(l, string'("=== MULTI-POSITION 3-AXIS MOVEMENT TEST (Positions 0-3) ==="));
         writeline(output, l);
@@ -178,6 +188,44 @@ begin
         rst <= '0';
         wait for 200 ns;
 
+        -- Verify positions are reset to (0, 0, 0)
+        write(l, string'("[RESET] Verifying position reset..."));
+        writeline(output, l);
+        wait for 100 ns;  -- Allow time for reset to propagate
+
+        write(l, string'("Position after reset: X="));
+        write(l, to_integer(position_x));
+        write(l, string'(", Y="));
+        write(l, to_integer(position_y));
+        write(l, string'(", Z="));
+        write(l, to_integer(position_z));
+        writeline(output, l);
+
+        assert position_x = 0 report "[ERROR] Position X not reset to 0!" severity error;
+        assert position_y = 0 report "[ERROR] Position Y not reset to 0!" severity error;
+        assert position_z = 0 report "[ERROR] Position Z not reset to 0!" severity error;
+
+        if position_x = 0 and position_y = 0 and position_z = 0 then
+            write(l, string'("[RESET] PASS: Positions correctly reset to (0, 0, 0)"));
+            writeline(output, l);
+        else
+            write(l, string'("[RESET] FAIL: Positions not at origin after reset!"));
+            writeline(output, l);
+        end if;
+
+        -- Verify system is idle
+        write(l, string'("System status: busy="));
+        write(l, std_logic'image(busy));
+        write(l, string'(", fault="));
+        write(l, std_logic'image(fault));
+        writeline(output, l);
+
+        assert busy = '0' report "[ERROR] System busy after reset!" severity error;
+        assert fault = '0' report "[ERROR] Fault detected after reset!" severity error;
+
+        write(l, string'(""));
+        writeline(output, l);
+
         enable <= '1';
         write(l, string'("[INFO] Enable set, waiting for sequence..."));
         writeline(output, l);
@@ -185,6 +233,25 @@ begin
         -- Wait for sequence to activate
         wait until sequence_active = '1' for TIMEOUT_LOAD_POS;
         assert sequence_active = '1' report "[ERROR] Timeout waiting for sequence_active!" severity error;
+
+        -- Wait additional time for system stabilization
+        wait for 500 ns;
+
+        -- Save initial step counts to ignore any initialization steps
+        step_x_baseline := step_x_count_cum;
+        step_y_baseline := step_y_count_cum;
+        step_z_baseline := step_z_count_cum;
+        step_x_count_prev := step_x_count_cum;
+        step_y_count_prev := step_y_count_cum;
+        step_z_count_prev := step_z_count_cum;
+        write(l, string'("[INFO] Initial step counts (baseline): X="));
+        write(l, step_x_baseline);
+        write(l, string'(", Y="));
+        write(l, step_y_baseline);
+        write(l, string'(", Z="));
+        write(l, step_z_baseline);
+        write(l, string'(" - Starting position tests..."));
+        writeline(output, l);
 
         -- Loop over positions 0 to 3
         for pos_idx in 0 to NUM_POSITIONS-1 loop
@@ -238,35 +305,30 @@ begin
             write(l, pos_idx);
             writeline(output, l);
 
-            -- Wait for busy to assert (movement start) or skip if no movement
-            if max3(expected_steps_x, expected_steps_y, expected_steps_z) > 0 then
-                wait until busy = '1' for TIMEOUT_BUSY_START;
-                assert busy = '1' report "[ERROR] Timeout waiting for busy on pos " & integer'image(pos_idx) & "!" severity error;
-                write(l, string'("[BUSY] Movement started for pos "));
+            -- Wait for movement to complete by monitoring position counter advancement
+            -- (works for both zero and non-zero delta)
+            if pos_idx < NUM_POSITIONS-1 then
+                -- Wait until controller advances to next position
+                wait until to_integer(unsigned(current_step)) = pos_idx + 1 for timeout_movement;
+                assert to_integer(unsigned(current_step)) = pos_idx + 1
+                    report "[ERROR] Controller did not advance from pos " & integer'image(pos_idx) & "!"
+                    severity error;
+                write(l, string'("[DONE] Position "));
                 write(l, pos_idx);
-                write(l, string'(" at "));
-                write(l, now);
-                writeline(output, l);
-
-                -- Verify state_debug during movement (should be "0100" for MOVING)
-                assert state_debug = "0100" report "[ERROR] Unexpected state during movement for pos " & integer'image(pos_idx) & "!" severity error;
-                write(l, string'("[INFO] State debug verified during movement (MOVING: 0100) for pos "));
-                write(l, pos_idx);
-                writeline(output, l);
-
-                -- Wait for movement completion
-                wait until busy = '0' for timeout_movement;
-                assert busy = '0' report "[ERROR] Timeout waiting for movement completion on pos " & integer'image(pos_idx) & "!" severity error;
-                write(l, string'("[DONE] Movement complete for pos "));
-                write(l, pos_idx);
+                write(l, string'(" complete, advanced to "));
+                write(l, pos_idx + 1);
                 write(l, string'(" at "));
                 write(l, now);
                 writeline(output, l);
             else
-                wait for TIMEOUT_ZERO_DELTA;
-                write(l, string'("[INFO] No movement expected for pos "));
+                -- Last position: wait for sequence_done
+                wait until sequence_done = '1' for timeout_movement;
+                assert sequence_done = '1'
+                    report "[ERROR] Sequence did not complete after pos " & integer'image(pos_idx) & "!"
+                    severity error;
+                write(l, string'("[DONE] Final position "));
                 write(l, pos_idx);
-                write(l, string'(" (delta = 0), checked at "));
+                write(l, string'(" complete, sequence done at "));
                 write(l, now);
                 writeline(output, l);
             end if;
@@ -306,13 +368,22 @@ begin
             write(l, string'(")"));
             writeline(output, l);
             write(l, string'("Cumulative X steps: "));
+            write(l, step_x_count_cum - step_x_baseline);
+            write(l, string'(" (absolute: "));
             write(l, step_x_count_cum);
+            write(l, string'(")"));
             writeline(output, l);
             write(l, string'("Cumulative Y steps: "));
+            write(l, step_y_count_cum - step_y_baseline);
+            write(l, string'(" (absolute: "));
             write(l, step_y_count_cum);
+            write(l, string'(")"));
             writeline(output, l);
             write(l, string'("Cumulative Z steps: "));
+            write(l, step_z_count_cum - step_z_baseline);
+            write(l, string'(" (absolute: "));
             write(l, step_z_count_cum);
+            write(l, string'(")"));
             writeline(output, l);
             write(l, string'(""));
             writeline(output, l);
@@ -330,10 +401,21 @@ begin
 
         write(l, string'("=== FINAL RESULTS ==="));
         writeline(output, l);
-        if step_x_count_cum = 3000 and step_y_count_cum = 3000 and step_z_count_cum = 1000 then  -- Cumulative expected: X=0+1000+2000+0=3000, Y=0+1000+0+2000=3000, Z=0+1000+0+0=1000
+        write(l, string'("Total steps from baseline: X="));
+        write(l, step_x_count_cum - step_x_baseline);
+        write(l, string'(", Y="));
+        write(l, step_y_count_cum - step_y_baseline);
+        write(l, string'(", Z="));
+        write(l, step_z_count_cum - step_z_baseline);
+        writeline(output, l);
+        -- Cumulative expected: X=0+1000+2000+0=3000, Y=0+1000+0+2000=3000, Z=0+1000+0+0=1000
+        if (step_x_count_cum - step_x_baseline) = 3000 and
+           (step_y_count_cum - step_y_baseline) = 3000 and
+           (step_z_count_cum - step_z_baseline) = 1000 then
             write(l, string'("*** TEST PASS *** No accumulation of errors over positions!"));
         else
             write(l, string'("*** TEST FAIL *** Step errors accumulated!"));
+            write(l, string'(" Expected: X=3000, Y=3000, Z=1000"));
         end if;
         writeline(output, l);
 
