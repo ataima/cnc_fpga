@@ -60,6 +60,7 @@ entity homing_sequence_v2 is
 
         -- Overall status
         all_axes_homed  : out std_logic;          -- All 3 axes homed
+        all_axes_homed_n : out std_logic;         -- All 3 axes homed (active low)
         homing_active   : out std_logic;          -- High during any homing
 
         -- Debug outputs
@@ -94,11 +95,12 @@ architecture structural of homing_sequence_v2 is
 begin
 
     -- Output assignments
-    pos_z_zero      <= z_homed;
-    pos_y_zero      <= y_homed;
-    pos_x_zero      <= x_homed;
-    all_axes_homed  <= x_homed;
-    homing_active   <= z_active or y_active or x_active;
+    pos_z_zero       <= z_homed;
+    pos_y_zero       <= y_homed;
+    pos_x_zero       <= x_homed;
+    all_axes_homed   <= x_homed;
+    all_axes_homed_n <= not x_homed;  -- Negated (active low)
+    homing_active    <= z_active or y_active or x_active;
 
     -- Cascaded enable
     enable_z_homing <= wait_done;       -- Z starts after 1ms

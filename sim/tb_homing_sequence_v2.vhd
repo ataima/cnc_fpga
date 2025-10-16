@@ -180,6 +180,8 @@ begin
         writeline(output, l);
 
         -- Phase 1.3: Z RELEASE (moving forward)
+        -- Wait for direction signal to propagate through step_dir_generator
+        wait for 100 ns;
         assert dir_z = '1' report "[ERROR] Z direction should be positive in RELEASE!" severity error;
 
         wait for 2 ms;  -- Let it release
